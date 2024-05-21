@@ -325,6 +325,20 @@
 				"navigationBarTitleText" : "",
 				"navigationStyle": "custom" 
 			}
+		},
+		{
+			"path" : "pages/index/charityConsultation",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/index/targetedAssistance",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
 		}
 	],
 	"globalStyle": {
@@ -366,7 +380,7 @@
 			},
 			
 			{
-					"pagePath": "pages/index/index",
+					"pagePath": "pages/me/me",
 					"iconPath": "static/img/tabbar/home_select.png",
 					"selectedIconPath": "static/img/tabbar/home_select.png"
 					

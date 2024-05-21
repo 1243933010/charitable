@@ -383,14 +383,14 @@
 						{
 							iconUrl: "../../static/img/icon/index/33.png",
 							tit: this.$t("app.newAdd11"),
-							link: "/pages/index/activityInfo1",
+							link: "/pages/index/targetedAssistance",
 						},
 						
 
 						{
 							iconUrl: "../../static/img/icon/index/44.png",
 							tit: this.$t("app.newAdd12"),
-							link: "/pages/index/storageLevel",
+							link: "/pages/index/charityConsultation",
 						},
 						{
 							iconUrl: "../../static/img/icon/index/55.png",

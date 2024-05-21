@@ -28,40 +28,11 @@
 				</view>
 			</view>
 			
-			<view class="all_price">
-				<view class="price">
-					<view class="num">
-						<text>$12121</text>
-					</view>
-					<view class="title">
-						<text>{{$t("app.newAdd22")}}</text>
-					</view>
-				</view>
-				<view class="msg">
-					<view class="title">
-						<text>{{$t("app.newAdd23")}}</text>
-					</view>
-					<view class="label">
-						<text>{{$t("app.newAdd24")}}</text>
-					</view>
-				</view>
-			</view>
-			<view class="logo">
-				<view class="img">
-					<image src="../../static/img/banner/charity_sale_icon1.png" mode="widthFix"></image>
-				</view>
-				<view class="img">
-					<image src="../../static/img/banner/charity_sale_icon2.png" mode="widthFix"></image>
-				</view>
-			</view>
+		
+		
 			
-			<view class="product-container1">
-				<view class="header">
-					<view class="tit">
-					<view class="radio"></view>
-					{{ $t("app.newAdd10") }}</view>
-					<view class="desc">{{ $t("app.newAdd17") }}></view>
-				</view>
+			<view class="product-container">
+			
 			
 				<view class="product-list">
 					<view class="product-item" v-for="(item,index) in nftList" :key="index">
@@ -70,15 +41,15 @@
 							</image>
 						</view>
 						<view class="product-info">
-							<view class="product-title"><text>{{item.title}}</text> </view>
-							<view class="product-tit">
-								<text>{{item.label}}</text>
-								<text style="color: #8E8E8E;font-size: 24rpx;">{{ $t("app.newAdd20") }}11</text>
-							</view>
-							<!-- <view class="product-price-info">
-								<view class="rebate">$ {{item.statusText}}</view>
+							<view class="product-title">{{item.title}}</view>
+							<!-- <view class="product-tit">{{item.label}}</view> -->
+							<view class="product-price-info">
+								<view class="rebate">
+									<text style="margin-right:27rpx;">{{item.statusText}}</text>
+									<text style="color: #F96932;">{{item.statusText}}</text>
+								</view>
 							
-							</view> -->
+							</view>
 						</view>
 					</view>
 			
@@ -100,7 +71,7 @@
 		computed: {
 			config() {
 				return {
-					title: this.$t("app.newAdd10"),
+					title: this.$t("app.newAdd11"),
 					color: "#403039",
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};
@@ -317,19 +288,16 @@
 				}
 			}
 		}
-		.product-container1 {
-			margin-top: 16rpx;
+		.product-container,.product-container3 {
+			padding-top: 20rpx;
 			padding-bottom: 26rpx;
-			padding-top: 37rpx;
 			box-sizing: border-box;
 			padding-left: 20rpx;
 			padding-right: 20rpx;
-			background-color: white;
 			.header{
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				background-color: white;
 			}
 			.tit {
 				margin-bottom: 8rpx;
@@ -350,27 +318,24 @@
 			.product-list {
 				// .df(stretch, flex-start);
 				width: 100%;
-				display: flex;
-				justify-content: space-between;
-				flex-wrap: wrap;
 				.product-item {
-					// margin-top: 10rpx;
-					// margin-right: 10rpx;
+					margin-top: 10rpx;
+					margin-right: 10rpx;
 					border-radius: 20rpx;
 					background-color: #fff;
-					width: calc(50% - 5rpx);
+					width: 100%;
 					// overflow: hidden;
 					display: flex;
-					flex-direction: column;
+					flex-direction: row;
 					align-items: center;
+					box-sizing: border-box;
 					padding-top: 9rpx;
 					padding-bottom: 9rpx;
-					// background-color: red;
 					.product-img {
-						width: 324rpx;
-						height: 305rpx;
+						width: 144rpx;
+						height: 144rpx;
 						background-color: white;
-						// margin-right: 27rpx;
+						margin-right: 27rpx;
 						image {
 							width: 100%;
 							height: 100%;
@@ -380,35 +345,28 @@
 		
 					.product-info {
 						padding: 20rpx 28rpx;
+						box-sizing: border-box;
+						width:calc(100% - 144rpx);
+						height:144rpx;
+						display: flex;
+						flex-direction: column;
+						justify-content: space-between;
 						.product-title {
-							// .vertical(2);
-							// width:200rpx;
-							// overflow: hidden;
-							// text-overflow:ellipsis;
+							.vertical(2);
 							color: #3A2633;
-							font-size: 28rpx;
+							font-size: 24rpx;
 							font-weight: 600;
 							line-height: 1.5;
 							margin-bottom: 9rpx;
-							width:300rpx;
-							overflow: hidden;
-							text-overflow:ellipsis;
-							text{
-								// width:200rpx;
-								// overflow: hidden;
-								text-overflow:ellipsis;
-								white-space: nowrap;
-							}
 						}
 						.product-tit {
 							.vertical(2);
 							color: #F3581D;
-							font-size: 30rpx;
+							font-size: 26rpx;
 							font-weight: 600;
 							line-height: 1.5;
 							margin-bottom: 9rpx;
-							display: flex;
-							justify-content: space-between
+							
 						}
 		
 						.product-price-info {
