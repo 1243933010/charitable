@@ -4,7 +4,19 @@
 		<view class="index-scroll  has-tabbar">
 			<view class="bk">
 				<view class="tip">
-
+					<view class="content">
+						<view class="title">
+							<text>{{$t("app.newAdd27")}}</text>
+						</view>
+						<view class="label">
+							<text>{{$t("app.newAdd28")}}  <text class="num">11</text> {{$t("app.newAdd29")}} {{$t("app.newAdd30")}}</text>
+						</view>
+					</view>
+				</view>
+				<view class="btn">
+					<view class="button">
+						<text>{{$t("app.newAdd26")}}</text>
+					</view>
 				</view>
 			</view>
 			<view class="product-container">
@@ -20,7 +32,7 @@
 							<view class="product-price-info">
 								<view class="rebate">
 									<text style="margin-right:27rpx;">{{item.statusText}}</text>
-									<text style="">{{item.statusText}}</text>
+									<!-- <text style="">{{item.statusText}}</text> -->
 								</view>
 
 							</view>
@@ -97,27 +109,78 @@
 			// padding-bottom: 75rpx;
 		}
 		.bk{
-			width: 813rpx;
+			// width: 813rpx;
 			height: 750rpx;
 			background: url("../../static/img/bg/love_bk1.png") no-repeat top left / 100% 100%;
 			display: flex;
 			align-items: center;
 			padding-top: 75rpx;
+			position: relative;
+			// margin-bottom: 50rpx;
 			.tip{
-				
 				width: 609rpx;
 				height: 404rpx;
 				background: url("../../static/img/bg/love_bk2.png") no-repeat top left / 100% 100%;
+				display: flex;
+				flex-direction: row;
+				.content{
+					width: 80%;
+					height: 150rpx;
+					display: flex;
+					justify-content: space-around;
+					display: flex;
+					flex-direction: column;
+					box-sizing: border-box;
+					padding-top: 50rpx;
+					padding-left: 47rpx;
+					.title{
+						color: #FFFFFF;
+						font-size: 24rpx;
+						font-weight: 600;
+					}
+					.label{
+						color: #FFFFFF;
+						font-size: 24rpx;
+						font-weight: 600;
+						.num{
+							font-size: 48rpx;
+						}
+					}
+					
+				}
+			}
+			.btn{
+				width: 100%;
+				position: absolute;
+				bottom: -50rpx;
+				left: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				z-index: 10;
+				
+				view{
+					width: 600rpx;
+					height: 110rpx;
+					background: linear-gradient( 180deg, #EF8E1F 0%, #F0AC05 100%);
+					border-radius: 20rpx;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					color: #FFFFFF;
+					font-size: 30rpx;
+					font-weight: 600;
+				}
 			}
 		}
 		.product-container,
 		.product-container3 {
-			padding-top: 20rpx;
+			padding-top: 70rpx;
 			padding-bottom: 26rpx;
 			box-sizing: border-box;
 			padding-left: 20rpx;
 			padding-right: 20rpx;
-
+			background-color: white;
 			.header {
 				display: flex;
 				justify-content: space-between;
@@ -200,11 +263,15 @@
 						}
 
 						.product-price-info {
-							.df(center, space-between);
-
+							// .df(center, space-between);
+							display: flex;
+							flex-direction: row;
 							.rebate {
 								color: #9EA19D;
 								font-size: 24rpx;
+								display: flex;
+								flex-direction: row;
+								align-items: center;
 								// font-weight: bold;
 							}
 
