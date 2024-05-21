@@ -54,14 +54,15 @@
 					</view>
 				</view>
 				<view class="tab">
+					<view class="tab-item"  @click="goPage('/pages/index/passingLove')">
+						<image src="../../static/img/icon/index/tab1.png" mode="widthFix"></image>
+						<!-- <text>{{$t("app.newAdd15")}}</text> -->
+					</view>
 					<view class="tab-item" @click="goPage('/pages/index/passingLove')">
 						<image src="../../static/img/icon/index/tab2.png" mode="widthFix"></image>
 						<!-- <text>{{$t("app.newAdd14")}}</text> -->
 					</view>
-					<view class="tab-item">
-						<image src="../../static/img/icon/index/tab1.png" mode="widthFix"></image>
-						<!-- <text>{{$t("app.newAdd15")}}</text> -->
-					</view>
+					
 				</view>
 				<!-- <view class="auction">
 					<view class="auction-header">
@@ -395,7 +396,7 @@
 						{
 							iconUrl: "../../static/img/icon/index/55.png",
 							tit: this.$t("app.newAdd13"),
-							link: "/pages/index/recargar",
+							link: "/pages/index/contactUs",
 						},
 						// {
 						//   iconUrl: "../../static/img/icon/index/66.png",
@@ -723,7 +724,8 @@
 					padding: 0 37rpx;
 
 					.tab-item {
-						width: 330rpx;
+						// width: 330rpx;
+						width: 48%;
 						height: 160rpx;
 						position: relative;
 
