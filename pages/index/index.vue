@@ -2,7 +2,7 @@
 	<view class="profix-page-container index-page">
 		<!-- :headerText="$t('app.name')" -->
 		<customHeader style="z-index: 0" :above="false" />
-		<customHeader headerText="$t('app.name')" style="position: fixed; top: 0; z-index: 1" :above="true" />
+		<customHeader :headerText="$t('app.name')" style="position: fixed; top: 0; z-index: 1" :above="true" />
 		<view class="index-scroll  has-tabbar">
 			<view class="banner">
 				<swiper class="swiper" circular autoplay style="height: 400rpx;" @change="swiperChange">
@@ -12,7 +12,7 @@
 								<image @click="linkImg(item)" :src="item.image" class="img" mode="widthFix"></image>
 								<view class="text-box">
 									<view class="title">
-										<text>星星点灯，照亮梦乡{{currentIndex}}</text>
+										<text>星星点灯，照亮梦乡</text>
 									</view>
 									<view class="label">
 										<text>希望计划让留守山区的孩子找寻回家的希望，照亮梦乡让留守山区</text>
@@ -23,21 +23,14 @@
 					</swiper-item>
 				</swiper>
 			</view>
-
-
-
-			<view class="menu-container">
-				<view class="tab">
-					<view class="tab-item" @click="goPage('/pages/index/passingLove')">
-						<image src="../../static/img/icon/index/tab2.png" mode="widthFix"></image>
-						<text>{{$t("app.newAdd14")}}</text>
-					</view>
-					<view class="tab-item">
-						<image src="../../static/img/icon/index/tab1.png" mode="widthFix"></image>
-						<text>{{$t("app.newAdd15")}}</text>
-					</view>
+			<view class="swiper-active">
+				<view class="item" v-for="(item,index) in swiperList.length" :key="index">
+					<view class="div" :class="index==currentIndex?'active':''"></view>
 				</view>
-				<view class="">
+			</view>
+			<view class="menu-container">
+				
+				<view class="" style="background-color: #FDDDA3;padding-top: 25rpx;">
 					<view class="menu-list" v-for="(item, index) in menuList" :key="index">
 						<view @click="goPage(e.link)" class="menu-item" v-for="(e, i) in item" :key="i">
 							<view class="pic">
@@ -47,7 +40,30 @@
 						</view>
 					</view>
 				</view>
-				<view class="auction">
+				<view class="news-list">
+					<!-- {{ $t("index.news") }} -->
+					<view class="left-tit">
+						<image src="../../static/img/icon/new_icon.png" mode="widthFix"></image>
+					</view>
+					<view class="news-swiper">
+						<swiper class="swiper" vertical circular autoplay>
+							<swiper-item v-for="(item, index) in newsList" :key="index" @click="newLink(item)">
+								<view class="swiper-item">{{ item.name }}</view>
+							</swiper-item>
+						</swiper>
+					</view>
+				</view>
+				<view class="tab">
+					<view class="tab-item" @click="goPage('/pages/index/passingLove')">
+						<image src="../../static/img/icon/index/tab2.png" mode="widthFix"></image>
+						<!-- <text>{{$t("app.newAdd14")}}</text> -->
+					</view>
+					<view class="tab-item">
+						<image src="../../static/img/icon/index/tab1.png" mode="widthFix"></image>
+						<!-- <text>{{$t("app.newAdd15")}}</text> -->
+					</view>
+				</view>
+				<!-- <view class="auction">
 					<view class="auction-header">
 						<view class="auction-title">
 							<view class="radio"></view>
@@ -70,18 +86,9 @@
 						</scroll-view>
 
 					</view>
-				</view>
-			</view>
-			<!-- <view class="news-list">
-				<view class="left-tit">{{ $t("index.news") }}</view>
-				<view class="news-swiper">
-					<swiper class="swiper" vertical circular autoplay>
-						<swiper-item v-for="(item, index) in newsList" :key="index" @click="newLink(item)">
-							<view class="swiper-item">{{ item.name }}</view>
-						</swiper-item>
-					</swiper>
-				</view>
-			</view> -->
+				</view> -->
+			</view> 
+			
 
 			<!-- <view class="paper-card-list">
 				<view class="paper-card " @click="goPage(linkInfo.Join_community_url.val)">
@@ -106,17 +113,78 @@
 					</view>
 				</view>
 			</view> -->
-
+			
 			<view class="product-container">
 				<view class="header">
 					<view class="tit">
 						<view class="radio"></view>
-					{{ $t("app.newAdd18") }}
+					{{ $t("app.newAdd12") }}
 					
 					</view>
 					<view class="desc">{{ $t("app.newAdd17") }}></view>
 				</view>
-
+			
+				<view class="product-list">
+					<view class="product-item" v-for="(item,index) in nftList" :key="index">
+						<view class="product-img pic">
+							<image :src="item.url" mode="aspectFit" class="img" @click="goProductDetail(item)">
+							</image>
+						</view>
+						<view class="product-info">
+							<view class="product-title">{{item.title}}</view>
+							<!-- <view class="product-tit">{{item.label}}</view> -->
+							<view class="product-price-info">
+								<view class="rebate">
+									<text style="margin-right:27rpx;">{{item.statusText}}</text>
+									<text style="">{{item.statusText}}</text>
+								</view>
+							
+							</view>
+						</view>
+					</view>
+			
+				</view>
+			</view>
+			
+			<view class="product-container1">
+				<view class="header">
+					<view class="tit">
+					<view class="radio"></view>
+					{{ $t("app.newAdd10") }}</view>
+					<view class="desc">{{ $t("app.newAdd17") }}></view>
+				</view>
+			
+				<view class="product-list">
+					<view class="product-item" v-for="(item,index) in nftList" :key="index">
+						<view class="product-img pic">
+							<image :src="item.url" mode="aspectFit" class="img" @click="goProductDetail(item)">
+							</image>
+						</view>
+						<view class="product-info">
+							<view class="product-title"><text>{{item.title}}</text> </view>
+							<view class="product-tit">
+								<text>{{item.label}}</text>
+								<text style="color: #8E8E8E;font-size: 24rpx;">{{ $t("app.newAdd20") }}11</text>
+							</view>
+							<!-- <view class="product-price-info">
+								<view class="rebate">$ {{item.statusText}}</view>
+							
+							</view> -->
+						</view>
+					</view>
+			
+				</view>
+			</view>
+		<!-- 	<view class="product-container3">
+				<view class="header">
+					<view class="tit">
+						<view class="radio"></view>
+					{{ $t("app.newAdd11") }}
+					
+					</view>
+					<view class="desc">{{ $t("app.newAdd17") }}></view>
+				</view>
+			
 				<view class="product-list">
 					<view class="product-item" v-for="(item,index) in nftList" :key="index">
 						<view class="product-img pic">
@@ -132,14 +200,76 @@
 							</view>
 						</view>
 					</view>
-
+			
+				</view>
+			</view> -->
+			<view class="product-container3">
+				<view class="header">
+					<view class="tit">
+						<view class="radio"></view>
+					{{ $t("app.newAdd11") }}
+					
+					</view>
+					<view class="desc">{{ $t("app.newAdd17") }}></view>
+				</view>
+			
+				<view class="product-list">
+					<view class="product-item" v-for="(item,index) in nftList" :key="index">
+						<view class="product-img pic">
+							<image :src="item.url" mode="aspectFit" class="img" @click="goProductDetail(item)">
+							</image>
+						</view>
+						<view class="product-info">
+							<view class="product-title">{{item.title}}</view>
+							<!-- <view class="product-tit">{{item.label}}</view> -->
+							<view class="product-price-info">
+								<view class="rebate">
+									<text style="margin-right:7rpx;">{{item.statusText}}</text>
+									<text style="color: #F96932;">{{item.statusText}}</text>
+								</view>
+							
+							</view>
+						</view>
+					</view>
+			
 				</view>
 			</view>
-			<view class="product-container1">
+			<view class="product-container3">
+				<view class="header">
+					<view class="tit">
+						<view class="radio"></view>
+					{{ $t("app.newAdd9") }}
+					
+					</view>
+					<view class="desc">{{ $t("app.newAdd17") }}></view>
+				</view>
+			
+				<view class="product-list">
+					<view class="product-item" v-for="(item,index) in nftList" :key="index">
+						<view class="product-img pic">
+							<image :src="item.url" mode="aspectFit" class="img" @click="goProductDetail(item)">
+							</image>
+						</view>
+						<view class="product-info">
+							<view class="product-title">{{item.title}}</view>
+							<!-- <view class="product-tit">{{item.label}}</view> -->
+							<view class="product-price-info">
+								<view class="rebate" style="display: flex;justify-content: space-between;width: 100%;">
+									<text style="margin-right:7rpx;color: #EF8F1E;">{{item.statusText}}</text>
+									<text style="color: #9EA19D;">{{item.statusText}}</text>
+								</view>
+							
+							</view>
+						</view>
+					</view>
+			
+				</view>
+			</view>
+			<view class="product-container1" style="padding-bottom: 140rpx;">
 				<view class="header">
 					<view class="tit">
 					<view class="radio"></view>
-					{{ $t("app.newAdd19") }}</view>
+					{{ $t("app.newAdd21") }}</view>
 					<view class="desc">{{ $t("app.newAdd17") }}></view>
 				</view>
 			
@@ -151,7 +281,10 @@
 						</view>
 						<view class="product-info">
 							<view class="product-title"><text>{{item.title}}</text> </view>
-							<view class="product-tit">{{item.label}}</view>
+							<view class="product-tit">
+								<text>{{item.label}}</text>
+								<!-- <text style="color: #8E8E8E;font-size: 24rpx;">{{ $t("app.newAdd20") }}11</text> -->
+							</view>
 							<!-- <view class="product-price-info">
 								<view class="rebate">$ {{item.statusText}}</view>
 							
@@ -161,9 +294,6 @@
 			
 				</view>
 			</view>
-			
-			
-			
 		</view>
 		<uni-popup ref="popup" type="center" background-color="#fff">
 			<view class="popup-container">
@@ -239,21 +369,23 @@
 			},
 			menuList() {
 				return [
-					[{
+					[
+						{
+						  iconUrl: "../../static/img/icon/index/11.png",
+						  tit: this.$t("app.newAdd9"),
+						  link: "/pages/index/auction",
+						},
+						{
+							iconUrl: "../../static/img/icon/index/22.png",
+							tit: this.$t("app.newAdd10"),
+							link: "/pages/index/charitySale",
+						},
+						{
 							iconUrl: "../../static/img/icon/index/33.png",
 							tit: this.$t("app.newAdd11"),
 							link: "/pages/index/activityInfo1",
 						},
-						// {
-						//   iconUrl: "../../static/img/icon/index/11.png",
-						//   tit: this.$t("app.newAdd9"),
-						//   link: "/pages/index/abloutList",
-						// },
-						{
-							iconUrl: "../../static/img/icon/index/22.png",
-							tit: this.$t("app.newAdd10"),
-							link: "/pages/index/qualifications",
-						},
+						
 
 						{
 							iconUrl: "../../static/img/icon/index/44.png",
@@ -435,6 +567,26 @@
 	page{
 		background-color: #F4F4F4;
 	}
+	.swiper-active{
+		background-color: #FAE0AD;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		.div{
+			width: 25rpx;
+			height: 12rpx;
+			background: #CCC8C7;
+			border-radius: 50rpx 50rpx 50rpx 50rpx;
+			margin: 0 6.5rpx;
+		}
+		.active{
+			width: 47rpx;
+			height: 12rpx;
+			background: #F96932;
+			border-radius: 50rpx 50rpx 50rpx 50rpx;
+		}
+	}
 	.radio {
 		width: 19rpx;
 		height: 19rpx;
@@ -507,13 +659,13 @@
 			}
 
 			.news-list {
-				width: 90%;
+				width: 85%;
 				margin: 20rpx auto;
 				// margin-left: -30rpx;
 				// margin-right: -30rpx;
 				padding: 10rpx 30rpx;
-				background-color: #fff;
-
+				background-color: white;
+				border-radius: 20rpx;
 				.df(center, flex-start);
 				flex-direction: row;
 
@@ -523,8 +675,13 @@
 					padding: 10rpx 30rpx;
 					// background: linear-gradient(0deg, #fd631f 0%, #fd7e1f 100%);
 					// background: linear-gradient(90deg, #1098B7 0%, #64BAB4 100%);
-					background: #F96932;
-					color: #fff;
+					// background: #F96932;
+					color: #F96932;
+					font-size: 24rpx;
+					image{
+						width:29rpx;
+						margin-right: 10rpx;
+					}
 				}
 
 				.news-swiper {
@@ -550,10 +707,10 @@
 
 			.menu-container {
 				width: 100%;
-				margin-top: 21rpx;
+				// margin-top: 21rpx;
 				margin-bottom: 22rpx;
-				padding: 43rpx 0rpx;
-				background-color: white;
+				// padding: 43rpx 0rpx;
+				// background-color: white;
 				border-radius: 50rpx;
 
 				.tab {
@@ -566,8 +723,8 @@
 					padding: 0 37rpx;
 
 					.tab-item {
-						width: 309rpx;
-						height: 130rpx;
+						width: 330rpx;
+						height: 160rpx;
 						position: relative;
 
 						image {
@@ -586,11 +743,13 @@
 				}
 
 				.menu-list {
-					margin-bottom: 60rpx;
-
+					// margin-bottom: 20rpx;
+					background-color: white;
 					.df(stretch, space-between);
 					flex-direction: row;
-
+					padding: 43rpx 10rpx;
+					border-top-left-radius: 50rpx;
+					border-top-right-radius: 50rpx;
 					&:last-child {
 						margin-bottom: 0;
 					}
@@ -598,11 +757,11 @@
 					.menu-item {
 						.df(center, center);
 						flex-direction: column;
-						width: 24%;
+						width: 18%;
 						text-align: center;
 
 						.pic {
-							width: 118rpx;
+							width: 104rpx;
 
 							.img {
 								width: 100%;
@@ -612,7 +771,7 @@
 						.menu-tit {
 							margin-top: 24rpx;
 							font-size: 24rpx;
-							// font-weight: 600;
+							font-weight: 600;
 						}
 					}
 				}
@@ -620,7 +779,7 @@
 				.auction {
 					display: flex;
 					flex-direction: column;
-					padding-top: 49rpx;
+					padding-top: 9rpx;
 					box-sizing: border-box;
 					padding-left: 30rpx;
 					padding-right: 30rpx;
@@ -745,7 +904,7 @@
 				}
 			}
 
-			.product-container {
+			.product-container,.product-container3 {
 				padding-bottom: 26rpx;
 				box-sizing: border-box;
 				padding-left: 20rpx;
@@ -784,6 +943,7 @@
 						display: flex;
 						flex-direction: row;
 						align-items: center;
+						box-sizing: border-box;
 						padding-top: 9rpx;
 						padding-bottom: 9rpx;
 						.product-img {
@@ -800,6 +960,12 @@
 
 						.product-info {
 							padding: 20rpx 28rpx;
+							box-sizing: border-box;
+							width:calc(100% - 144rpx);
+							height:144rpx;
+							display: flex;
+							flex-direction: column;
+							justify-content: space-between;
 							.product-title {
 								.vertical(2);
 								color: #3A2633;
@@ -815,6 +981,7 @@
 								font-weight: 600;
 								line-height: 1.5;
 								margin-bottom: 9rpx;
+								
 							}
 
 							.product-price-info {
@@ -839,6 +1006,9 @@
 						}
 					}
 				}
+			}
+			.product-container3{
+				background-color: white;
 			}
 			.product-container1 {
 				margin-top: 16rpx;
@@ -930,6 +1100,8 @@
 								font-weight: 600;
 								line-height: 1.5;
 								margin-bottom: 9rpx;
+								display: flex;
+								justify-content: space-between
 							}
 			
 							.product-price-info {

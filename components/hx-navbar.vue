@@ -56,7 +56,7 @@
 				<view class="hx-navbar__content__main_center" v-if="!conf.search && !conf.maxSlot">
 					<view class="hx-navbar__content__main_center_flex"></view>
 					<view class="hx-navbar__content__main_center_txt" >
-						<text class="hx_font_size hx_text_overflow" :style="{color: txtColor}" v-if="!conf.centerSlot && title">{{title}}</text>
+						<text style="font-weight: 600;" class="hx_font_size hx_text_overflow" :style="{color: txtColor}" v-if="!conf.centerSlot && title">{{title}}</text>
 						
 						<slot name="centerSwitch" v-if="conf.centerSlotSwitch && slotSwitchOpacity == 0"/>
 						<slot name="center" v-else/>
@@ -214,7 +214,7 @@
 					backgroundImg: null,
 					
 					// 线性渐变角度
-					backgroundColorLinearDeg: 'to right',
+					backgroundColorLinearDeg: 'to bottom',
 					// 滑动距离
 					slideHeight: 100,
 					// 滑动后背景颜色;参数一：透明度;参数二：背景颜色（array则为线性渐变，string为单色背景）

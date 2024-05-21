@@ -6,16 +6,14 @@ export  const setTabbar = ($t)=>{
 				"text": `${$t('app.home')}`
 			
 			}, {
-				"text": `${$t('app.tabbar2')}`
+				"text": `${$t('app.newAdd9')}`
 			},{
-				"text": `${$t('app.tabbar3')}`
-			},{
-				"text": `${$t('app.tabbar4')}`
+				"text": `${$t('app.newAdd21')}`
 			},{
 				"text":`${$t('app.me')}`
 			}]
-	let index = 5;
-	for(let i = 0;i<5;i++){
+	let index = 4;
+	for(let i = 0;i<4;i++){
 		uni.setTabBarItem({
 		  index: i,
 		  text: tabbar[i].text,

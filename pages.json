@@ -310,6 +310,21 @@
 				"navigationBarTitleText" : "",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/index/auction",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/index/charitySale",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"navigationStyle": "custom" 
+			}
 		}
 	],
 	"globalStyle": {
@@ -349,18 +364,13 @@
 				"selectedIconPath": "static/img/tabbar/classification_select.png"
 				
 			},
-			{
-				"pagePath": "pages/me/me",
-				"iconPath": "static/img/tabbar/me_select.png",
-				"selectedIconPath": "static/img/tabbar/me_select.png"
-				
-			},
+			
 			{
 					"pagePath": "pages/index/index",
 					"iconPath": "static/img/tabbar/home_select.png",
 					"selectedIconPath": "static/img/tabbar/home_select.png"
 					
-				},
+				}
 		]
 	},
 	"easycom": {
