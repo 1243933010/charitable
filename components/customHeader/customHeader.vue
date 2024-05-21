@@ -103,6 +103,8 @@ export default {
 	font-weight: 600;
 	font-size: 36rpx;
     .header-icon {
+		color: #403039;
+		font-size: 40rpx;
       image {
         width: 68rpx;
         border-radius: 50%;

@@ -12,8 +12,7 @@
 			"path": "pages/login/messageLoginIndex",
 			"style": {
 				"navigationBarTitleText": "PT",
-				"navigationStyle": "custom",
-				// "navigationBarTextStyle": "black"
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -347,7 +346,13 @@
 				"iconPath": "static/img/tabbar/me_select.png",
 				"selectedIconPath": "static/img/tabbar/me_select.png"
 				// "text": "me"
-			}
+			},
+			{
+					"pagePath": "pages/index/index",
+					"iconPath": "static/img/tabbar/home_select.png",
+					"selectedIconPath": "static/img/tabbar/home_select.png"
+					// "text": "home"
+				},
 		]
 	},
 	"easycom": {
