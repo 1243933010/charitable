@@ -606,7 +606,11 @@
 				margin: 0 auto;
 				// background: url("../../static/img/bg/index_bg.png") no-repeat center center / 100% 100%;
 				background-color: #FAE0AD;
-				padding-left: 5%;
+				box-sizing: border-box;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				// padding-left: 5%;
 				// display: flex;
 				// justify-content: center;
 				// align-items: center;
@@ -616,11 +620,14 @@
 				.swiper {
 					width: 90%;
 					height: 140px;
-
+					
 					.swiper-item {
+						
 						.pic {
 							position: relative;
-
+							image{
+								border-radius: 20rpx;
+							}
 							.text-box {
 								width: 100%;
 								position: absolute;
@@ -632,7 +639,8 @@
 								box-sizing: border-box;
 								padding: 12rpx 0 11rpx 21rpx;
 								backdrop-filter: blur(5px);
-
+								border-bottom-left-radius: 20rpx;
+								border-bottom-right-radius: 20rpx;
 								.title {
 									color: #FFFFFF;
 									font-size: 32rpx;
