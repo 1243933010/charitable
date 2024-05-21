@@ -6,7 +6,7 @@
 		<view class="index-scroll  has-tabbar">
 			<view class="banner">
 				<swiper class="swiper" circular autoplay style="height: 400rpx;" @change="swiperChange">
-					<swiper-item :current="current" v-for="(item, index) in swiperList" :key="index">
+					<swiper-item  v-for="(item, index) in swiperList" :key="index">
 						<view class="swiper-item">
 							<view class="pic">
 								<image @click="linkImg(item)" :src="item.image" class="img" mode="widthFix"></image>
@@ -496,7 +496,7 @@
 			},
 			async adverts() {
 				let res = await $request("adverts", {});
-				// console.log(res)
+				console.log(res)
 				if (res.data.code === 0) {
 					this.swiperList = res.data.data;
 					return false;

@@ -325,6 +325,27 @@
 				"navigationBarTitleText" : "",
 				"navigationStyle": "custom" 
 			}
+		},
+		{
+			"path" : "pages/index/charityProducts",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/index/charityProductDetail",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/index/addProduct",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
 		}
 	],
 	"globalStyle": {

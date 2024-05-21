@@ -140,12 +140,22 @@ body {
 	padding: 0;
 }
 
+* {
+	margin: 0;
+	outline: 0;
+	border: 0;
+	padding: 0;
+	list-style: none;
+	box-sizing: border-box;
+}
+
 .profix-page-container {
 	color: #333;
 	font-size: 30rpx;
 	width: 100vw;
 	line-height: 1;
 	height: 100%;
+	
 	.page-scroll {
 		padding-left: 30rpx;
 		padding-right: 30rpx;
@@ -168,7 +178,7 @@ body {
 	}
 
 	.button {
-		border-radius: 10rpx;
+		border-radius: 20rpx;
 		border: none;
 		padding: 0;
 		background-color: transparent;
