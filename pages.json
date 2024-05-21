@@ -1,8 +1,16 @@
 {
 	"pages": [
-		// 首页
+		
 		{
 			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "PT",
+				"navigationStyle": "custom" 
+			}
+		},
+		
+		{
+			"path": "pages/index/passingLove",
 			"style": {
 				"navigationBarTitleText": "PT",
 				"navigationStyle": "custom" 
@@ -79,7 +87,7 @@
 			}
 		},
 
-		// 分类
+		
 		{
 			"path": "pages/classification/classification",
 			"style": {
@@ -96,7 +104,7 @@
 			}
 		},
 
-		// 我的
+		
 		{
 			"path": "pages/me/me",
 			"style": {
@@ -151,7 +159,7 @@
 			}
 		},
 
-		// 登录注册
+		
 		{
 			"path": "pages/login/index",
 			"style": {
@@ -182,7 +190,7 @@
 			}
 		},
 		
-		// 加盟
+		
 		{
 			"path": "pages/join/join",
 			"style": {
@@ -327,31 +335,31 @@
 				"pagePath": "pages/index/index",
 				"iconPath": "static/img/tabbar/home_select.png",
 				"selectedIconPath": "static/img/tabbar/home_select.png"
-				// "text": "home"
+				
 			},
 			{
 				"pagePath": "pages/join/join",
 				"iconPath": "static/img/tabbar/join_select.png",
 				"selectedIconPath": "static/img/tabbar/join_select.png"
-				// "text": "join"
+				
 			},
 			{
 				"pagePath": "pages/classification/classification",
 				"iconPath": "static/img/tabbar/classification_select.png",
 				"selectedIconPath": "static/img/tabbar/classification_select.png"
-				// "text": "classification"
+				
 			},
 			{
 				"pagePath": "pages/me/me",
 				"iconPath": "static/img/tabbar/me_select.png",
 				"selectedIconPath": "static/img/tabbar/me_select.png"
-				// "text": "me"
+				
 			},
 			{
 					"pagePath": "pages/index/index",
 					"iconPath": "static/img/tabbar/home_select.png",
 					"selectedIconPath": "static/img/tabbar/home_select.png"
-					// "text": "home"
+					
 				},
 		]
 	},
