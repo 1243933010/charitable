@@ -20,11 +20,15 @@
 		"app.newAdd18": "交易信息",
 		"app.newAdd19": "猜猜你喜欢",
 		// "app.tabbar1":"首页",
-		"app.tabbar2": "拍卖会场",
-		"app.tabbar3": "交易会场",
-		"app.tabbar4": "我的拍品",
-		"app.newAdd20": "库存",
-		"app.newAdd21": "交易专场",
+		"app.tabbar2":"拍卖会场",
+		"app.tabbar3":"交易会场",
+		"app.tabbar4":"我的拍品",
+		"app.newAdd20":"库存",
+		"app.newAdd21":"交易专场",
+		"app.newAdd22":"义卖总额",
+		"app.newAdd23":"义卖说明",
+		"app.newAdd24":"说明说明说明说明说明说明说明说明",
+		"app.newAdd25":"其他",
 
 
 		"app.shen1": "义卖产品",
@@ -36,10 +40,10 @@
 		"app.shen7": "确认上传",
 		"app.shen8": "添加商品",
 
-
-
-		"download.android": "Android Download",
-		"download.ios": "IOS Download",
+		
+		
+		"download.android":"Android Download",
+		"download.ios":"IOS Download",
 		"login.code": "请输入验证码",
 		"login.region": "Email Registration",
 		"login.region2": "Phone Number Registration",

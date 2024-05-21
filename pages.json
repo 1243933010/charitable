@@ -327,6 +327,27 @@
 			}
 		},
 		{
+			"path" : "pages/index/charityConsultation",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/index/targetedAssistance",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/index/contactUs",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
 			"path" : "pages/index/charityProducts",
 			"style" : 
 			{
@@ -387,7 +408,7 @@
 			},
 			
 			{
-					"pagePath": "pages/index/index",
+					"pagePath": "pages/me/me",
 					"iconPath": "static/img/tabbar/home_select.png",
 					"selectedIconPath": "static/img/tabbar/home_select.png"
 					
