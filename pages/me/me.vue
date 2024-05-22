@@ -1,582 +1,326 @@
 <template>
-	<view class="profix-page-container mine-page">
-		<scroll-view :scroll-y="true" class="mine-scroll page-scroll">
-			<view class="userinfo-box">
-				<view class="userinfo">
-					<view class="message" @click="goMessage">
-						<uni-badge size="small" :text="messageCount" absolute="rightTop" type="error">
-							<image src="../../static/img/message.png" mode="widthFix"></image>
-						</uni-badge>
-
+	<view class="user">
+		<view class="user_bg" :style="bg_image">
+			<view class="user_bg_height">
+				<!-- 这里是状态栏  -->
+			</view>
+			<!-- 设置图标 -->
+			<view class="user_setting" @click="goPath('/pages/me/setting/setting')">
+				<image src="../../static/userStatic/setting.png" mode="aspectFill"></image>
+			</view>
+			<!-- 头像区域 -->
+			<view class="user_avatar">
+				<image src="../../static/img/cn.png" mode="aspectFill"></image>
+				<view class="avatar_right">
+					<view class="right_name">
+						赵大枣NO.1
 					</view>
-					<view class="logo pic" @click="openAvatarPop">
-						<image :src="userInfo.avatar?userInfo.avatar:'../../static/img/logo.jpg'" mode="" class="img">
-						</image>
+					<view class="right_phone">
+						+86 13888656692
 					</view>
-					<view class="msg">
-						<view class="name" v-if="userInfo.nickname">
-							<!-- {{ userInfo.nickname||userInfo.mobile }} -->
-							<text class="name-text" style="font-size: 36rpx;" @click="goModifyNickname">
-								{{ userInfo.nickname}}</text>
-							<!-- <view class="vip">{{ userInfo.vip_name }}</view> -->
-						</view>
-						<view class="name" >
-							<text class="name-text" style="font-weight: 100;font-size: 24rpx;"
-								@click="goModifyNickname">UUID:{{userInfo.id}}</text>
-							<view class="vip">{{ userInfo.vip_name }}</view>
-							<image :src="captainObj.captain_img" v-if="captainObj.captain_img" mode="widthFix"  @click="handleImg" style="width: 1.9625rem;height: 18px;margin-left: 0.6125rem;border-radius: 0.1125rem;" ></image>
-
-						</view>
-
-						
-						<view class="id" style="margin-bottom: 20rpx;color: white;">
-							<text>{{userInfo.email}}</text>
-						</view>
-						<!-- <view class="id" style="margin-bottom: 10rpx;color: white;">
-							<text>UUID:{{userInfo.id}}</text>
-						</view> -->
-						<view class="id"  >
-							<text style="margin-right: 10rpx;">{{userInfo.country_code}}</text> <text>{{ userInfo.mobile }}</text>
-						    <!-- v-if="captainObj.captain_img" -->
-						 </view>
-					</view>
-
-				</view>
-				<view class="number">
-					<view class="item">
-						<view class="num">
-							<text>{{ userInfo.balance }}</text>
-						</view>
-						<view class="text">
-							<text>{{ $t("app.balance") }} (U)</text>
-						</view>
-					</view>
-					<view class="item">
-						<view class="num">
-							<text>{{ userInfo.total_income }}</text>
-						</view>
-						<view class="text">
-							<text>{{ $t("app.TotalIncome") }} (U)</text>
-						</view>
-					</view>
-					<view class="item">
-						<view class="num">
-							<text>{{ userInfo.recharge_money }}</text>
-						</view>
-						<view class="text">
-							<text>{{ $t("app.deposit") }} (U)</text>
-						</view>
+					<view class="right_uid">
+						UUID：10000
 					</view>
 				</view>
 			</view>
-
-			<view class="list">
-				<view class="item" v-for="(item, index) in linkList" :key="index" @click="goPage(item.url)">
-					<view class="left">
-						<view class="icon pic">
-							<image :src="item.src" mode="widthFix" class="img"></image>
-						</view>
-						<view class="text">
-							<text>{{ item.title }}</text>
-						</view>
+			<!-- 账户余额 -->
+			<view class="user_money">
+				<view class="user_money_one">
+					<view class="user_money_number">
+						1090
 					</view>
-					<view class="right"></view>
+					<view class="user_money_title">
+						账户余额
+					</view>
+				</view>
+				<view class="user_money_one">
+					<view class="user_money_number">
+						10
+					</view>
+					<view class="user_money_title">
+						分享奖金
+					</view>
+				</view>
+				<view class="user_money_one">
+					<view class="user_money_number">
+						1090
+					</view>
+					<view class="user_money_title">
+						公益基金
+					</view>
 				</view>
 			</view>
-
-			<view class="btn-box">
-				<view class="exit" @click="logout">
-					<text>{{ $t("app.Exit") }}</text>
+		</view>
+		<!-- 内容区域 -->
+		<view class="user_centent">
+			<view class="user_centent_title">
+				<view class="title_left">
+					<image src="../../static/userStatic/dian.png" mode="aspectFill"></image>
+					我的订单
 				</view>
-				<view class="agreement" @click="goFwxy">
-					<text>{{ $t("app.Agreement") }}</text>
+				<view class="title_right">
+					全部订单
+					<image src="../../static/userStatic/user_right.png" mode="aspectFill"></image>
 				</view>
 			</view>
-		</scroll-view>
-
-		<uni-popup ref="openingPopup" type="center" class="opening">
-			<view class="pic">
-				<image src="../../static/img/opening.png" mode="widthFix" class="img"></image>
-			</view>
-			<view class="text">{{ $t("opening.popupTips") }}</view>
-		</uni-popup>
-
-		<uni-popup ref="avatarPopup" type="bottom" class="change-avatar">
-			<view class="select-ul">
-				<view class="select-item">{{$t("app.popup3")}}</view>
-				<view class="select-item">{{$t("app.popup4")}}</view>
-				<view class="select-item cancel" @click="closeAvatarPop">{{$t("app.cancel")}}</view>
-			</view>
-		</uni-popup>
-		<uni-popup ref="captain" type="center" class="change-avatar">
-			<view class="select-ul">
-				<view class="select-item" style="max-height: 800rpx;overflow-y: scroll;">
-					<rich-text :nodes="captainObj.captain_details"></rich-text>
+			<view class="user_centent_order">
+				<view class="order_one" v-for="(item,index) in orderArray" :key="index">
+					<image :src="item.imageUrl" mode="aspectFill"></image>
+					<view class="order_one_title">
+						{{item.name}}
+					</view>
 				</view>
-				
 			</view>
-		</uni-popup>
+			<view class="user_centent_title title_two">
+				<view class="title_left">
+					<image src="../../static/userStatic/dian.png" mode="aspectFill"></image>
+					更多功能
+				</view>
+			</view>
+			<view class="functional_count">
+				<view class="functional_one" v-for="(items,indexs) in functionalArray" :key="indexs">
+					<view class="one_image">
+						<image :src="items.imageeds" mode="aspectFill"></image>
+					</view>
+					<view class="one_image_title">
+						{{items.name}}
+					</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
-
 <script>
-	import {
-		$request,
-		url as requestUrl
-	} from "@/utils/request.js";
 	export default {
-		data() {
+		data(){
 			return {
-				userInfo: {
-					username: "username",
-					avatar: "",
-					// balance: '',
-					country_code: null,
-					created_at: "",
-					deposit_balance: 0,
-					email: "",
-					freeze_balance: "",
-					id: 0,
-					invitation_code: "",
-					is_auth: 0,
-					last_login: 0,
-					mobile: "",
-					nickname: "",
-					pay_password: "",
-					pid: 1,
-					point: "",
-					// recharge_money: "",
-					status: 0,
-					// total_income: 0,
-					updated_at: "",
-					usdt: "",
-					username: "",
-					vip_grade: 1,
-					vip_name: "",
-					withdraw_money: "",
-					id: "",
-					vip: 1,
-					num1: 1,
-					num2: 1,
-					num3: 1,
+				bg_image: {
+					backgroundImage: `url(../../static/userStatic/user_bg.png)`,
+					backgroundSize: `100% 100%`
 				},
-				messageCount: 0,
-				linkList: [{
-						url: "/pages/me/wallet",
-						title: this.$t("app.myWallet"),
-						src: "../../static/img/mine/lc.png",
+				orderArray:[{
+					name:"待付款",
+					imageUrl:'../../static/userStatic/user_daishoukuan.png'
+				},{
+					name:"待发货",
+					imageUrl:'../../static/userStatic/user_fahuo.png'
+				},{
+					name:"待收货",
+					imageUrl:'../../static/userStatic/user_daishouhuo.png'
+				},{
+					name:"已完成",
+					imageUrl:'../../static/userStatic/user_wancheng.png'
+				}],
+				functionalArray:[
+					{
+						name:"代理明细",
+						imageeds:'../../static/userStatic/function_one.png'
 					},
 					{
-						url: "/pages/me/deal",
-						title: this.$t("app.financial"),
-						src: "../../static/img/mine/cw.png",
+						name:"捐赠记录",
+						imageeds:'../../static/userStatic/function_two.png'
 					},
 					{
-						url: "/pages/login/forgetPwd",
-						title: this.$t("app.securityCenter"),
-						src: "../../static/img/mine/ws.png",
+						name:"新品开拍",
+						imageeds:'../../static/userStatic/function_three.png'
 					},
 					{
-						url: "/pages/index/recargar",
-						title: this.$t("app.recharge"),
-						src: "../../static/img/mine/cz.png",
+						name:"活动中心",
+						imageeds:'../../static/userStatic/function_four.png'
 					},
 					{
-						url: "/pages/index/withdraw",
-						title: this.$t("app.withdraw"),
-						src: "../../static/img/mine/tx.png",
+						name:"我的好友",
+						imageeds:'../../static/userStatic/function_five.png'
 					},
 					{
-						url: "",
-						title: this.$t("app.basicFunctions"),
-						src: "../../static/img/mine/jz.png",
+						name:"拍卖订单",
+						imageeds:'../../static/userStatic/function_six.png'
+					},
+					{
+						name:"用户反馈",
+						imageeds:'../../static/userStatic/function_feedbao.png'
+					},
+					{
+						name:"我要分享",
+						imageeds:'../../static/userStatic/function_share.png'
 					}
-				],
-				captainObj:{}
-			};
-		},
-		mounted() {
-			this.bindEmail();
-		},
-		onShow() {
-			this.getUserInfo();
-			this.getCaptain()
-		},
-		methods: {
-			handleImg(){
-				this.$refs.captain.open("center")
-			},
-			async getCaptain(){
-				let res = await $request('captain', {})
-				console.log(res)
-				if (res.data.code == 0) {
-					this.captainObj = res.data.data;
-				}
-			},
-			async bindEmail() {
-				let res = await $request('bindEmail', {})
-				console.log(res)
-				if (res.data.code == 0) {
-					if (res.data.data.is_bind !== 1) {
-						this.linkList = [{
-								url: "/pages/me/wallet",
-								title: this.$t("app.myWallet"),
-								src: "../../static/img/mine/lc.png",
-							},
-							{
-								url: "/pages/me/deal",
-								title: this.$t("app.financial"),
-								src: "../../static/img/mine/cw.png",
-							},
-							{
-								url: "/pages/me/bindEmail",
-								title: this.$t("login.bindEmail"),
-								src: "../../static/img/mine/jz.png",
-							},
-							{
-								url: "/pages/login/forgetPwd",
-								title: this.$t("app.securityCenter"),
-								src: "../../static/img/mine/ws.png",
-							},
-							{
-								url: "/pages/index/recargar",
-								title: this.$t("app.recharge"),
-								src: "../../static/img/mine/cz.png",
-							},
-							{
-								url: "/pages/index/withdraw",
-								title: this.$t("app.withdraw"),
-								src: "../../static/img/mine/tx.png",
-							},
-							{
-								url: "",
-								title: this.$t("app.basicFunctions"),
-								src: "../../static/img/mine/jz.png",
-							}
-						]
-					}
-				}
-			},
-			async getUserInfo() {
-				uni.showLoading()
-				let res = await $request("getUserInfo", {});
-				uni.hideLoading()
-				console.log(res);
-				if (res.data.code == 0) {
-					this.userInfo = res.data.data;
-
-				} else {
-					uni.showToast({
-						icon: "none",
-						title: res.data.msg,
-					});
-				}
-				uni.hideLoading()
-				let resp = await $request('msgCount', {});
-				console.log(resp.data.data, '---')
-				if (resp.data.code === 0) {
-					this.messageCount = resp.data.data.total_count;
-					// console.log(resp.data.data.total_count,'--')
-				}
-			},
-			goModifyNickname() {
-				uni.navigateTo({
-					url: "/pages/me/modifyNickname",
-				});
-			},
-			goPage(url) {
-				if (!url) {
-					this.openPopup();
-					return;
-				}
-				uni.navigateTo({
-					url,
-				});
-			},
-			goFwxy() {
-				uni.navigateTo({
-					url: "/pages/me/fwxy",
-				});
-			},
-			openPopup() {
-				// 开发中 的弹窗
-				this.$refs.openingPopup.open("center");
-
-				let timer = setTimeout(() => {
-					this.$refs.openingPopup.close();
-					clearTimeout(timer);
-				}, 2000);
-			},
-			async openAvatarPop() {
-				// this.$refs.avatarPopup.open("bottom");
-				uni.chooseImage({
-					count: 1,
-					success: async res => {
-						console.log(res);
-						uni.uploadFile({
-							url: `${requestUrl}/api/file_upload`,
-							filePath: res.tempFilePaths[0],
-							name: "file",
-							formData: {},
-							success: async res1 => {
-								console.log(res1);
-								let avatar = JSON.parse(res1.data);
-								if (avatar.code === 0) {
-									let resp = await $request("userSave", {
-										avatar: avatar.data.src
-									});
-									uni.showToast({
-										icon: "none",
-										title: resp.data.msg,
-									});
-									if (resp.data.code === 0) {
-										this.getUserInfo();
-									}
-								}
-							},
-						});
-					},
-				});
-			},
-			closeAvatarPop() {
-				this.$refs.avatarPopup.close();
-			},
-			async logout() {
-				let res = await $request("logout", {});
-				uni.showToast({
-					icon: "none",
-					title: res.data.msg,
-				});
-				if (res.data.code === 0) {
-					setTimeout(() => {
-						uni.clearStorageSync();
-						uni.reLaunch({
-							url: "/pages/login/emailVerificationLogin",
-						});
-					}, 1000);
-					return;
-				}
-			},
-			goMessage() {
-				uni.navigateTo({
-					url: '/pages/me/message'
-				})
+				]
 			}
 		},
-	};
+		methods:{
+			goPath(link){
+				uni.navigateTo({
+					url: link,
+				});
+			}
+		}
+	}
 </script>
-
-<style lang="less" scoped>
-	@import "../../static/less/variable.less";
-
-	// page {
-	// 	background-color: #fd7f20;
-	// }
-
-	.mine-page {
-		height: 100%;
-
-		.mine-scroll {
-			padding: 0;
-
-			.userinfo-box {
-				background: url("../../static/img/bgcb7c2c77.png") no-repeat top left / cover;
-				color: #fff;
-				// height: 1000rpx;
+<style lang="scss" scoped>
+	.user{
+		width: 100%;
+		.user_bg{
+			width: 100%;
+			height: calc(640rpx - var(--status-bar-height));
+			background-repeat: no-repeat;
+			.user_bg_height{
+				width: 100%;
+				height: var(--status-bar-height);
+			}
+			.user_setting{
+				width: 100%;
+				height: 100rpx;
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
 				box-sizing: border-box;
-				padding: 100rpx 0rpx 32rpx 0rpx;
-
-				.userinfo {
-
-					// background-color: red;
+				padding: 0 70rpx;
+				image{
+					width: 46rpx;
+					height: 53rpx;
+				}
+			}
+			.user_avatar{
+				width: 100%;
+				box-sizing: border-box;
+				padding: 50rpx 70rpx;
+				display: flex;
+				// align-items: center;
+				image{
+					width: 160rpx;
+					height: 160rpx;
+					border-radius: 50%;
+				}
+				.avatar_right{
+					flex: 1;
+					margin-left: 24rpx;
 					display: flex;
 					flex-direction: column;
-					align-items: center;
-
-					// align-items: flex-start;
-					// justify-content: space-between;
-					// align-items: center;
-					.message {
-
-						// padding-left: 100rpx;
-						// margin-top: -25rpx;
-						padding-right: 58rpx;
-						display: flex;
-						// flex-direction: row-reverse;
-						// align-items: flex-end;
-						align-self: flex-end;
-
-						image {
-							width: 43rpx;
-						}
+					justify-content: space-between;
+					box-sizing: border-box;
+					padding: 10rpx 0;
+					.right_name{
+						font-family: PingFang SC, PingFang SC;
+						font-weight: 800;
+						font-size: 36rpx;
+						color: #403039;
 					}
-
-					.df(center, flex-start);
-
-					.logo {
-						border-radius: 50%;
-						// margin-right: 46rpx;
-						width: 115rpx;
-						max-height: 115rpx;
-						background-color: #f5f5f5;
-						margin-bottom: 20rpx;
-
-						image {
-							width: 115rpx;
-							height: 115rpx;
-							border-radius: 50%;
-						}
+					.right_phone{
+						font-family: PingFang SC, PingFang SC;
+						font-weight: 400;
+						font-size: 30rpx;
+						color: #6A3A00;
 					}
-
-					.msg {
-
-						// padding-left: 50rpx;
-						margin-bottom: 46rpx;
-						.name {
-							margin-bottom: 26rpx;
-							// .df(center, flex-start);
-							display: flex;
-							justify-content: center;
-							align-items: center;
-
-							.name-text {
-								min-height: 20rpx;
-								min-width: 50rpx;
-								font-size: 36rpx;
-								font-weight: bold;
-							}
-
-							.vip {
-								margin-left: 20rpx;
-								// border-radius: 10rpx;
-								padding: 8rpx 15rpx;
-								// background-color: #ffb47c;
-								background: linear-gradient(90deg, #FFE0B2 0%, #FEC27A 100%);
-								border-radius: 10rpx;
-								font-size: 24rpx;
-								color: #945C3B;
-								font-weight: 600;
-							}
-						}
-
-						.id {
-							color: #ffcf84;
-							display: flex;
-							justify-content: center;
-							align-items: center;
-						}
-					}
-				}
-
-				.number {
-					padding-bottom: 33rpx;
-					display: flex;
-
-					.item {
-						.df(center, flex-start);
-						flex-direction: column;
-
-						width: 33.33%;
-
-						.num {
-							font-size: 38rpx;
-							font-weight: 600;
-							margin-bottom: 23rpx;
-						}
-
-						.text {
-							font-size: 24rpx;
-						}
+					.right_uid{
+						font-family: PingFang SC, PingFang SC;
+						font-weight: 400;
+						font-size: 26rpx;
+						color: #6A3A00;
 					}
 				}
 			}
-
-			.list {
-				padding: 22rpx 34rpx;
-				background-color: #fff;
-
-				.item {
-					padding: 30rpx 0;
-					.df(center, space-between);
-
-					.left {
-						.df(center, flex-start);
-
-						.icon {
-							margin-right: 20rpx;
-							width: 54rpx;
-						}
-
-						.text {
-							font-size: 28rpx;
-							font-weight: bold;
-						}
-					}
-
-					.right {
-						width: 14rpx;
-						height: 25rpx;
-						background: url("../../static/img/right_arrow.png") no-repeat top left / 100% 100%;
-					}
-				}
-			}
-
-			.btn-box {
-				padding: 0 50rpx 100rpx;
-				width: calc(100% - 100rpx);
-				background-color: #fff;
-
-				.df(center, space-between);
-
-				.exit,
-				.agreement {
-					border-radius: 10rpx;
-					padding: 32rpx 0;
-					font-size: 24rpx;
-					width: calc(50% - 40rpx);
-					text-align: center;
-				}
-
-				.exit {
-					color: #383838;
-					background: #F0E8E8;
-				}
-
-				.agreement {
-					background: linear-gradient(0deg, #0694B8 0%, #6BBDB4 100%);
-					// background: #FD8124;
-					color: #fff;
-				}
-			}
-		}
-
-		.opening {
-			.pic {
-				width: 210rpx;
-			}
-
-			.text {
-				margin-top: 20rpx;
-				color: #fff;
-				font-size: 30rpx;
-				text-align: center;
-			}
-		}
-
-		.change-avatar {
-			z-index: 9999;
-
-			.select-ul {
+			// 账户余额
+			.user_money{
+				width: 100%;
 				display: flex;
-				flex-direction: column;
-
-				.select-item {
-					padding: 40rpx;
+				.user_money_one{
+					flex: 1;
 					text-align: center;
-					background-color: #fff;
-
-					&.cancel {
+					.user_money_number{
+						font-family: PingFang SC, PingFang SC;
+						font-weight: 800;
+						font-size: 36rpx;
+						color: #403039;
+					}
+					.user_money_title{
+						font-family: PingFang SC, PingFang SC;
+						font-weight: 400;
+						font-size: 26rpx;
+						color: #6A3A00;
 						margin-top: 10rpx;
+					}
+				}
+			}
+		}
+		// 内容区域
+		.user_centent{
+			width: 100%;
+			box-sizing: border-box;
+			padding: 0 31rpx;
+			margin-top: calc(-140rpx + var(--status-bar-height));
+			.user_centent_title{
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				.title_left{
+					image{
+						width: 19rpx;
+						height: 19rpx;
+						margin-right: 15rpx;
+					}
+					font-family: PingFang SC, PingFang SC;
+					font-weight: 800;
+					font-size: 32rpx;
+					color: #3A2633;
+				}
+				.title_right{
+					font-family: PingFang SC, PingFang SC;
+					font-weight: 400;
+					font-size: 24rpx;
+					color: #858585;
+					display: flex;
+					align-items: center;
+					image{
+						width: 11rpx;
+						height: 24rpx;
+						margin-left: 15rpx;
+					}
+				}
+			}
+			.user_centent_order{
+				width: 100%;
+				display: flex;
+				.order_one{
+					flex: 1;
+					text-align: center;
+					margin-top: 30rpx;
+					image{
+						width: 77rpx;
+						height: 57rpx;
+						border-radius: 5rpx;
+					}
+					.order_one_title{
+						font-family: PingFang SC, PingFang SC;
+						font-weight: bold;
+						font-size: 24rpx;
+						color: #3A2633;
+						margin-top: 15rpx;
+					}
+				}
+			}
+			.title_two{
+				margin-top: 25rpx;
+			}
+			.functional_count{
+				width: 100%;
+				display: flex;
+				flex-wrap: wrap;
+				.functional_one{
+					flex: 0 25%;
+					margin-top: 40rpx;
+					text-align: center;
+					.one_image{
+						image{
+							width: 50rpx;
+							height: 50rpx;
+						}
+					}
+					.one_image_title{
+						font-family: PingFang SC, PingFang SC;
+						font-weight: bold;
+						font-size: 24rpx;
+						color: #3A2633;
+						margin-top: 20rpx;
 					}
 				}
 			}

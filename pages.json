@@ -409,6 +409,44 @@
 			{
 				"navigationBarTitleText" : ""
 			}
+		},
+		// 个人中心模块
+		{
+			"path" : "pages/me/setting/setting",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/me/setting/bindAddress",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"navigationStyle": "custom"
+			}
+		},{
+			"path" : "pages/me/setting/bindAccout",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"navigationStyle": "custom"
+			}
+		},{
+			"path" : "pages/me/setting/changePaypass",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"navigationStyle": "custom"
+			}
+		},{
+			"path" : "pages/me/setting/changeLoginpass",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"globalStyle": {
