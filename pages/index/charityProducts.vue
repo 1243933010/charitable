@@ -1,7 +1,7 @@
 <template>
 	<view class="profix-page-container">
 		<hx-navbar :config="config" style="position: absolute; top: 0; width: 100vw;" />
-		<view class="charity-products-scroll page-scroll">
+		<scroll-view :scroll-y="true" class="charity-products-scroll page-scroll">
 			<div class="products-list">
 				<div class="item-box" v-for="(product,index) in productsList" :key="product.id" @click="goPage(`/pages/index/charityProductDetail`)">
 					<div class="pic product-img">
@@ -23,7 +23,7 @@
 			<div class="add-product">
 				<button class="button" @click="goPage(`/pages/index/addProduct`)">{{$t("app.shen5")}}</button>
 			</div>
-		</view>
+		</scroll-view>
 	</view>
 </template>
 
