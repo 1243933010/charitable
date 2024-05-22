@@ -35,7 +35,7 @@
 			
 			
 				<view class="product-list">
-					<view class="product-item" v-for="(item,index) in nftList" :key="index">
+					<view class="product-item" v-for="(item,index) in nftList" @click="goUrl(item)" :key="index">
 						<view class="product-img pic">
 							<image :src="item.url" mode="aspectFit" class="img" @click="goProductDetail(item)">
 							</image>
@@ -93,6 +93,11 @@
 			this.adverts();
 		},
 		methods: {
+			goUrl(item){
+				uni.navigateTo({
+					url:'/pages/index/detail/targetedAssistanceDetail'
+				})
+			},
 			swiperChange(e) {
 			      // e.detail.current 是当前的索引
 			      this.currentIndex = e.detail.current;
@@ -113,7 +118,7 @@
 	}
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	@import "../../static/less/variable.less";
 
 	page {

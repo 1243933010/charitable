@@ -38,7 +38,7 @@ export default {
       iStatusBarHeight: 0,
       index: 0,
 	  array: ["中文","English","Francés","Español"," اللغة العربية"],
-      iconList: [ "../../static/img/eg.png","../../static/img/fr.png","../../static/img/es.png","../../static/img/asa.png"],
+      iconList: [ "../../static/img/cn.png", "../../static/img/eg.png","../../static/img/fr.png","../../static/img/es.png","../../static/img/asa.png"],
       code: ["zh-Hans","en","fr","es","ara"],
 	  imgSrc: "../../static/img/eg.png",
       locale: {"zh-Hans":0, en: 1, fr:2,es:3,ara:4, },

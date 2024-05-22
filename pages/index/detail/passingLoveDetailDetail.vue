@@ -1,22 +1,15 @@
 <template>
-	<view class="index-page ">
+	<view class="index-page1 ">
 		<hx-navbar :config="config" />
 
 		<view class="index-scroll  has-tabbar">
-			<view class="banner">
+		<!-- 	<view class="banner">
 				<swiper class="swiper" circular autoplay style="height: 400rpx;" @change="swiperChange">
 					<swiper-item :current="current" v-for="(item, index) in swiperList" :key="index">
 						<view class="swiper-item">
 							<view class="pic">
 								<image @click="linkImg(item)" :src="item.image" class="img" mode="widthFix"></image>
-								<!-- <view class="text-box">
-									<view class="title">
-										<text>星星点灯，照亮梦乡</text>
-									</view>
-									<view class="label">
-										<text>希望计划让留守山区的孩子找寻回家的希望，照亮梦乡让留守山区</text>
-									</view>
-								</view> -->
+	
 							</view>
 						</view>
 					</swiper-item>
@@ -26,64 +19,41 @@
 				<view class="item" v-for="(item,index) in swiperList.length" :key="index">
 					<view class="div" :class="index==currentIndex?'active':''"></view>
 				</view>
-			</view>
+			</view> -->
 			
-			<view class="all_price">
-				<view class="price">
-					<view class="num">
-						<text>$12121</text>
-					</view>
-					<view class="title">
-						<text>{{$t("app.newAdd22")}}</text>
-					</view>
-				</view>
-				<view class="msg">
-					<view class="title">
-						<text>{{$t("app.newAdd23")}}</text>
-					</view>
-					<view class="label">
-						<text>{{$t("app.newAdd24")}}</text>
-					</view>
-				</view>
+		
+		<view class="rich">
+			<text>这是富文本</text>
+		</view>
+		
+		<view class="history">
+			<view class="title">
+				<image src="../../../static/img/icon/index/radio.png" mode="widthFix"></image>
+				<text>{{$t("app.newAdd37")}}</text>
 			</view>
-			<view class="logo">
-				<view class="img">
-					<image src="../../static/img/banner/charity_sale_icon1.png" mode="widthFix"></image>
-				</view>
-				<view class="img">
-					<image src="../../static/img/banner/charity_sale_icon2.png" mode="widthFix"></image>
+			<view class="list">
+				<view class="item" v-for="(item,index) in nftList" :key="index">
+					<view class="left">
+						<image src="../../../static/img/help_icon.png" mode="widthFix"></image>
+						<text>我已捐赠</text>
+					</view>
+					<view class="right">
+						<text>500 USDT</text>
+					</view>
 				</view>
 			</view>
-			
-			<view class="product-container1">
-				<view class="header">
-					<view class="tit">
-					<view class="radio"></view>
-					{{ $t("app.newAdd10") }}</view>
-					<view class="desc">{{ $t("app.newAdd17") }}></view>
-				</view>
-			
-				<view class="product-list">
-					<view class="product-item" v-for="(item,index) in nftList" :key="index">
-						<view class="product-img pic">
-							<image :src="item.url" mode="aspectFit" class="img" @click="goProductDetail(item)">
-							</image>
-						</view>
-						<view class="product-info">
-							<view class="product-title"><text>{{item.title}}</text> </view>
-							<view class="product-tit">
-								<text>{{item.label}}</text>
-								<text style="color: #8E8E8E;font-size: 24rpx;">{{ $t("app.newAdd20") }}11</text>
-							</view>
-							<!-- <view class="product-price-info">
-								<view class="rebate">$ {{item.statusText}}</view>
-							
-							</view> -->
-						</view>
+		</view>
+		<view class="fixed-div">
+			<view class="content">
+				
+				<view class="right">
+					<view class="btn">
+						<text>{{$t("app.newAdd14")}}</text>
 					</view>
-			
 				</view>
 			</view>
+		</view>	
+			
 		</view>
 	</view>
 </template>
@@ -100,7 +70,7 @@
 		computed: {
 			config() {
 				return {
-					title: this.$t("app.newAdd10"),
+					title: this.$t("index.detail"),
 					color: "#403039",
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};
@@ -111,10 +81,10 @@
 				swiperList:[],
 				currentIndex:0,
 				nftList: [
-					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
+					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
+					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
+					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
+					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
 				],
 			};
 		},
@@ -142,8 +112,8 @@
 	}
 </script>
 
-<style lang="less">
-	@import "../../static/less/variable.less";
+<style lang="less" scoped>
+	@import "../../../static/less/variable.less";
 
 	page {
 		background-color: #F4F4F4;
@@ -158,12 +128,12 @@
 	}
 
 	.swiper-active {
-		// background-color: #FAE0AD;
+		background-color: white;
 		width: 100%;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		margin-bottom: 20rpx;
+
 		.div {
 			width: 25rpx;
 			height: 12rpx;
@@ -180,7 +150,7 @@
 		}
 	}
 
-	.index-page {
+	.index-page1 {
 		background-color: #F4F4F4;
 
 		// background-color: red;
@@ -188,11 +158,12 @@
 			.banner {
 				width: 100%;
 				margin: 0 auto;
+				background-color: white;
 				// background: url("../../static/img/bg/index_bg.png") no-repeat center center / 100% 100%;
 				box-sizing: border-box;
 				// background-color: #FAE0AD;
-				padding-left: 5%;
-				padding-top: 20rpx;
+				// padding-left: 5%;
+				// padding-top: 20rpx;
 				// display: flex;
 				// justify-content: center;
 				// align-items: center;
@@ -200,14 +171,17 @@
 				// margin-right: -30rpx;
 
 				.swiper {
-					width: calc(100% - 37rpx);
-					height: 380rpx !important;
+					width: 100%;
+					height: 440rpx !important;
 					margin: 0 auto;
 					.swiper-item {
 						.pic {
 							position: relative;
 							image{
-								border-radius: 20rpx;
+								// border-radius: 20rpx;
+							}
+							.img{
+								width: 100%;
 							}
 							.text-box {
 								width: 100%;
@@ -317,119 +291,95 @@
 				}
 			}
 		}
-		.product-container1 {
-			margin-top: 16rpx;
-			padding-bottom: 26rpx;
-			padding-top: 37rpx;
+		.rich{
 			box-sizing: border-box;
-			padding-left: 20rpx;
-			padding-right: 20rpx;
+			padding: 30rpx;
 			background-color: white;
-			.header{
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				background-color: white;
-			}
-			.tit {
-				margin-bottom: 8rpx;
-				color: @bodyColor;
-				font-size: @bodySize;
-				font-weight: 600;
+		}
+		.history{
+			width: 100%;
+			box-sizing: border-box;
+			padding:  32rpx 32rpx 82rpx 32rpx;
+			.title{
 				display: flex;
 				flex-direction: row;
 				align-items: center;
+				color: #3A2633;
+				font-size: 14rpx;
+				font-weight: 600;
+				margin-bottom: 21rpx;
+				image{
+					width: 20rpx;
+					margin-right: 14rpx;
+				}
 			}
-		
-			.desc {
-				margin-bottom: 28rpx;
-				color: #777680;
-				font-size: @descSize;
+			.list{
+				width: 100%;
+				padding-bottom: 50rpx;
+				.item{
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					margin-bottom: 20rpx;
+					box-sizing: border-box;
+					padding: 22rpx 28rpx;
+					background-color: white;
+					border-radius: 20rpx;
+					.left{
+						display: flex;
+						flex-direction: row;
+						align-items: center;
+						color: #3A2633;
+						font-size: 24rpx;
+						font-weight: 600;
+						image{
+							width: 60rpx;
+							margin-right: 26rpx;
+						}
+					}
+					.right{
+						color: #EF8F1E;
+						font-size: 24rpx;
+						font-weight: 600;
+					}
+				}
 			}
-		
-			.product-list {
-				// .df(stretch, flex-start);
+		}
+		.fixed-div{
+			position: fixed;
+			background-color: white;
+			bottom: 0rpx;
+			left: 0;
+			width: 100%;
+			padding-bottom: 30rpx;
+			padding-top:20rpx ;
+			.content{
 				width: 100%;
 				display: flex;
-				justify-content: space-between;
-				flex-wrap: wrap;
-				.product-item {
-					// margin-top: 10rpx;
-					// margin-right: 10rpx;
-					border-radius: 20rpx;
-					background-color: #fff;
-					width: calc(50% - 5rpx);
-					// overflow: hidden;
+				flex-direction: row;
+				align-items: center;
+				box-sizing: border-box;
+				padding: 0 30rpx;
+			}
+			
+			
+			.right{
+				width: 600rpx;
+				margin: 0 auto;
+				.btn{
+					background: linear-gradient( 180deg, #EF8E1F 0%, #F0AC05 100%);
+					font-size: 30rpx;
+					color: white;
 					display: flex;
-					flex-direction: column;
+					justify-content: center;
 					align-items: center;
-					padding-top: 9rpx;
-					padding-bottom: 9rpx;
-					// background-color: red;
-					.product-img {
-						width: 324rpx;
-						height: 305rpx;
-						background-color: white;
-						// margin-right: 27rpx;
-						image {
-							width: 100%;
-							height: 100%;
-							// height: 100rpx;
-						}
-					}
-		
-					.product-info {
-						padding: 20rpx 28rpx;
-						.product-title {
-							// .vertical(2);
-							// width:200rpx;
-							// overflow: hidden;
-							// text-overflow:ellipsis;
-							color: #3A2633;
-							font-size: 28rpx;
-							font-weight: 600;
-							line-height: 1.5;
-							margin-bottom: 9rpx;
-							width:300rpx;
-							overflow: hidden;
-							text-overflow:ellipsis;
-							text{
-								// width:200rpx;
-								// overflow: hidden;
-								text-overflow:ellipsis;
-								white-space: nowrap;
-							}
-						}
-						.product-tit {
-							.vertical(2);
-							color: #F3581D;
-							font-size: 30rpx;
-							font-weight: 600;
-							line-height: 1.5;
-							margin-bottom: 9rpx;
-							display: flex;
-							justify-content: space-between
-						}
-		
-						.product-price-info {
-							.df(center, space-between);
-		
-							.rebate {
-								color: #9EA19D;
-								font-size: 24rpx;
-								// font-weight: bold;
-							}
-		
-							.brfore-rebate {
-								color: #777680;
-								font-size: 30rpx;
-								text-decoration: line-through;
-							}
-						}
-					}
-		
-					&:nth-child(2n) {
-						margin-right: 0;
+					border-radius: 20rpx;
+					font-weight: 600;
+					box-sizing: border-box;
+					padding: 34rpx 0;
+					image{
+						width: 35rpx;
+						margin-right: 14rpx;
 					}
 				}
 			}

@@ -1,27 +1,11 @@
 <template>
-	<view class="index-page">
+	<view class="index-page1 ">
 		<hx-navbar :config="config" />
+
 		<view class="index-scroll  has-tabbar">
-			<view class="bk">
-				<view class="tip">
-					<view class="content">
-						<view class="title">
-							<text>{{$t("app.newAdd27")}}</text>
-						</view>
-						<view class="label">
-							<text>{{$t("app.newAdd28")}}  <text class="num">11</text> {{$t("app.newAdd29")}} {{$t("app.newAdd30")}}</text>
-						</view>
-					</view>
-				</view>
-				<view class="btn">
-					<view class="button" @click="goUrl">
-						<text>{{$t("app.newAdd26")}}</text>
-					</view>
-				</view>
-			</view>
 			<view class="product-container">
 				<view class="product-list">
-					<view class="product-item" v-for="(item,index) in nftList" :key="index">
+					<view class="product-item" v-for="(item,index) in nftList" :key="index" @click="goUrl">
 						<view class="product-img pic">
 							<image :src="item.url" mode="aspectFit" class="img" @click="goProductDetail(item)">
 							</image>
@@ -31,16 +15,17 @@
 							<!-- <view class="product-tit">{{item.label}}</view> -->
 							<view class="product-price-info">
 								<view class="rebate">
-									<text style="margin-right:27rpx;">{{item.statusText}}</text>
+									<text style="margin-right:27rpx;color: #F45C23;">{{item.statusText}}</text>
 									<!-- <text style="">{{item.statusText}}</text> -->
 								</view>
-
+			
 							</view>
 						</view>
 					</view>
-
+			
 				</view>
 			</view>
+			
 		</view>
 	</view>
 </template>
@@ -57,7 +42,7 @@
 		computed: {
 			config() {
 				return {
-					title: this.$t("app.newAdd14"),
+					title: this.$t("app.newAdd36"),
 					color: "#403039",
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};
@@ -65,135 +50,71 @@
 		},
 		data() {
 			return {
-				nftList: [{
-						url: '../../static/img/logo.png',
-						label: '500USDT',
-						statusText: '**用户已完成交易',
-						title: '白色的空开放式学校背包'
-					},
-					{
-						url: '../../static/img/logo.png',
-						label: '500USDT',
-						statusText: '**用户已完成交易',
-						title: '白色的空开放式学校背包'
-					},
-					{
-						url: '../../static/img/logo.png',
-						label: '500USDT',
-						statusText: '**用户已完成交易',
-						title: '白色的空开放式学校背包'
-					},
-					{
-						url: '../../static/img/logo.png',
-						label: '500USDT',
-						statusText: '**用户已完成交易',
-						title: '白色的空开放式学校背包'
-					},
+				swiperList:[],
+				currentIndex:0,
+				nftList: [
+					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包'},
+					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
+					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
+					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
 				],
-			}
+			};
 		},
-		methods:{
+		mounted() {
+			this.adverts();
+		},
+		methods: {
 			goUrl(){
 				uni.navigateTo({
-					url:'/pages/index/detail/passingLoveDetail'
+					url:'/pages/index/detail/passingLoveDetailDetail'
 				})
-			}
+			},
+			swiperChange(e) {
+			      // e.detail.current 是当前的索引
+			      this.currentIndex = e.detail.current;
+			},
+			async adverts() {
+				let res = await $request("adverts", {});
+				// console.log(res)
+				if (res.data.code === 0) {
+					this.swiperList = res.data.data;
+					return false;
+				}
+				uni.showToast({
+					icon: "none",
+					title: res.data.msg,
+				});
+			},
 		}
 	}
 </script>
 
-<style lang="less">
-	@import "../../static/less/variable.less";
+<style lang="less" scoped>
+	@import "../../../static/less/variable.less";
 
 	page {
-		background-color: #F4F4F4;
+		background-color: #F5F5F5;
 	}
+	
 
-	.index-page {
-		// padding: 0;
-		.index-scroll{
-			padding-top: 0rpx;
-			// padding-bottom: 75rpx;
-		}
-		.bk{
-			// width: 813rpx;
-			height: 750rpx;
-			background: url("../../static/img/bg/love_bk1.png") no-repeat top left / 100% 100%;
-			display: flex;
-			align-items: center;
-			padding-top: 75rpx;
-			position: relative;
-			// margin-bottom: 50rpx;
-			.tip{
-				width: 609rpx;
-				height: 404rpx;
-				background: url("../../static/img/bg/love_bk2.png") no-repeat top left / 100% 100%;
-				display: flex;
-				flex-direction: row;
-				.content{
-					width: 80%;
-					height: 150rpx;
-					display: flex;
-					justify-content: space-around;
-					display: flex;
-					flex-direction: column;
-					box-sizing: border-box;
-					padding-top: 50rpx;
-					padding-left: 47rpx;
-					.title{
-						color: #FFFFFF;
-						font-size: 24rpx;
-						font-weight: 600;
-					}
-					.label{
-						color: #FFFFFF;
-						font-size: 24rpx;
-						font-weight: 600;
-						.num{
-							font-size: 48rpx;
-						}
-					}
-					
-				}
-			}
-			.btn{
-				width: 100%;
-				position: absolute;
-				bottom: -50rpx;
-				left: 0;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				z-index: 10;
-				
-				view{
-					width: 600rpx;
-					height: 110rpx;
-					background: linear-gradient( 180deg, #EF8E1F 0%, #F0AC05 100%);
-					border-radius: 20rpx;
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					color: #FFFFFF;
-					font-size: 30rpx;
-					font-weight: 600;
-				}
-			}
-		}
+
+	.index-page1 {
+		background-color: #F4F4F4;
+
 		.product-container,
 		.product-container3 {
-			padding-top: 70rpx;
+			padding-top: 20rpx;
 			padding-bottom: 26rpx;
 			box-sizing: border-box;
 			padding-left: 20rpx;
 			padding-right: 20rpx;
-			background-color: white;
+			// background-color: white;
 			.header {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
 			}
-
+		
 			.tit {
 				margin-bottom: 8rpx;
 				color: @bodyColor;
@@ -203,22 +124,23 @@
 				flex-direction: row;
 				align-items: center;
 			}
-
+		
 			.desc {
 				margin-bottom: 28rpx;
 				color: #777680;
 				font-size: @descSize;
 			}
-
+		
 			.product-list {
 				// .df(stretch, flex-start);
 				width: 100%;
-
+		
 				.product-item {
 					margin-top: 10rpx;
 					margin-right: 10rpx;
 					border-radius: 20rpx;
 					background-color: #fff;
+					margin-bottom: 16rpx;
 					width: 100%;
 					// overflow: hidden;
 					display: flex;
@@ -227,29 +149,29 @@
 					box-sizing: border-box;
 					padding-top: 9rpx;
 					padding-bottom: 9rpx;
-
+		
 					.product-img {
 						width: 144rpx;
 						height: 144rpx;
 						background-color: white;
 						margin-right: 27rpx;
-
+		
 						image {
 							width: 100%;
 							height: 100%;
 							// height: 100rpx;
 						}
 					}
-
+		
 					.product-info {
 						padding: 20rpx 28rpx;
 						box-sizing: border-box;
 						width: calc(100% - 144rpx);
-						height: 144rpx;
+						height: 164rpx;
 						display: flex;
 						flex-direction: column;
 						justify-content: space-between;
-
+		
 						.product-title {
 							.vertical(2);
 							color: #3A2633;
@@ -258,7 +180,7 @@
 							line-height: 1.5;
 							margin-bottom: 9rpx;
 						}
-
+		
 						.product-tit {
 							.vertical(2);
 							color: #F3581D;
@@ -266,9 +188,9 @@
 							font-weight: 600;
 							line-height: 1.5;
 							margin-bottom: 9rpx;
-
+		
 						}
-
+		
 						.product-price-info {
 							// .df(center, space-between);
 							display: flex;
@@ -281,7 +203,7 @@
 								align-items: center;
 								// font-weight: bold;
 							}
-
+		
 							.brfore-rebate {
 								color: #777680;
 								font-size: 30rpx;
@@ -289,7 +211,7 @@
 							}
 						}
 					}
-
+		
 					&:nth-child(2n) {
 						margin-right: 0;
 					}

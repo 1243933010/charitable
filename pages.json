@@ -367,6 +367,48 @@
 			{
 				"navigationBarTitleText" : ""
 			}
+		},
+		{
+			"path" : "pages/index/detail/charityConsultationDetail",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/index/detail/targetedAssistanceDetail",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/index/detail/passingLoveDetail",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/index/detail/passingLoveDetailDetail",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/index/appShare",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/auctionVenue/auctionVenue",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
 		}
 	],
 	"globalStyle": {
@@ -395,7 +437,7 @@
 				
 			},
 			{
-				"pagePath": "pages/join/join",
+				"pagePath": "pages/auctionVenue/auctionVenue",
 				"iconPath": "static/img/tabbar/join_select.png",
 				"selectedIconPath": "static/img/tabbar/join_select.png"
 				

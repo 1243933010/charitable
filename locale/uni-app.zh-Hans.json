@@ -34,6 +34,28 @@
 		"app.newAdd28":"我已爱心传递",
 		"app.newAdd29":"个",
 		"app.newAdd30":"项目",
+		"app.newAdd31":"观看",
+		"app.newAdd32":"转发",
+		"app.newAdd33":"分享转发",
+		"app.newAdd34":"我的帮扶记录",
+		"app.newAdd35":"立即捐赠",
+		"app.newAdd36":"爱心传递项目",
+		"app.newAdd37":"爱心传递记录",
+		"app.newAdd38":"捐赠金额",
+		"app.newAdd39":"请输入捐赠金额",
+		"app.newAdd40":"分享",
+		"app.newAdd41":"您可以通过以上方式邀请好友",
+		"app.newAdd42":"综合",
+		"app.newAdd43":"价格区间",
+		"app.newAdd44":"当前",
+		"app.newAdd45":"起拍价",
+		"app.newAdd46":"开拍",
+		"app.newAdd47":"结束时间",
+		"app.newAdd48":"中止时间",
+		"app.newAdd49":"撤回时间",
+		
+		
+		
 
 
 		"app.shen1": "义卖产品",
@@ -177,7 +199,7 @@
 		"join.teamTit4": "D级团队加入详情",
 		"join.committee": "佣金",
 		"join.partners": "合伙人数量",
-		"join.peopleD": "人数",
+		"join.peopleD": "人",
 		"join.committeeVIP": "VIP人数",
 		"join.text1": "邀请奖励(下级购买VIP的佣金)",
 		"join.text2": "总获得奖励",

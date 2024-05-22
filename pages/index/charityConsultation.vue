@@ -1,5 +1,5 @@
 <template>
-	<view class="index-page ">
+	<view class="index-page1 ">
 		<hx-navbar :config="config" />
 
 		<view class="index-scroll  has-tabbar">
@@ -35,7 +35,7 @@
 			
 			
 				<view class="product-list">
-					<view class="product-item" v-for="(item,index) in nftList" :key="index">
+					<view class="product-item" v-for="(item,index) in nftList" @click="goUrl(item)" :key="index">
 						<view class="product-img pic">
 							<image :src="item.url" mode="aspectFit" class="img" @click="goProductDetail(item)">
 							</image>
@@ -97,6 +97,11 @@
 			      // e.detail.current 是当前的索引
 			      this.currentIndex = e.detail.current;
 			},
+			goUrl(item){
+				uni.navigateTo({
+					url:'/pages/index/detail/charityConsultationDetail'
+				})
+			},
 			async adverts() {
 				let res = await $request("adverts", {});
 				// console.log(res)
@@ -130,11 +135,12 @@
 
 	.swiper-active {
 		// background-color: #FAE0AD;
+		background-color: #F4F4F4;
 		width: 100%;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-
+		padding-bottom: 20rpx;
 		.div {
 			width: 25rpx;
 			height: 12rpx;
@@ -151,7 +157,7 @@
 		}
 	}
 
-	.index-page {
+	.index-page1 {
 		background-color: #F4F4F4;
 
 		// background-color: red;
@@ -161,9 +167,10 @@
 				margin: 0 auto;
 				// background: url("../../static/img/bg/index_bg.png") no-repeat center center / 100% 100%;
 				box-sizing: border-box;
-				// background-color: #FAE0AD;
+				background-color: #F4F4F4 !important;
 				padding-left: 5%;
 				padding-top: 20rpx;
+				padding-bottom: 20rpx;
 				// display: flex;
 				// justify-content: center;
 				// align-items: center;
