@@ -25,7 +25,7 @@
 			</view>
 			<!-- 账户余额 -->
 			<view class="user_money">
-				<view class="user_money_one">
+				<view class="user_money_one" @click="goPath(`/pages/me/month/month`)">
 					<view class="user_money_number">
 						1090
 					</view>
