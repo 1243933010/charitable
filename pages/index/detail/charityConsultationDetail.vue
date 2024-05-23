@@ -46,7 +46,7 @@
 					</view>
 				</view>
 				<view class="right">
-					<view class="btn">
+					<view class="btn" @click="goUrl">
 						<!-- <image src="../../../static/img/icon/icon_search.png" mode="widthFix"></image> -->
 						<text>{{$t("app.newAdd33")}}</text>
 					</view>
@@ -92,6 +92,11 @@
 			this.adverts();
 		},
 		methods: {
+			goUrl(){
+				uni.navigateTo({
+					url:'/pages/index/appShare'
+				})
+			},
 			swiperChange(e) {
 			      // e.detail.current 是当前的索引
 			      this.currentIndex = e.detail.current;
