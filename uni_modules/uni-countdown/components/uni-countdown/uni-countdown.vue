@@ -1,12 +1,12 @@
 <template>
 	<view class="uni-countdown">
-		<text v-if="showDay" :style="[timeStyle]" class="uni-countdown__number">{{ d }}</text>
-		<text v-if="showDay" :style="[splitorStyle]" class="uni-countdown__splitor">{{dayText}}</text>
-		<text v-if="showHour" :style="[timeStyle]" class="uni-countdown__number">{{ h }}</text>
+		<text v-if="showDay" :style="[timeStyle]" :class="{'his-bk':hisBk}" class="uni-countdown__number">{{ d }}</text>
+		<text v-if="showDay" :style="[splitorStyle]"  :class="{'his-bk':hisBk}" class="uni-countdown__splitor">{{dayText}}</text>
+		<text v-if="showHour" :style="[timeStyle]"  :class="{'his-bk':hisBk}" class="uni-countdown__number">{{ h }}</text>
 		<text v-if="showHour" :style="[splitorStyle]" class="uni-countdown__splitor">{{ showColon ? ':' : hourText }}</text>
-		<text v-if="showMinute" :style="[timeStyle]" class="uni-countdown__number">{{ i }}</text>
+		<text v-if="showMinute" :style="[timeStyle]"  :class="{'his-bk':hisBk}" class="uni-countdown__number">{{ i }}</text>
 		<text v-if="showMinute" :style="[splitorStyle]" class="uni-countdown__splitor">{{ showColon ? ':' : minuteText }}</text>
-		<text :style="[timeStyle]" class="uni-countdown__number">{{ s }}</text>
+		<text :style="[timeStyle]"  :class="{'his-bk':hisBk}" class="uni-countdown__number">{{ s }}</text>
 		<text v-if="!showColon" :style="[splitorStyle]" class="uni-countdown__splitor">{{secondText}}</text>
 	</view>
 </template>
@@ -41,6 +41,10 @@
 		name: 'UniCountdown',
 		emits: ['timeup'],
 		props: {
+			hisBk:{
+				type: Boolean,
+				default: false
+			},
 			showDay: {
 				type: Boolean,
 				default: true
@@ -75,7 +79,7 @@
 			},
 			splitorColor: {
 				type: String,
-				default: '#333'
+				default: 'white'
 			},
 			day: {
 				type: Number,
@@ -262,10 +266,11 @@
 	$font-size: 14px;
 
 	.uni-countdown {
-		display: flex;
-		flex-direction: row;
-		justify-content: flex-start;
-		align-items: center;
+		// display: flex;
+		// flex-direction: row;
+		// justify-content: flex-start;
+		// align-items: center;
+		display: inline-block;
 
 		&__splitor {
 			margin: 0 2px;
@@ -280,10 +285,13 @@
 		}
 		.uni-countdown__number{
 			color: white;
-			background-color: #3A2633;
+			
 			box-sizing: border-box;
-			padding:  13rpx 7rpx;
+			// padding:  13rpx 7rpx;
 			border-radius: 10rpx;
+		}
+		.his-bk{
+			background-color: #3A2633 !important;
 		}
 	}
 </style>

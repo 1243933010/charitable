@@ -50,7 +50,7 @@
 					</picker>
 				</view>
 				<view class="list">
-					<view class="item" v-for="(item,index) in nftList" :key="index">
+					<view class="item" v-for="(item,index) in nftList" :key="index" @click="goUrl(item)">
 						<view class="status">
 							<text>{{$t("app.newAdd44")}}:即将开始</text>
 						</view>
@@ -148,6 +148,11 @@
 			this.adverts();
 		},
 		methods: {
+			goUrl(item){
+				uni.navigateTo({
+					url:'./detail'
+				})
+			},
 			bindPickerChange: (e) => {
 				console.log('picker发送选择改变，携带值为', e.detail.value)
 				this.index = e.detail.value
@@ -216,6 +221,7 @@
 	}
 
 	.index-page1 {
+		padding-bottom: 120rpx;
 		.banner {
 
 			width: 100%;

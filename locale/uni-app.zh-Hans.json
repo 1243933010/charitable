@@ -53,7 +53,17 @@
 		"app.newAdd47":"结束时间",
 		"app.newAdd48":"中止时间",
 		"app.newAdd49":"撤回时间",
-		
+		"app.newAdd50":"竞拍时间",
+		"app.newAdd51":"加价幅度",
+		"app.newAdd52":"竞价要求",
+		"app.newAdd53":"当前价",
+		"app.newAdd54":"立即竞价",
+		"app.newAdd55":"结束",
+		"app.newAdd56":"竞拍记录",
+		"app.newAdd57":"已终止",
+		"app.newAdd58":"撤回",
+		"app.newAdd59":"注：所出价格不能低于当前竞拍价格",
+		"app.newAdd60":"距离结束",
 		
 		
 
