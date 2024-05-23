@@ -410,7 +410,7 @@
 				"navigationBarTitleText" : ""
 			}
 		},
-		// 个人中心模块
+		
 		{
 			"path" : "pages/me/setting/setting",
 			"style" : 
@@ -446,6 +446,34 @@
 			{
 				"navigationBarTitleText" : "",
 				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/index/contact",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/me/receiptDetails",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/me/delivery",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/me/myFriend",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
 			}
 		},
 		{
