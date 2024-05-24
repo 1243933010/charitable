@@ -78,7 +78,7 @@
 				</view>
 			</view>
 			<view class="functional_count">
-				<view class="functional_one" v-for="(items,indexs) in functionalArray" :key="indexs">
+				<view class="functional_one" v-for="(items,indexs) in functionalArray" :key="indexs" @click="goPath(items.path)">
 					<view class="one_image">
 						<image :src="items.imageeds" mode="aspectFill"></image>
 					</view>
@@ -114,23 +114,28 @@
 				functionalArray:[
 					{
 						name:"代理明细",
-						imageeds:'../../static/userStatic/function_one.png'
+						imageeds:'../../static/userStatic/function_one.png',
+						path:"/pages/me/broker/broker"
 					},
 					{
 						name:"捐赠记录",
-						imageeds:'../../static/userStatic/function_two.png'
+						imageeds:'../../static/userStatic/function_two.png',
+						path:"/pages/me/donation/donation"
 					},
 					{
 						name:"新品开拍",
-						imageeds:'../../static/userStatic/function_three.png'
+						imageeds:'../../static/userStatic/function_three.png',
+						path:"/pages/me/newKaipai/newKaipai"
 					},
 					{
 						name:"活动中心",
-						imageeds:'../../static/userStatic/function_four.png'
+						imageeds:'../../static/userStatic/function_four.png',
+						path:'/pages/me/activity/activity'
 					},
 					{
 						name:"我的好友",
-						imageeds:'../../static/userStatic/function_five.png'
+						imageeds:'../../static/userStatic/function_five.png',
+						path:"/pages/me/friends/friends"
 					},
 					{
 						name:"拍卖订单",
@@ -142,7 +147,8 @@
 					},
 					{
 						name:"我要分享",
-						imageeds:'../../static/userStatic/function_share.png'
+						imageeds:'../../static/userStatic/function_share.png',
+						path:"/pages/me/share/share"
 					}
 				]
 			}

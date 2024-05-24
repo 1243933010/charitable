@@ -68,7 +68,7 @@
 		<view class="withdrawal_count_two">
 			<view class="two_centented">
 				<view class="count_two_named">
-					充值详情
+					上传充值信息
 				</view>
 				<view class="two_centented_title">
 					<view class="two_centented_titlename">
