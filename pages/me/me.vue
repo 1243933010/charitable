@@ -64,7 +64,7 @@
 				</view>
 			</view>
 			<view class="user_centent_order">
-				<view class="order_one" v-for="(item,index) in orderArray" :key="index" @click="goPath(item.path)">
+				<view class="order_one" v-for="(item,index) in orderArray" :key="index">
 					<image :src="item.imageUrl" mode="aspectFill"></image>
 					<view class="order_one_title">
 						{{item.name}}
@@ -101,19 +101,15 @@
 				orderArray:[{
 					name:"待付款",
 					imageUrl:'../../static/userStatic/user_daishoukuan.png',
-					path: `/pages/me/receiptDetails?status=0`
 				},{
 					name:"待发货",
 					imageUrl:'../../static/userStatic/user_fahuo.png',
-					path: `/pages/me/receiptDetails?status=1`
 				},{
 					name:"待收货",
 					imageUrl:'../../static/userStatic/user_daishouhuo.png',
-					path: `/pages/me/receiptDetails?status=2`
 				},{
 					name:"已完成",
 					imageUrl:'../../static/userStatic/user_wancheng.png',
-					path: `/pages/me/receiptDetails?status=3`
 				}],
 				functionalArray:[
 					{

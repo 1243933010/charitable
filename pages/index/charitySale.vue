@@ -47,7 +47,7 @@
 				</view>
 			</view>
 			<view class="logo">
-				<view class="img">
+				<view class="img" @click="goPage(`/pages/index/charityProducts`)">
 					<image src="../../static/img/banner/charity_sale_icon1.png" mode="widthFix"></image>
 				</view>
 				<view class="img">
@@ -65,8 +65,8 @@
 			
 				<view class="product-list">
 					<view class="product-item" v-for="(item,index) in nftList" :key="index">
-						<view class="product-img pic">
-							<image :src="item.url" mode="aspectFit" class="img" @click="goProductDetail(item)">
+						<view class="product-img pic" @click="goPage(`/pages/index/charityProductDetail1?id=${item.id}`)">
+							<image :src="item.url" mode="aspectFit" class="img">
 							</image>
 						</view>
 						<view class="product-info">
@@ -111,10 +111,10 @@
 				swiperList:[],
 				currentIndex:0,
 				nftList: [
-					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
+					{id: 0,url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
+					{id: 1,url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
+					{id: 2,url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
+					{id: 3,url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
 				],
 			};
 		},
@@ -136,6 +136,11 @@
 				uni.showToast({
 					icon: "none",
 					title: res.data.msg,
+				});
+			},
+			goPage(url) {
+				uni.navigateTo({
+					url,
 				});
 			},
 		}
