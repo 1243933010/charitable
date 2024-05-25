@@ -53,7 +53,7 @@
 						1.82
 					</view>
 				</view>
-				<view class="counted_share_right">
+				<view class="counted_share_right" @click="goPath('/pages/me/month/jiangliDetail')">
 					奖励明细>
 				</view>
 			</view>
@@ -66,7 +66,7 @@
 						0.00
 					</view>
 				</view>
-				<view class="counted_share_right" style="color: #FFF8F1;">
+				<view class="counted_share_right" style="color: #FFF8F1;" @click="goPath('/pages/me/month/jijinDetail')">
 					基金明细>
 				</view>
 			</view>

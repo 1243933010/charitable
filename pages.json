@@ -498,6 +498,20 @@
 			}
 		},
 		{
+			"path" : "pages/me/month/jiangliDetail",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/me/month/jijinDetail",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
 			"path" : "pages/me/month/withdrawal",
 			"style" : 
 			{
@@ -597,6 +611,20 @@
 		},
 		{
 			"path" : "pages/me/share/share",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/me/auctionOrder/auctionOrder",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/me/auctionOrder/auctionDetail",
 			"style" : 
 			{
 				"navigationBarTitleText" : ""

@@ -139,7 +139,8 @@
 					},
 					{
 						name:"拍卖订单",
-						imageeds:'../../static/userStatic/function_six.png'
+						imageeds:'../../static/userStatic/function_six.png',
+						path:"/pages/me/auctionOrder/auctionOrder"
 					},
 					{
 						name:"用户反馈",
