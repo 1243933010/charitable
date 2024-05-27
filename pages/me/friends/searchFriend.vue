@@ -16,32 +16,35 @@
 		<view class="broker_search">
 			<view class="broker_search_left">
 				<image src="../../../static/userStatic/search.png" mode="aspectFill"></image>
-				<input type="text" placeholder="请输入">
+				<input type="text" placeholder="请输入" v-model="params.keyword" >
 			</view>
-			<view class="broker_search_right">
+			<view class="broker_search_right" @click="getFriends('init')">
 				搜索
 			</view>
 		</view>
 		<scroll-view scroll-y="true" class="scroll_h">
 			<view class="friends_centent">
-				<view class="friends_ones" v-for="(item,index) in 10" :key="index">
+				<view class="friends_ones" v-for="(item,index) in friendsArray" :key="index">
 					<image src="../../../static/img/cn.png" mode="aspectFill"></image>
 					<view class="friends_onescount">
 						<view class="friends_ones_name">
 							<view class="name_left">
-								张三
+								{{item.nickname}}
 							</view>
-							<view class="name_right">
+							<view class="name_right" @click="chanCheck(index)" v-if="!item.checked">
 								此处显示层级
+							</view>
+							<view class="name_right" v-else>
+								{{item.level_name||''}}
 							</view>
 						</view>
 						<view class="friends_ones_bottom">
 							<view class="ones_bottom_left">
 								<view class="friends_ones_phone">
-									18839263345
+									{{item.mobile}}
 								</view>
 								<view class="friends_ones_time">
-									注册时间：2024.5.19 
+									注册时间：{{item.created_at_format}}
 								</view>
 							</view>
 							<view class="ones_bottom_right">
@@ -57,15 +60,68 @@
 </template>
 
 <script>
+	import {
+		$request
+	} from "@/utils/request";
 	export default {
 		data(){
 			return {
-				
+				params:{
+					page:1,
+					keyword:"",
+				},
+				last_page:1,
+				friendsArray:[],
 			}
+		},
+		onLoad() {
+			this.getFriends('init')//获取好友列表
+		},
+		onReachBottom() {
+			if(this.last_page>this.params.page){
+				this.params.page++
+				this.getFriends()
+			}
+		},
+		onPullDownRefresh() {
+			setTimeout(()=>{
+				uni.stopPullDownRefresh()
+			},1000)
+			this.getFriends('init')//获取好友列表
 		},
 		methods:{
 			goBack(){
 				uni.navigateBack()
+			},
+			async getFriends(type){
+				if(type=='init'){
+					this.params.page=1
+					this.friendsArray=[]
+				}
+				let res = await $request('getFriends',this.params)
+				if(res.data.code==200){
+					this.last_page=res.data.data.last_page
+					if(res.data.data.data.length){
+						res.data.data.data.forEach(item=>{
+							this.$set(item,'checked',false)
+						})
+						if(this.params.page==1){
+							this.friendsArray=res.data.data.data
+						}else{
+							this.friendsArray=[...this.friendsArray,...res.data.data.data]
+						}
+					}
+				}
+				// console.log(res,'89999999')
+			},
+			chanCheck(index){
+				this.friendsArray.forEach((item,indexs)=>{
+					if(index==indexs){
+						this.$set(item,'checked',true)
+					}else{
+						this.$set(item,'checked',false)
+					}
+				})
 			}
 		}
 	}

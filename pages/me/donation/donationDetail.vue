@@ -5,16 +5,16 @@
 			<image src="../../../static/userStatic/zhengshu_bg.png" mode="aspectFill"></image>
 			<view class="donationDetail_count">
 				<view class="count_name">
-					某某某
+					{{docationDetail.nickname}}
 				</view>
 				<view class="count_desc">
-					感谢您向<span>公益基金</span>项目捐助了<span>100USD</span>
+					感谢您向<span>公益基金</span>项目捐助了<span>{{docationDetail.money}}USD</span>
 				</view>
 				<view class="count_desctwo">
 					大爱无疆，感谢您让世界更美好！
 				</view>
 				<view class="count_descthree">
-					证书编号 <span>ZFB23022818059221</span>
+					证书编号 <span>{{docationDetail.sn}}</span>
 				</view>
 			</view>
 		</view>
@@ -23,6 +23,9 @@
 
 <script>
 	import hxNavbar from "@/components/hx-navbar.vue";
+	import {
+		$request
+	} from "@/utils/request";
 	export default {
 		components: {
 			hxNavbar,
@@ -36,9 +39,21 @@
 				};
 			},
 		},
+		onLoad(option) {
+			this.getDetail(option.id)
+		},
 		data(){
 			return {
-				
+				docationDetail:"",//详情
+			}
+		},
+		methods:{
+			async getDetail(id){
+			    let res = await $request('getRecordsdetail',{id:id})
+				if(res.data.code==200){
+					this.docationDetail=res.data.data
+				}
+			    console.log(res,'证书详情')
 			}
 		}
 	}
