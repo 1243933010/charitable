@@ -10,16 +10,21 @@
 			</view>
 			<!-- 头像区域 -->
 			<view class="user_avatar">
-				<image src="../../static/img/cn.png" mode="aspectFill"></image>
-				<view class="avatar_right">
+				<image :src="userInfo.avatar||'../../static/img/v2logo.png'" @error="userInfo.avatar='../../static/img/v2logo.png'" mode="aspectFill"></image>
+				<view class="avatar_right" v-if="userInfo">
 					<view class="right_name">
-						赵大枣NO.1
+						{{userInfo.nickname||'未设置昵称'}}
 					</view>
 					<view class="right_phone">
-						+86 13888656692
+						+86 {{userInfo.mobile}}
 					</view>
 					<view class="right_uid">
-						UUID：10000
+						UUID：{{userInfo.id}}
+					</view>
+				</view>
+				<view class="avatar_right" v-if="!userInfo" @click="goLogin">
+					<view class="right_name">
+						暂未登录
 					</view>
 				</view>
 			</view>
@@ -27,7 +32,7 @@
 			<view class="user_money">
 				<view class="user_money_one" @click="goPath(`/pages/me/month/month`)">
 					<view class="user_money_number">
-						1090
+						{{userInfo.balance||0}}
 					</view>
 					<view class="user_money_title">
 						账户余额
@@ -35,7 +40,7 @@
 				</view>
 				<view class="user_money_one">
 					<view class="user_money_number">
-						10
+						{{userInfo.share_bonus||0}}
 					</view>
 					<view class="user_money_title">
 						分享奖金
@@ -43,7 +48,7 @@
 				</view>
 				<view class="user_money_one">
 					<view class="user_money_number">
-						1090
+						{{userInfo.public_welfare_fund||0}}
 					</view>
 					<view class="user_money_title">
 						公益基金
@@ -91,6 +96,9 @@
 	</view>
 </template>
 <script>
+	import {
+		$request
+	} from "@/utils/request";
 	export default {
 		data(){
 			return {
@@ -151,14 +159,39 @@
 						imageeds:'../../static/userStatic/function_share.png',
 						path:"/pages/me/share/share"
 					}
-				]
+				],
+				userInfo:"",//用户详情
+			}
+		},
+		onShow() {
+			if(uni.getStorageSync('token')){
+				this.getUserinfo()//获取用户详情
 			}
 		},
 		methods:{
+			async getUserinfo(){
+				let res = await $request('getInfo', {});
+				if (res.data.code == 200) {
+					this.userInfo = res.data.data;
+					console.log(this.userInfo)
+				}
+				// console.log(res,'用户详情')
+			},
 			goPath(link){
-				uni.navigateTo({
-					url: link,
-				});
+				if(uni.getStorageSync('token')){
+					uni.navigateTo({
+						url: link,
+					});
+				}else{
+					uni.reLaunch({
+						url:"/pages/login/index"
+					})
+				}
+			},
+			goLogin(){
+				uni.reLaunch({
+					url:"/pages/login/index"
+				})
 			}
 		}
 	}
@@ -192,7 +225,7 @@
 				box-sizing: border-box;
 				padding: 50rpx 70rpx;
 				display: flex;
-				// align-items: center;
+				align-items: center;
 				image{
 					width: 160rpx;
 					height: 160rpx;

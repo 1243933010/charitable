@@ -241,5 +241,25 @@ let requestObj = {
 		url:'/api/user/captain',
 		type: 'POST',
 	},
+	getInfo:{
+		name:"用户详情",
+		url:"/api/userInfo",
+		type:"POST"
+	},
+	getRecords:{
+		name:"证书列表",
+		url:"/api/userTargetedAidRecords",
+		type:"POST"
+	},
+	getRecordsdetail:{
+		name:"证书详情",
+		url:"/api/userTargetedAidRecordDetail",
+		type:"POST"
+	},
+	getFriends:{
+		name:"好友列表",
+		url:"/api/userFriends",
+		type:"POST"
+	}
 }
 export default requestObj;
