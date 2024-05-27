@@ -23,7 +23,7 @@
 					<view class="image-icon"></view>
 					<view class="prefix-con" @click="openpNumberPicker">
 						<!-- 手机号前缀选择器 -->
-						<view class="number-prefix" @click="goPhonePrefix">{{ formData.country_code }}</view>
+						<view class="number-prefix" @click="goPhonePrefix">+{{ formData.mobile_code }}</view>
 						<view class="arrow"></view>
 					</view>
 					<view class="inp">
@@ -34,7 +34,7 @@
 			<view class="input-con password">
 				<view class="image-icon"></view>
 				<view class="inp">
-					<input type="text" v-model="formData.captcha_code"  :placeholder="$t('login.code')" />
+					<input type="text" v-model="formData.code"  :placeholder="$t('login.code')" />
 				</view>
 				<!-- <view class="eye-icon" :class="{ close: pwdType }" @click="handleEye"></view> -->
 				<view class="get" v-if="typeof codeText =='number'"  >{{codeText}}</view>
@@ -53,7 +53,7 @@
 					<view class="view1" @click="goOther('/pages/login/index')"><text>{{$t("app.newAdd8")}}</text></view>
 				</view>
 				<view class="btn-list">
-					<button class="button login-btn" :disabled="!(formData.mobile && formData.password)"
+					<button class="button login-btn" 
 						@click="loginHandle">{{ $t("login.btn1") }}</button>
 					<!-- <button class="button region-btn" @click="goRegion">{{ $t("region.btn1") }}</button> -->
 				</view>
@@ -81,10 +81,10 @@
 				isMember: true,
 				codeText: '',
 				formData: {
-					login_type: '0',
+					code: '',
 					mobile: undefined,
-					password: "",
-					country_code: "+975", // 手机前缀
+					// password: "",
+					mobile_code: "975", // 手机前缀
 				},
 			};
 		},
@@ -108,12 +108,12 @@
 			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight;
 
 			// 获取缓存里面的手机号和密码
-			this.formData.mobile = uni.getStorageSync("mobile");
-			this.formData.password = uni.getStorageSync("password");
+			// this.formData.mobile = uni.getStorageSync("mobile");
+			// this.formData.password = uni.getStorageSync("password");
 
 			// 在页面加载时监听返回事件
 			uni.$on("getPrefix", event => {
-				this.formData.country_code = "+" + event.prefix;
+				this.formData.mobile_code =  event.prefix;
 			});
 		},
 		methods: {
@@ -142,10 +142,10 @@
 				});
 			},
 			handleTime() {
-				if (!this.formData.email) {
+				if (!this.formData.mobile) {
 					uni.showToast({
 						icon: 'none',
-						title: this.$t("login.code")
+						title: this.$t("login.phonePlaceholder")
 					})
 					return
 				}
@@ -164,21 +164,33 @@
 					}
 				}, 1000)
 			},
+			async sendEmail() {
+				let res = await $request("smsPassword", {
+					mobile: this.formData.mobile,
+					mobile_code:this.formData.mobile_code,
+					scene:"login",
+				})
+				console.log(res)
+				uni.showToast({
+					icon: "none",
+					title: res.data.message,
+				});
+			},
 			loginHandle() {
-				$request("login", this.formData).then(res => {
+				$request("loginByCode", this.formData).then(res => {
 					let {
 						data,
 						code,
-						msg
+						message
 					} = res.data;
 					let {
 						token
 					} = data;
 
-					if (code !== 0) {
+					if (code !== 200) {
 						// 登录失败
 						uni.showToast({
-							title: res.data.msg,
+							title: res.data.message,
 							icon: "none",
 						});
 
@@ -188,13 +200,13 @@
 					// 登录成功
 					uni.setStorageSync("token", `Bearer ${token}`); // 存储token
 
-					// 记住密码
-					let {
-						mobile,
-						password
-					} = this.formData;
-					uni.setStorageSync("mobile", mobile); // 存储手机号
-					this.isMember ? uni.setStorageSync("password", password) : ""; // 存储密码
+					// // 记住密码
+					// let {
+					// 	mobile,
+					// 	password
+					// } = this.formData;
+					// uni.setStorageSync("mobile", mobile); // 存储手机号
+					// this.isMember ? uni.setStorageSync("password", password) : ""; // 存储密码
 					uni.showToast({
 						title: this.$t("login.seccuss"),
 						success: () => {

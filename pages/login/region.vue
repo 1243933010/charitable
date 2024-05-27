@@ -34,7 +34,7 @@
 				<view class="input-con password">
 					<view class="image-icon"></view>
 					<view class="inp">
-						<input type="text" v-model="formData.captcha_code"  :placeholder="$t('login.code')" />
+						<input type="text" v-model="formData.code"  :placeholder="$t('login.code')" />
 					</view>
 					<!-- <view class="eye-icon" :class="{ close: pwdType }" @click="handleEye"></view> -->
 					<view class="get" v-if="typeof codeText =='number'"  >{{codeText}}</view>
@@ -43,7 +43,7 @@
 				<view class="input-con invite-code">
 					<view class="image-icon"></view>
 					<view class="inp">
-						<input type="text" v-model="formData.invitation_code"
+						<input type="text" v-model="formData.invite_code"
 							:placeholder="$t('region.invitePlaceholder')" />
 					</view>
 					<view class="eye-icon"></view>
@@ -59,7 +59,7 @@
 				<view class="input-con password">
 					<view class="image-icon"></view>
 					<view class="inp">
-						<input type="text" v-model="formData.confirmPassword" :password="confirmPwdType"
+						<input type="text" v-model="formData.password_confirmation" :password="confirmPwdType"
 							:placeholder="$t('app.newAdd6')" />
 					</view>
 					<!-- <view class="eye-icon" :class="{ close: pwdType }" @click="handleEye1"></view> -->
@@ -96,20 +96,22 @@
 				codeText: '',
 				formData: {
 					mobile: "",
+					code:"",
 					password_confirmation: "",
-					invitation_code: "",
+					invite_code: "",
 					password: "",
 					mobile_code: "975", // 手机前缀
-					scene:'login'
+					scene:'register'
 				},
 			};
 		},
 		onLoad(e) {
-			if (e.invitation_code) {
-				this.formData.invitation_code = e.invitation_code;
+			if (e.invite_code) {
+				this.formData.invite_code = e.invite_code;
 			}
 		},
 		mounted(){
+			this.codeText = this.$t("login.get-code");
 			uni.$on("getPrefix", event => {
 				console.log("11",event,';;')
 				this.formData.mobile_code =   event.prefix;
@@ -130,9 +132,9 @@
 			  };
 			},
 		},
-		mounted() {
-			this.codeText = this.$t("login.get-code");
-		},
+		// mounted() {
+		// 	this.codeText = this.$t("login.get-code");
+		// },
 		methods: {
 			openpNumberPicker() {},
 			goPhonePrefix() {
@@ -143,14 +145,14 @@
 			},
 			goRegion(){
 				uni.navigateTo({
-					url:`./mobileRegion?invitation_code=${this.formData.invitation_code}`
+					url:`./mobileRegion?invite_code=${this.formData.invite_code}`
 				})
 			},
 			handleTime() {
 				if (!this.formData.mobile) {
 					uni.showToast({
 						icon: 'none',
-						title: this.$t("login.code")
+						title: this.$t("login.phonePlaceholder")
 					})
 					return
 				}
@@ -179,22 +181,22 @@
 				let res = await $request("smsPassword", {
 					mobile: this.formData.mobile,
 					mobile_code:this.formData.mobile_code,
-					scene:"login",
+					scene:"register",
 				})
 				console.log(res)
 				uni.showToast({
 					icon: "none",
-					title: res.data.msg,
+					title: res.data.message,
 				});
 			},
 			async region() {
-				this.formData.password_confirmation = this.formData.password;
-				let data = await $request("emailRegister", this.formData);
+				// this.formData.password_confirmation = this.formData.password;
+				let data = await $request("region", this.formData);
 				uni.showToast({
 					icon: "none",
-					title: data.data.msg,
+					title: data.data.message,
 				});
-				if (data.data.code == 0) {
+				if (data.data.code == 200) {
 					uni.setStorageSync("token", `Bearer ${data.data.data.token}`);
 					uni.reLaunch({
 						url: "/pages/index/index",

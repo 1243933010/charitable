@@ -9,10 +9,10 @@
 					<swiper-item  v-for="(item, index) in swiperList" :key="index">
 						<view class="swiper-item">
 							<view class="pic">
-								<image @click="linkImg(item)" :src="item.image" class="img" mode="widthFix"></image>
+								<image @click="linkImg(item)" :src="imageUrl+item.image" class="img" mode="widthFix"></image>
 								<view class="text-box">
 									<view class="title">
-										<text>星星点灯，照亮梦乡</text>
+										<text>{{item.title}}</text>
 									</view>
 									<view class="label">
 										<text>希望计划让留守山区的孩子找寻回家的希望，照亮梦乡让留守山区</text>
@@ -311,7 +311,7 @@
 <script>
 	import customHeader from "@/components/customHeader/customHeader.vue";
 	import {
-		$request
+		$request,filesUrl
 	} from "@/utils/request.js";
 	import {
 		setTabbar
@@ -426,11 +426,14 @@
 					// ],
 				];
 			},
+		    imageUrl(){
+				return filesUrl;
+			}
 		},
 		mounted() {
-			// console.log(uni.getLocale())
+			console.log(filesUrl)
 			setTabbar(this.$t)
-			this.adverts();
+			this.slides();
 			this.getNotices();
 			this.nftListFnc();
 			this.linkObj();
@@ -495,11 +498,11 @@
 					title: res.data.msg,
 				});
 			},
-			async adverts() {
-				let res = await $request("adverts", {});
-				console.log(res)
-				if (res.data.code === 0) {
-					this.swiperList = res.data.data;
+			async slides() {
+				let res = await $request("slides", {});
+				console.log( res.data.data.data)
+				if (res.data.code === 200) {
+					this.swiperList = res.data.data.data;
 					return false;
 				}
 				uni.showToast({

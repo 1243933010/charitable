@@ -81,9 +81,9 @@
 				isMember: true,
 				formData: {
 					// login_type: '0',
-					mobile: '17512099696', //undefined
-					password: "Xx123456",
-					mobile_code: "10", // 手机前缀
+					mobile: '', //undefined
+					password: "",
+					mobile_code: "975", // 手机前缀
 					email:""
 				},
 			};
@@ -98,7 +98,6 @@
 
 			// 在页面加载时监听返回事件
 			uni.$on("getPrefix", event => {
-				console.log('1;;')
 				this.formData.mobile_code =   event.prefix;
 			});
 		},
@@ -133,7 +132,7 @@
 					let {
 						data,
 						code,
-						msg
+						message
 					} = res.data;
 					let {
 						token
@@ -142,7 +141,7 @@
 					if (code !== 200) {
 						// 登录失败
 						uni.showToast({
-							title: res.data.msg,
+							title: res.data.message,
 							icon: "none",
 						});
 

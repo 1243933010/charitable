@@ -9,6 +9,17 @@ let requestObj = {
 		url: '/api/login',
 		type: 'POST'
 	},
+	loginByCode: {
+		name: "验证码登录",
+		url: '/api/loginByCode',
+		type: 'POST'
+	},
+	forgetPassword:{
+		name: "忘记密码",
+		url: '/api/forgetPassword',
+		type: 'POST'
+	},
+	
 	smsPassword:{
 		name: "发送验证码",
 		url: '/api/sms',
@@ -84,8 +95,8 @@ let requestObj = {
 		url: '/api/bank_accounts/index',
 		type: 'POST'
 	},
-	adverts: {
-		url: '/api/adverts',
+	slides: {
+		url: '/api/slides',
 		type: 'POST'
 	},
 	notices: {
