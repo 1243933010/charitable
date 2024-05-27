@@ -23,7 +23,7 @@
 					<view class="image-icon"></view>
 					<view class="prefix-con" @click="openpNumberPicker">
 						<!-- 手机号前缀选择器 -->
-						<view class="number-prefix" @click="goPhonePrefix">{{ formData.country_code }}</view>
+						<view class="number-prefix" @click="goPhonePrefix">+{{ formData.mobile_code }}</view>
 						<view class="arrow"></view>
 					</view>
 					<view class="inp">
@@ -99,7 +99,8 @@
 					password_confirmation: "",
 					invitation_code: "",
 					password: "",
-					country_code: "+975", // 手机前缀
+					mobile_code: "975", // 手机前缀
+					scene:'login'
 				},
 			};
 		},
@@ -107,6 +108,12 @@
 			if (e.invitation_code) {
 				this.formData.invitation_code = e.invitation_code;
 			}
+		},
+		mounted(){
+			uni.$on("getPrefix", event => {
+				console.log("11",event,';;')
+				this.formData.mobile_code =   event.prefix;
+			});
 		},
 		computed:{
 			codeLocale(){
@@ -140,7 +147,7 @@
 				})
 			},
 			handleTime() {
-				if (!this.formData.email) {
+				if (!this.formData.mobile) {
 					uni.showToast({
 						icon: 'none',
 						title: this.$t("login.code")
@@ -169,9 +176,10 @@
 				this.confirmPwdType = !this.confirmPwdType;
 			},
 			async sendEmail() {
-				let res = await $request("sendEmail", {
-					to_email: this.formData.email,
-					template:'register'
+				let res = await $request("smsPassword", {
+					mobile: this.formData.mobile,
+					mobile_code:this.formData.mobile_code,
+					scene:"login",
 				})
 				console.log(res)
 				uni.showToast({

@@ -9,6 +9,11 @@ let requestObj = {
 		url: '/api/login',
 		type: 'POST'
 	},
+	smsPassword:{
+		name: "发送验证码",
+		url: '/api/sms',
+		type: 'POST'
+	},
 	emailLogin:{
 		name: "送邮箱验证码",
 		url: '/api/email_login',

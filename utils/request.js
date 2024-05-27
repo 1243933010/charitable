@@ -1,11 +1,11 @@
 import requestObj from '@/utils/requestObj.js'
-export let url = 'http://dev.2404.goldval.top'
+export let url = 'http://2405-api.2404.goldval.top'
 export const $request = (requestName,params,headerType=0)=>{
 	let reqObj = requestObj[requestName];
 	let token = uni.getStorageSync('token');
 	let language = uni.getLocale();
 	console.log(language)
-	let languageObj = {'en':'en','fr': "fr",'es': "es",'ara': "ara",}
+	let languageObj = {'en':'en','fr': "fr",'es': "es",'ara': "ara","zh-Hans":"zh-Hans"}
 	let headerObj = [
 		{
 			"Content-Type":"application/json",
@@ -31,14 +31,14 @@ export const $request = (requestName,params,headerType=0)=>{
 		    header: headerObj[headerType],
 		    success: (res) => {
 				// console.log(res,'=====================')
-				// if(res.data.code==401){
-				// 	uni.hideLoading()
-				// 	uni.clearStorageSync();
-				// 	uni.reLaunch({
-				// 		url:'/pages/login/index'
-				// 	})
-				// 	return
-				// }
+				if(res.data.code==401){
+					uni.hideLoading()
+					uni.clearStorageSync();
+					uni.reLaunch({
+						url:'/pages/login/index'
+					})
+					return
+				}
 		        resolve(res)
 		    },
 			fail: (err) => {

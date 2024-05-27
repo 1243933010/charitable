@@ -23,7 +23,7 @@
 					<view class="image-icon"></view>
 					<view class="prefix-con" @click="openpNumberPicker">
 						<!-- 手机号前缀选择器 -->
-						<view class="number-prefix" @click="goPhonePrefix">{{ formData.country_code }}</view>
+						<view class="number-prefix" @click="goPhonePrefix">+{{ formData.mobile_code }}</view>
 						<view class="arrow"></view>
 					</view>
 					<view class="inp">
@@ -80,10 +80,11 @@
 				pwdType: true,
 				isMember: true,
 				formData: {
-					login_type: '0',
-					mobile: undefined,
-					password: "",
-					country_code: "+975", // 手机前缀
+					// login_type: '0',
+					mobile: '17512099696', //undefined
+					password: "Xx123456",
+					mobile_code: "10", // 手机前缀
+					email:""
 				},
 			};
 		},
@@ -92,12 +93,13 @@
 			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight;
 
 			// 获取缓存里面的手机号和密码
-			this.formData.mobile = uni.getStorageSync("mobile");
-			this.formData.password = uni.getStorageSync("password");
+			// this.formData.mobile = uni.getStorageSync("mobile");
+			// this.formData.password = uni.getStorageSync("password");
 
 			// 在页面加载时监听返回事件
 			uni.$on("getPrefix", event => {
-				this.formData.country_code = "+" + event.prefix;
+				console.log('1;;')
+				this.formData.mobile_code =   event.prefix;
 			});
 		},
 		methods: {
@@ -127,6 +129,7 @@
 			},
 			loginHandle() {
 				$request("login", this.formData).then(res => {
+					console.log(res,'11')
 					let {
 						data,
 						code,
@@ -136,7 +139,7 @@
 						token
 					} = data;
 
-					if (code !== 0) {
+					if (code !== 200) {
 						// 登录失败
 						uni.showToast({
 							title: res.data.msg,
