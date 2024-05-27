@@ -50,6 +50,11 @@ let requestObj = {
 		url: '/api/email_forgot_password',
 		type: 'POST'
 	},
+	articles:{
+		name: "文章列表（慈善等）",
+		url: '/api/articles',
+		type: 'POST'
+	},
 	bindEmail:{
 		name: "检测用户是否绑定邮箱",
 		url: '/api/check_email_bind',

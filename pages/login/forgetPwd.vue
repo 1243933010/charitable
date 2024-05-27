@@ -183,6 +183,7 @@
 				});
 				if (data.data.code == 200) {
 					// uni.setStorageSync("token", `Bearer ${data.data.data.token}`);
+					uni.clearStorage();
 					// uni.reLaunch({
 					// 	url: "/pages/index/index",
 					// });

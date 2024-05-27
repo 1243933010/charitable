@@ -126,9 +126,9 @@
 				</view>
 			
 				<view class="product-list">
-					<view class="product-item" v-for="(item,index) in nftList" :key="index">
+					<view class="product-item" v-for="(item,index) in articlesList" :key="index">
 						<view class="product-img pic">
-							<image :src="item.url" mode="aspectFit" class="img" @click="goProductDetail(item)">
+							<image :src="item.images" mode="aspectFit" class="img" @click="goProductDetail(item)">
 							</image>
 						</view>
 						<view class="product-info">
@@ -331,6 +331,7 @@
 					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
 					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
 				],
+				articlesList:[],
 				linkInfo: {},
 				currentIndex:0,
 				auctionList:[
@@ -435,7 +436,7 @@
 			setTabbar(this.$t)
 			this.slides();
 			this.getNotices();
-			this.nftListFnc();
+			this.articles();
 			this.linkObj();
 		},
 		methods: {
@@ -453,19 +454,19 @@
 					console.log(this.menuList)
 				}
 			},
-			async nftListFnc() {
+			async articles() {
 				this.loading = true;
 				let formData = {
 					keywords: '',
 					page: 1,
-					page_size: 20,
-					vip_grade: ''
+					limit: 20,
+					identifier: 'charity'
 				}
-				let res = await $request('nftList', formData);
+				let res = await $request('articles', formData);
 				console.log(res)
 				this.loading = false;
-				if (res.data.code === 0) {
-					this.nftList = res.data.data.data;
+				if (res.data.code === 200) {
+					this.articlesList = res.data.data.data;
 					console.log(this.nftList)
 				}
 			},
