@@ -60,7 +60,7 @@
 					<view class="tit">
 					<view class="radio"></view>
 					{{ $t("app.newAdd10") }}</view>
-					<view class="desc">{{ $t("app.newAdd17") }}></view>
+					<!-- <view class="desc">{{ $t("app.newAdd17") }}></view> -->
 				</view>
 			
 				<view class="product-list">

@@ -34,9 +34,9 @@
 					<view class="title">
 						<text>{{$t("app.newAdd42")}}</text>
 					</view>
-					<picker @change="bindPickerChange" :value="index" :range="statusList">
+					<picker @change="bindPickerChange" range-key="label" :value="index" :range="statusList">
 						<view class="status">
-							<view class="uni-input">{{statusList[index]}}</view>
+							<view class="uni-input">{{statusList[pickerIndex].label}}</view>
 							<image src="../../static/img/icon/arrow.png" mode="widthFix"></image>
 
 						</view>
@@ -50,13 +50,13 @@
 					</picker>
 				</view>
 				<view class="list">
-					<view class="item" v-for="(item,index) in nftList" :key="index" @click="goUrl(item)">
+					<view class="item" v-for="(item,index) in auctionsList" :key="index" @click="goUrl(item)">
 						<view class="status">
 							<text>{{$t("app.newAdd44")}}:即将开始</text>
 						</view>
 						<view class="content">
 							<view class="img">
-								<image :src="item.url" mode="widthFix"></image>
+								<image :src="item.main_image" mode="widthFix"></image>
 							</view>
 							<view class="right">
 								<view class="name">
@@ -111,11 +111,23 @@
 				swiperList: [],
 				currentIndex: 0,
 				formData: {
-					// status:'竞拍阶段'
+					page: 1,
+					limit: 20,
+					status:0,
+					start_price:'0',
+					end_price:'200'
 				},
-				statusList: ['竞拍阶段', 'xx阶段', 'xxx阶段'],
+				pickerIndex:0,
+				// statusList: ['即将开始', '竞拍中','已结束','已终止','已撤回'],
+				statusList:[
+					{value:0,label:'即将开始'},
+					{value:1,label:'竞拍中'},
+					{value:2,label:'已结束'},
+					{value:3,label:'已终止'},
+					{value:4,label:'已撤回'},
+				],
 				index: 0,
-				betweenList: ['10-20', '20-100', '100-500'],
+				betweenList: ['0-200','200-1000', '1000-5000','5000-100000'],
 				betweenIndex: 0,
 				nftList: [{
 						url: '../../static/img/logo.png',
@@ -142,10 +154,15 @@
 						title: '白色的空开放式学校背包'
 					},
 				],
+				auctionsList:[]
 			}
 		},
 		mounted() {
-			this.adverts();
+			this.auctions();
+		},
+		onReachBottom(){
+			this.formData.page++;
+			this.auctions();
 		},
 		methods: {
 			goUrl(item){
@@ -153,29 +170,35 @@
 					url:'./detail'
 				})
 			},
-			bindPickerChange: (e) => {
+			bindPickerChange (e)  {
 				console.log('picker发送选择改变，携带值为', e.detail.value)
-				this.index = e.detail.value
+				this.pickerIndex = e.detail.value
+				this.formData.status = this.statusList[e.detail.value].value;
+				this.formData.page=1;
+				this.auctionsList = [];
+				this.auctions();
 			},
-			bindPickerChange1: (e) => {
-				console.log('picker发送选择改变，携带值为', e.detail.value)
-				this.betweenIndex = e.detail.value
+			bindPickerChange1(e)  {
+				console.log('picker发送选择改变，携带值为', e.detail.value, this.betweenList[e.detail.value])
+				this.betweenIndex = e.detail.value;
+				this.formData.start_price = this.betweenList[e.detail.value].split('-')[0];
+				this.formData.end_price = this.betweenList[e.detail.value].split('-')[1];
+				this.formData.page=1;
+				this.auctionsList = [];
+				this.auctions();
 			},
 			swiperChange(e) {
 				// e.detail.current 是当前的索引
 				this.currentIndex = e.detail.current;
 			},
-			async adverts() {
-				let res = await $request("adverts", {});
-				// console.log(res)
-				if (res.data.code === 0) {
-					this.swiperList = res.data.data;
-					return false;
+			async auctions() {
+				
+				let res = await $request('auctions', this.formData);
+				console.log(res)
+				this.loading = false;
+				if (res.data.code === 200) {
+					this.auctionsList.push(...res.data.data.data);
 				}
-				uni.showToast({
-					icon: "none",
-					title: res.data.msg,
-				});
 			},
 		}
 	}
@@ -310,7 +333,8 @@
 					display: flex;
 					flex-direction: row;
 					align-items: center;
-					margin-right: 69rpx;
+					// margin-right: 69rpx;
+					// padding-left: 69rpx;
 					.uni-input{
 						color: #3A2633;
 						font-size: 26rpx;
@@ -322,6 +346,7 @@
 					}
 				}
 				.between{
+					 padding-left: 69rpx;
 					.uni-input{
 						color: #F96932;
 					}

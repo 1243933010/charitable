@@ -39,13 +39,13 @@
 					<text>{{$t("app.newAdd34")}}</text>
 				</view>
 				<view class="list">
-					<view class="item" v-for="(item,index) in nftList" :key="index">
+					<view class="item" v-for="(item,index) in detailInfo.user_records" :key="index">
 						<view class="left">
 							<image src="../../../static/img/help_icon.png" mode="widthFix"></image>
-							<text>我已捐赠</text>
+							<text>{{$t("app.newAdd61")}}</text>
 						</view>
 						<view class="right">
-							<text>500 USDT</text>
+							<text>{{item.money}} USDT</text>
 						</view>
 					</view>
 				</view>
@@ -81,13 +81,13 @@
 							<text>{{$t("app.newAdd38")}}</text>
 						</view>
 						<view class="input">
-							<input :placeholder="$t('app.newAdd39')" type="text" />
+							<input v-model="money" :placeholder="$t('app.newAdd39')" type="text" />
 						</view>
 					</view>
 				
 				</view>
 				<view class="btn-div">
-					<view class="btn">
+					<view class="btn" @click="submit">
 						<text>{{$t("app.newAdd35")}}</text>
 					</view>
 				</view>
@@ -118,40 +118,31 @@
 			return {
 				swiperList: [],
 				currentIndex: 0,
-				nftList: [{
-						url: '../../../static/img/logo.png',
-						label: '500USDT',
-						statusText: '**用户已完成交易',
-						title: '白色的空开放式学校背包'
-					},
-					{
-						url: '../../../static/img/logo.png',
-						label: '500USDT',
-						statusText: '**用户已完成交易',
-						title: '白色的空开放式学校背包'
-					},
-					{
-						url: '../../../static/img/logo.png',
-						label: '500USDT',
-						statusText: '**用户已完成交易',
-						title: '白色的空开放式学校背包'
-					},
-					{
-						url: '../../../static/img/logo.png',
-						label: '500USDT',
-						statusText: '**用户已完成交易',
-						title: '白色的空开放式学校背包'
-					},
-				],
+				detailInfo:{},
+				onLoadPrams:{},
+				money:""
 			};
 		},
 		mounted() {
 			this.adverts();
 		},
 		onLoad(e){
+			this.onLoadPrams = e;
 			this.targetedAidsDetail(e.id)
 		},
 		methods: {
+			async submit(){
+				let res = await $request("submitTargetedAid",{id:this.onLoadPrams.id,money:this.money})
+				console.log(res)
+				uni.showToast({
+					icon: "none",
+					title: res.data.message,
+				});
+				if(res.data.code==200){
+					// this.detailInfo = res.data.data;
+					this.targetedAidsDetail(this.onLoadPrams.id)
+				}
+			},
 			async targetedAidsDetail(id){
 				let res = await $request("targetedAidsDetail",{id})
 				console.log(res)
@@ -176,7 +167,7 @@
 				}
 				uni.showToast({
 					icon: "none",
-					title: res.data.msg,
+					title: res.data.message,
 				});
 			},
 		}

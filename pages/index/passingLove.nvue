@@ -9,7 +9,7 @@
 							<text>{{$t("app.newAdd27")}}</text>
 						</view>
 						<view class="label">
-							<text>{{$t("app.newAdd28")}}  <text class="num">11</text> {{$t("app.newAdd29")}} {{$t("app.newAdd30")}}</text>
+							<text>{{$t("app.newAdd28")}}  <text class="num">{{info.total||0}}</text> {{$t("app.newAdd29")}} {{$t("app.newAdd30")}}</text>
 						</view>
 					</view>
 				</view>
@@ -21,9 +21,9 @@
 			</view>
 			<view class="product-container">
 				<view class="product-list">
-					<view class="product-item" v-for="(item,index) in nftList" :key="index">
+					<view class="product-item" @click="goUrl(item)" v-for="(item,index) in info.data" :key="index">
 						<view class="product-img pic">
-							<image :src="item.url" mode="aspectFit" class="img" @click="goProductDetail(item)">
+							<image :src="item.image" mode="aspectFit" class="img">
 							</image>
 						</view>
 						<view class="product-info">
@@ -32,7 +32,6 @@
 							<view class="product-price-info">
 								<view class="rebate">
 									<text style="margin-right:27rpx;">{{item.statusText}}</text>
-									<!-- <text style="">{{item.statusText}}</text> -->
 								</view>
 
 							</view>
@@ -65,39 +64,36 @@
 		},
 		data() {
 			return {
-				nftList: [{
-						url: '../../static/img/logo.png',
-						label: '500USDT',
-						statusText: '**用户已完成交易',
-						title: '白色的空开放式学校背包'
-					},
-					{
-						url: '../../static/img/logo.png',
-						label: '500USDT',
-						statusText: '**用户已完成交易',
-						title: '白色的空开放式学校背包'
-					},
-					{
-						url: '../../static/img/logo.png',
-						label: '500USDT',
-						statusText: '**用户已完成交易',
-						title: '白色的空开放式学校背包'
-					},
-					{
-						url: '../../static/img/logo.png',
-						label: '500USDT',
-						statusText: '**用户已完成交易',
-						title: '白色的空开放式学校背包'
-					},
-				],
+				
+				requestData: {
+					page: 1,
+					limit: 20,
+				},
+				info: {data:[]},
 			}
 		},
+		mounted() {
+			this.getList();
+		},
+		onReachBottom() {
+			this.requestData.page++;
+			this.getList();
+		},
 		methods:{
-			goUrl(){
+			goUrl(item){
 				uni.navigateTo({
-					url:'/pages/index/detail/passingLoveDetail'
+					url:`/pages/index/detail/passingLoveDetailDetail?id=${item.id}`
 				})
-			}
+			},
+			async getList() {
+				let res = await $request('loveTransmissions', this.requestData);
+				
+				this.loading = false;
+				if (res.data.code == 200) {
+					this.info.data.push(...res.data.data.data);
+					this.info.total = res.data.data.total;
+				}
+			},
 		}
 	}
 </script>

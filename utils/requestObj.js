@@ -75,6 +75,31 @@ let requestObj = {
 		url: '/api/targetedAidsDetail',
 		type: 'POST'
 	},
+	submitTargetedAid:{
+		name: "提交捐赠",
+		url: '/api/submitTargetedAid',
+		type: 'POST'
+	},
+	auctions:{
+		name: "拍卖列表",
+		url: '/api/auctions',
+		type: 'POST'
+	},
+	userAuctions:{
+		name: "交易列表",
+		url: '/api/userAuctions',
+		type: 'POST'
+	},
+	loveTransmissions:{
+		name: "爱心传递列表",
+		url: '/api/loveTransmissions',
+		type: 'POST'
+	},
+	loveTransmissionsDetail:{
+		name: "爱心传递详情",
+		url: '/api/loveTransmissionsDetail',
+		type: 'POST'
+	},
 	bindEmail:{
 		name: "检测用户是否绑定邮箱",
 		url: '/api/check_email_bind',

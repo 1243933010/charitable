@@ -25,13 +25,13 @@
 				</view>
 				
 				<view class="product-list">
-					<view class="product-item" v-for="(item,index) in nftList" :key="index" @click="goPage(`/pages/classification/productDetail`)">
+					<view class="product-item" v-for="(item,index) in userAuctionsList" :key="index" @click="goPage(`/pages/classification/productDetail`)">
 						<view class="product-img pic">
-							<image :src="item.url" mode="widthFix" class="img"></image>
+							<image :src="item.main_image" mode="widthFix" class="img"></image>
 						</view>
 						<view class="product-info">
 							<view class="product-title">{{item.title}}</view>
-							<view class="product-price">{{item.price}}</view>
+							<view class="product-price">{{item.bid_increment}}</view>
 						</view>
 					</view>
 				</view>
@@ -102,6 +102,7 @@
 					}
 				],
 				currentIndex: 0,
+				userAuctionsList:[],
 				tabs: [
 					{
 						text: "交易会场",
@@ -114,24 +115,6 @@
 				],
 				tabsVal: 0,
 				iStatusBarHeight: 0,
-				
-				nftList: [
-					{
-						url: productTestImg,
-						price:'500USDT',
-						title:'白色的空开放式学校背包',
-					},
-					{
-						url: productTestImg,
-						price:'500USDT',
-						title:'白色的空开放式学校背包',
-					},
-					{
-						url: productTestImg,
-						price:'500USDT',
-						title:'白色的空开放式学校背包',
-					},
-				],
 				myProductList: [
 					{
 						url: productTestImg,
@@ -175,13 +158,30 @@
 						title:'白色的空开放式学校背包',
 						time: "2024-01-01",
 					},
-				]
+				],
+				userAuctionsParams:{
+					page:1,
+					limit:20
+				}
 			};
 		},
 		mounted() {
 			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight;
+			this.userAuctions();
+		},
+		onReachBottom(){
+			if(tabsVal==0){
+				this.userAuctionsParams.page++;
+				this.userAuctions();
+			}
 		},
 		methods: {
+			async userAuctions() {
+				let res = await $request('userAuctions', this.userAuctionsParams);
+				if (res.data.code === 200) {
+					this.userAuctionsList.push(...res.data.data.data);
+				}
+			},
 			swiperChange(e) {
 			  // e.detail.current 是当前的索引
 			  this.currentIndex = e.detail.current;

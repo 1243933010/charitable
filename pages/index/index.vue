@@ -225,8 +225,8 @@
 							<!-- <view class="product-tit">{{item.label}}</view> -->
 							<view class="product-price-info">
 								<view class="rebate">
-									<text style="margin-right:7rpx;">{{item.total_moneys}}</text>
-									<text style="color: #F96932;">{{item.total_users}}</text>
+									<text style="margin-right:7rpx;">**用户已完成交易{{item.total_moneys}}</text>
+									<text style="color: #F96932;">**用户已完成交易{{item.total_users}}</text>
 								</view>
 							
 							</view>
@@ -242,13 +242,13 @@
 					{{ $t("app.newAdd9") }}
 					
 					</view>
-					<view class="desc">{{ $t("app.newAdd17") }}></view>
+					<view class="desc" @click="goPage('/pages/auctionVenue/auctionVenue')">{{ $t("app.newAdd17") }}></view>
 				</view>
 			
 				<view class="product-list">
-					<view class="product-item" v-for="(item,index) in nftList" :key="index">
+					<view class="product-item" v-for="(item,index) in auctionsList" :key="index">
 						<view class="product-img pic">
-							<image :src="item.url" mode="aspectFit" class="img" @click="goProductDetail(item)">
+							<image :src="item.main_image" mode="aspectFit" class="img" @click="goProductDetail(item)">
 							</image>
 						</view>
 						<view class="product-info">
@@ -256,8 +256,8 @@
 							<!-- <view class="product-tit">{{item.label}}</view> -->
 							<view class="product-price-info">
 								<view class="rebate" style="display: flex;justify-content: space-between;width: 100%;">
-									<text style="margin-right:7rpx;color: #EF8F1E;">{{item.statusText}}</text>
-									<text style="color: #9EA19D;">{{item.statusText}}</text>
+									<text style="margin-right:7rpx;color: #EF8F1E;">{{item.price}}</text>
+									<text style="color: #9EA19D;">{{item.stock}}</text>
 								</view>
 							
 							</view>
@@ -271,19 +271,19 @@
 					<view class="tit">
 					<view class="radio"></view>
 					{{ $t("app.newAdd21") }}</view>
-					<view class="desc" @click="goPage('/pages/index/charitySale')">{{ $t("app.newAdd17") }}></view>
+					<view class="desc" @click="goPage('/pages/classification/classification')">{{ $t("app.newAdd17") }}></view>
 				</view>
 			
 				<view class="product-list">
-					<view class="product-item" v-for="(item,index) in nftList" :key="index">
+					<view class="product-item" v-for="(item,index) in userAuctionsList" :key="index">
 						<view class="product-img pic">
-							<image :src="item.url" mode="aspectFit" class="img" @click="goProductDetail(item)">
+							<image :src="item.main_image" mode="aspectFit" class="img" @click="goProductDetail(item)">
 							</image>
 						</view>
 						<view class="product-info">
 							<view class="product-title"><text>{{item.title}}</text> </view>
 							<view class="product-tit">
-								<text>{{item.label}}</text>
+								<text>{{item.bid_increment}}</text>
 								<!-- <text style="color: #8E8E8E;font-size: 24rpx;">{{ $t("app.newAdd20") }}11</text> -->
 							</view>
 							<!-- <view class="product-price-info">
@@ -336,6 +336,8 @@
 				targetedAidsList:[],
 				linkInfo: {},
 				currentIndex:0,
+				auctionsList:[],
+				userAuctionsList:[]
 			};
 		},
 		onLoad() {},
@@ -434,8 +436,39 @@
 			this.linkObj();
 			this.charitySaleGoods();
 			this.targetedAids();
+			this.auctions();
+			this.userAuctions();
 		},
 		methods: {
+			
+			async userAuctions() {
+				let formData = {
+					// keywords: '',
+					page: 1,
+					limit: 5,
+					// identifier: 'charity'
+				}
+				let res = await $request('userAuctions', formData);
+				console.log(res)
+				this.loading = false;
+				if (res.data.code === 200) {
+					this.userAuctionsList = res.data.data.data;
+				}
+			},
+			async auctions() {
+				let formData = {
+					// keywords: '',
+					page: 1,
+					limit: 5,
+					// identifier: 'charity'
+				}
+				let res = await $request('auctions', formData);
+				console.log(res)
+				this.loading = false;
+				if (res.data.code === 200) {
+					this.auctionsList = res.data.data.data;
+				}
+			},
 			async targetedAids() {
 				let formData = {
 					// keywords: '',
@@ -520,10 +553,10 @@
 					}
 					return false;
 				}
-				uni.showToast({
-					icon: "none",
-					title: res.data.msg,
-				});
+				// uni.showToast({
+				// 	icon: "none",
+				// 	title: res.data.message,
+				// });
 			},
 			async slides() {
 				let res = await $request("slides", {});
@@ -579,7 +612,7 @@
 				// 	return
 				// }
 				// // #endif
-				if (link.indexOf("join") !== -1) {
+				if (link.includes("auctionVenue")||link.includes("classification")) {
 					uni.switchTab({
 						url: link,
 					});

@@ -5,7 +5,7 @@
 		<view class="index-scroll  has-tabbar">
 			<view class="product-container">
 				<view class="product-list">
-					<view class="product-item" v-for="(item,index) in nftList" :key="index" @click="goUrl">
+					<view class="product-item" v-for="(item,index) in nftList" :key="index" @click="goUrl(item)">
 						<view class="product-img pic">
 							<image :src="item.url" mode="aspectFit" class="img" @click="goProductDetail(item)">
 							</image>

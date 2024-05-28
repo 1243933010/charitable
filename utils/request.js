@@ -32,12 +32,14 @@ export const $request = (requestName,params,headerType=0)=>{
 		    header: headerObj[headerType],
 		    success: (res) => {
 				// console.log(res,'=====================')
-				if(res.data.code==401){
+				if(res.data.code==403){
 					uni.hideLoading()
 					uni.clearStorageSync();
-					uni.reLaunch({
-						url:'/pages/login/index'
-					})
+					setTimeout(()=>{
+						uni.reLaunch({
+							url:'/pages/login/index'
+						})
+					},1000)
 					return
 				}
 		        resolve(res)
