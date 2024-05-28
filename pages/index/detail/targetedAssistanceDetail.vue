@@ -148,7 +148,18 @@
 		mounted() {
 			this.adverts();
 		},
+		onLoad(e){
+			this.targetedAidsDetail(e.id)
+		},
 		methods: {
+			async targetedAidsDetail(id){
+				let res = await $request("targetedAidsDetail",{id})
+				console.log(res)
+				if(res.data.code==200){
+					this.detailInfo = res.data.data;
+				}
+				
+			},
 			openDialog(){
 				this.$refs.popup.open("bottom");
 			},

@@ -122,13 +122,13 @@
 					{{ $t("app.newAdd12") }}
 					
 					</view>
-					<view class="desc">{{ $t("app.newAdd17") }}></view>
+					<view class="desc" @click="goPage('/pages/index/charityConsultation')">{{ $t("app.newAdd17") }}></view>
 				</view>
 			
 				<view class="product-list">
-					<view class="product-item" v-for="(item,index) in articlesList" :key="index">
+					<view class="product-item" v-for="(item,index) in articlesList" :key="index" @click="goPage(`/pages/index/detail/charityConsultationDetail?id=${item.id}`)">
 						<view class="product-img pic">
-							<image :src="item.images" mode="aspectFit" class="img" @click="goProductDetail(item)">
+							<image :src="item.images" mode="aspectFit" class="img" >
 							</image>
 						</view>
 						<view class="product-info">
@@ -152,20 +152,20 @@
 					<view class="tit">
 					<view class="radio"></view>
 					{{ $t("app.newAdd10") }}</view>
-					<view class="desc">{{ $t("app.newAdd17") }}></view>
+					<view class="desc" @click="goPage('/pages/index/charitySale')">{{ $t("app.newAdd17") }}></view>
 				</view>
 			
 				<view class="product-list">
-					<view class="product-item" v-for="(item,index) in nftList" :key="index">
+					<view class="product-item" v-for="(item,index) in charitySaleGoodsList" :key="index">
 						<view class="product-img pic">
-							<image :src="item.url" mode="aspectFit" class="img" @click="goProductDetail(item)">
+							<image :src="item.main_image" mode="aspectFit" class="img" @click="goProductDetail(item)">
 							</image>
 						</view>
 						<view class="product-info">
 							<view class="product-title"><text>{{item.title}}</text> </view>
 							<view class="product-tit">
-								<text>{{item.label}}</text>
-								<text style="color: #8E8E8E;font-size: 24rpx;">{{ $t("app.newAdd20") }}11</text>
+								<text>{{item.price}}</text>
+								<text style="color: #8E8E8E;font-size: 24rpx;">{{ $t("app.newAdd20") }}{{item.stock}}</text>
 							</view>
 							<!-- <view class="product-price-info">
 								<view class="rebate">$ {{item.statusText}}</view>
@@ -211,13 +211,13 @@
 					{{ $t("app.newAdd11") }}
 					
 					</view>
-					<view class="desc">{{ $t("app.newAdd17") }}></view>
+					<view class="desc" @click="goPage('/pages/index/targetedAssistance')">{{ $t("app.newAdd17") }}></view>
 				</view>
 			
 				<view class="product-list">
-					<view class="product-item" v-for="(item,index) in nftList" :key="index">
+					<view class="product-item" v-for="(item,index) in targetedAidsList" :key="index" @click="goPage(`/pages/index/detail/targetedAssistanceDetail?id=${item.id}`)">
 						<view class="product-img pic">
-							<image :src="item.url" mode="aspectFit" class="img" @click="goProductDetail(item)">
+							<image :src="item.main_image" mode="aspectFit" class="img" >
 							</image>
 						</view>
 						<view class="product-info">
@@ -225,8 +225,8 @@
 							<!-- <view class="product-tit">{{item.label}}</view> -->
 							<view class="product-price-info">
 								<view class="rebate">
-									<text style="margin-right:7rpx;">{{item.statusText}}</text>
-									<text style="color: #F96932;">{{item.statusText}}</text>
+									<text style="margin-right:7rpx;">{{item.total_moneys}}</text>
+									<text style="color: #F96932;">{{item.total_users}}</text>
 								</view>
 							
 							</view>
@@ -271,7 +271,7 @@
 					<view class="tit">
 					<view class="radio"></view>
 					{{ $t("app.newAdd21") }}</view>
-					<view class="desc">{{ $t("app.newAdd17") }}></view>
+					<view class="desc" @click="goPage('/pages/index/charitySale')">{{ $t("app.newAdd17") }}></view>
 				</view>
 			
 				<view class="product-list">
@@ -332,16 +332,10 @@
 					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
 				],
 				articlesList:[],
+				charitySaleGoodsList:[],
+				targetedAidsList:[],
 				linkInfo: {},
 				currentIndex:0,
-				auctionList:[
-					{url:'../../static/img/logo.png',label:'500USDT'},
-					{url:'../../static/img/logo.png',label:'500USDT'},
-					{url:'../../static/img/logo.png',label:'500USDT'},
-					{url:'../../static/img/logo.png',label:'500USDT'},
-					{url:'../../static/img/logo.png',label:'500USDT'},
-					{url:'../../static/img/logo.png',label:'500USDT'},
-				]
 			};
 		},
 		onLoad() {},
@@ -438,8 +432,40 @@
 			this.getNotices();
 			this.articles();
 			this.linkObj();
+			this.charitySaleGoods();
+			this.targetedAids();
 		},
 		methods: {
+			async targetedAids() {
+				let formData = {
+					// keywords: '',
+					page: 1,
+					limit: 5,
+					// identifier: 'charity'
+				}
+				let res = await $request('targetedAids', formData);
+				console.log(res)
+				this.loading = false;
+				if (res.data.code === 200) {
+					this.targetedAidsList = res.data.data.data;
+					console.log(this.nftList)
+				}
+			},
+			async charitySaleGoods() {
+				let formData = {
+					// keywords: '',
+					page: 1,
+					limit: 4,
+					// identifier: 'charity'
+				}
+				let res = await $request('charitySaleGoods', formData);
+				console.log(res)
+				this.loading = false;
+				if (res.data.code === 200) {
+					this.charitySaleGoodsList = res.data.data.data;
+					console.log(this.nftList)
+				}
+			},
 			 swiperChange(e) {
 			      // e.detail.current 是当前的索引
 			      this.currentIndex = e.detail.current;
@@ -459,7 +485,7 @@
 				let formData = {
 					keywords: '',
 					page: 1,
-					limit: 20,
+					limit: 5,
 					identifier: 'charity'
 				}
 				let res = await $request('articles', formData);
@@ -533,26 +559,26 @@
 				});
 			},
 			goPage(link) {
-				if (link == '/pages/index/invitePage') {
-					// #ifdef APP
-					return false
-					// #endif
-				}
-				// #ifdef H5
-				if (link.includes('http') || link.includes('www')) {
-					window.open(link, '_blank');
-					return
-				}
-				// #endif
-				// #ifdef APP-PLUS
-				console.log(link, '===')
-				if (link.includes('http') || link.includes('www')) {
-					uni.navigateTo({
-						url: `/pages/index/webview?url=${link}`,
-					});
-					return
-				}
-				// #endif
+				// if (link == '/pages/index/invitePage') {
+				// 	// #ifdef APP
+				// 	return false
+				// 	// #endif
+				// }
+				// // #ifdef H5
+				// if (link.includes('http') || link.includes('www')) {
+				// 	window.open(link, '_blank');
+				// 	return
+				// }
+				// // #endif
+				// // #ifdef APP-PLUS
+				// console.log(link, '===')
+				// if (link.includes('http') || link.includes('www')) {
+				// 	uni.navigateTo({
+				// 		url: `/pages/index/webview?url=${link}`,
+				// 	});
+				// 	return
+				// }
+				// // #endif
 				if (link.indexOf("join") !== -1) {
 					uni.switchTab({
 						url: link,

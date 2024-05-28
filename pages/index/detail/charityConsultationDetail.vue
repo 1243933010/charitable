@@ -86,12 +86,24 @@
 					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
 					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
 				],
+				detailInfo:{}
 			};
 		},
 		mounted() {
 			this.adverts();
 		},
+		onLoad(e){
+			this.articlesDetail(e.id)
+		},
 		methods: {
+			async articlesDetail(id){
+				let res = await $request("articlesDetail",{id})
+				console.log(res)
+				if(res.data.code==200){
+					this.detailInfo = res.data.data;
+				}
+				
+			},
 			goUrl(){
 				uni.navigateTo({
 					url:'/pages/index/appShare'

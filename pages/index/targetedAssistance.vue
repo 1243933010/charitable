@@ -35,9 +35,9 @@
 			
 			
 				<view class="product-list">
-					<view class="product-item" v-for="(item,index) in nftList" @click="goUrl(item)" :key="index">
+					<view class="product-item" v-for="(item,index) in list" @click="goUrl(item)" :key="index">
 						<view class="product-img pic">
-							<image :src="item.url" mode="aspectFit" class="img" @click="goProductDetail(item)">
+							<image :src="item.main_image" mode="aspectFit" class="img" @click="goProductDetail(item)">
 							</image>
 						</view>
 						<view class="product-info">
@@ -45,8 +45,8 @@
 							<!-- <view class="product-tit">{{item.label}}</view> -->
 							<view class="product-price-info">
 								<view class="rebate">
-									<text style="margin-right:27rpx;">{{item.statusText}}</text>
-									<text style="color: #F96932;">{{item.statusText}}</text>
+									<text style="margin-right:27rpx;">**用户已完成交易</text>
+									<text style="color: #F96932;">**用户已完成交易</text>
 								</view>
 							
 							</view>
@@ -81,21 +81,33 @@
 			return {
 				swiperList:[],
 				currentIndex:0,
-				nftList: [
-					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-				],
+				list:[],
+				requestData: {
+					page: 1,
+					limit: 20,
+				},
 			};
 		},
 		mounted() {
 			this.adverts();
+			this.getList();
+		},
+		onReachBottom() {
+			this.requestData.page++;
+			this.getList();
 		},
 		methods: {
+			async getList() {
+				let res = await $request('targetedAids', this.requestData);
+				console.log(res)
+				this.loading = false;
+				if (res.data.code === 200) {
+					this.list.push(...res.data.data.data);
+				}
+			},
 			goUrl(item){
 				uni.navigateTo({
-					url:'/pages/index/detail/targetedAssistanceDetail'
+					url:`/pages/index/detail/targetedAssistanceDetail?id=${item.id}`
 				})
 			},
 			swiperChange(e) {

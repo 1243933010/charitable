@@ -64,16 +64,16 @@
 				</view>
 			
 				<view class="product-list">
-					<view class="product-item" v-for="(item,index) in nftList" :key="index">
+					<view class="product-item" v-for="(item,index) in list" :key="index">
 						<view class="product-img pic" @click="goPage(`/pages/index/charityProductDetail1?id=${item.id}`)">
-							<image :src="item.url" mode="aspectFit" class="img">
+							<image :src="item.main_image" mode="aspectFit" class="img">
 							</image>
 						</view>
 						<view class="product-info">
 							<view class="product-title"><text>{{item.title}}</text> </view>
 							<view class="product-tit">
-								<text>{{item.label}}</text>
-								<text style="color: #8E8E8E;font-size: 24rpx;">{{ $t("app.newAdd20") }}11</text>
+								<text>{{item.price}}</text>
+								<text style="color: #8E8E8E;font-size: 24rpx;">{{ $t("app.newAdd20") }}{{item.stock}}</text>
 							</view>
 							<!-- <view class="product-price-info">
 								<view class="rebate">$ {{item.statusText}}</view>
@@ -110,18 +110,31 @@
 			return {
 				swiperList:[],
 				currentIndex:0,
-				nftList: [
-					{id: 0,url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{id: 1,url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{id: 2,url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{id: 3,url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-				],
+				nftList: [],
+				requestData: {
+					page: 1,
+					limit: 20,
+				},
+				list: [],
 			};
 		},
 		mounted() {
 			this.adverts();
+			this.getList();
+		},
+		onReachBottom() {
+			this.requestData.page++;
+			this.getList();
 		},
 		methods: {
+			async getList() {
+				let res = await $request('charitySaleGoods', this.requestData);
+				console.log(res)
+				this.loading = false;
+				if (res.data.code === 200) {
+					this.list.push(...res.data.data.data);
+				}
+			},
 			swiperChange(e) {
 			      // e.detail.current 是当前的索引
 			      this.currentIndex = e.detail.current;

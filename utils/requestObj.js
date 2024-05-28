@@ -55,6 +55,26 @@ let requestObj = {
 		url: '/api/articles',
 		type: 'POST'
 	},
+	articlesDetail:{
+		name: "文章详情",
+		url: '/api/articlesDetail',
+		type: 'POST'
+	},
+	charitySaleGoods:{
+		name: "义卖列表",
+		url: '/api/charitySaleGoods',
+		type: 'POST'
+	},
+	targetedAids:{
+		name: "帮扶列表",
+		url: '/api/targetedAids',
+		type: 'POST'
+	},
+	targetedAidsDetail:{
+		name: "帮扶详情",
+		url: '/api/targetedAidsDetail',
+		type: 'POST'
+	},
 	bindEmail:{
 		name: "检测用户是否绑定邮箱",
 		url: '/api/check_email_bind',

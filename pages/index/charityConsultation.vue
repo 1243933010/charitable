@@ -35,7 +35,7 @@
 			
 			
 				<view class="product-list">
-					<view class="product-item" v-for="(item,index) in nftList" @click="goUrl(item)" :key="index">
+					<view class="product-item" v-for="(item,index) in list" @click="goUrl(item)" :key="index">
 						<view class="product-img pic">
 							<image :src="item.url" mode="aspectFit" class="img" @click="goProductDetail(item)">
 							</image>
@@ -62,7 +62,7 @@
 <script>
 	import hxNavbar from "@/components/hx-navbar.vue";
 	import {
-		$request
+		$request,filesUrl
 	} from "@/utils/request.js";
 	export default {
 		components: {
@@ -76,30 +76,48 @@
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};
 			},
+			imageUrl() {
+				return filesUrl;
+			}
 		},
 		data() {
 			return {
 				swiperList:[],
 				currentIndex:0,
-				nftList: [
-					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-				],
+				requestData: {
+					page: 1,
+					limit: 20,
+					identifier: 'charity',
+					category_id: ''
+				},
+				list: [],
 			};
 		},
 		mounted() {
 			this.adverts();
+			this.getList();
+		},
+		onReachBottom() {
+			this.requestData.page++;
+			this.getList();
 		},
 		methods: {
+			async getList() {
+				let res = await $request('articles', this.requestData);
+				console.log(res)
+				this.loading = false;
+				if (res.data.code === 200) {
+					this.list.push(...res.data.data.data);
+					console.log(this.nftList)
+				}
+			},
 			swiperChange(e) {
 			      // e.detail.current 是当前的索引
 			      this.currentIndex = e.detail.current;
 			},
 			goUrl(item){
 				uni.navigateTo({
-					url:'/pages/index/detail/charityConsultationDetail'
+					url:`/pages/index/detail/charityConsultationDetail?id=${item.id}`
 				})
 			},
 			async adverts() {
@@ -363,7 +381,7 @@
 							color: #3A2633;
 							font-size: 24rpx;
 							font-weight: 600;
-							line-height: 1.5;
+							// line-height: 1.5;
 							margin-bottom: 9rpx;
 						}
 						.product-tit {
