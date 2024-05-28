@@ -8,7 +8,7 @@
 					<swiper-item :current="current" v-for="(item, index) in swiperList" :key="index">
 						<view class="swiper-item">
 							<view class="pic">
-								<image @click="linkImg(item)" :src="item.image" class="img" mode="widthFix"></image>
+								<image  :src="imageUrl+item.image" class="img" mode="widthFix"></image>
 								<!-- <view class="text-box">
 									<view class="title">
 										<text>星星点灯，照亮梦乡</text>
@@ -91,21 +91,13 @@
 <script>
 	import hxNavbar from "@/components/hx-navbar.vue";
 	import {
-		$request
+		$request,filesUrl
 	} from "@/utils/request.js";
 	export default {
 		components: {
 			hxNavbar,
 		},
-		computed: {
-			config() {
-				return {
-					title: this.$t("app.newAdd10"),
-					color: "#403039",
-					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
-				};
-			},
-		},
+		
 		data() {
 			return {
 				swiperList:[],
@@ -118,8 +110,20 @@
 				list: [],
 			};
 		},
+		computed:{
+			config() {
+				return {
+					title: this.$t("app.newAdd10"),
+					color: "#403039",
+					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
+				};
+			},
+			imageUrl(){
+				return filesUrl;
+			}
+		},
 		mounted() {
-			this.adverts();
+			this.slides();
 			this.getList();
 		},
 		onReachBottom() {
@@ -127,6 +131,18 @@
 			this.getList();
 		},
 		methods: {
+			async slides() {
+				let res = await $request("slides", {position:'2'});
+				console.log( res.data.data.data)
+				if (res.data.code === 200) {
+					this.swiperList = res.data.data.data;
+					return false;
+				}
+				uni.showToast({
+					icon: "none",
+					title: res.data.msg,
+				});
+			},
 			async getList() {
 				let res = await $request('charitySaleGoods', this.requestData);
 				console.log(res)
@@ -139,18 +155,7 @@
 			      // e.detail.current 是当前的索引
 			      this.currentIndex = e.detail.current;
 			},
-			async adverts() {
-				let res = await $request("adverts", {});
-				// console.log(res)
-				if (res.data.code === 0) {
-					this.swiperList = res.data.data;
-					return false;
-				}
-				uni.showToast({
-					icon: "none",
-					title: res.data.msg,
-				});
-			},
+			
 			goPage(url) {
 				uni.navigateTo({
 					url,

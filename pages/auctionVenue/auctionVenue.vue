@@ -9,7 +9,7 @@
 					<swiper-item :current="current" v-for="(item, index) in swiperList" :key="index">
 						<view class="swiper-item">
 							<view class="pic">
-								<image @click="linkImg(item)" :src="item.image" class="img" mode="widthFix"></image>
+								<image @click="linkImg(item)" :src="imageUrl+item.image" class="img" mode="widthFix"></image>
 								<!-- <view class="text-box">
 									<view class="title">
 										<text>星星点灯，照亮梦乡</text>
@@ -90,7 +90,7 @@
 <script>
 	import hxNavbar from "@/components/hx-navbar.vue";
 	import {
-		$request
+		$request,filesUrl
 	} from "@/utils/request.js";
 	export default {
 		components: {
@@ -105,6 +105,9 @@
 					back: false
 				};
 			},
+			imageUrl(){
+				return filesUrl;
+			}
 		},
 		data() {
 			return {
@@ -159,12 +162,25 @@
 		},
 		mounted() {
 			this.auctions();
+			this.slides();
 		},
 		onReachBottom(){
 			this.formData.page++;
 			this.auctions();
 		},
 		methods: {
+			async slides() {
+				let res = await $request("slides", {position:'5'});
+				console.log( res.data.data.data)
+				if (res.data.code === 200) {
+					this.swiperList = res.data.data.data;
+					return false;
+				}
+				uni.showToast({
+					icon: "none",
+					title: res.data.msg,
+				});
+			},
 			goUrl(item){
 				uni.navigateTo({
 					url:'./detail'
@@ -252,19 +268,23 @@
 			// background: url("../../static/img/bg/index_bg.png") no-repeat center center / 100% 100%;
 			box-sizing: border-box;
 			background-color: white;
-
+			padding-top: 25rpx;
 			.swiper {
 				width: 100%;
-				height: 440rpx !important;
+				height: 400rpx !important;
 				margin: 0 auto;
 				// background-color: white;
 
 				.swiper-item {
 					.pic {
+						width: 690rpx;
+						margin: 0 auto;
 						position: relative;
+						
 						// background-color: white;
 
 						image {
+							border-radius: 30rpx;
 							// border-radius: 20rpx;
 						}
 

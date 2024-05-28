@@ -325,12 +325,6 @@
 				title: "Hello",
 				newsList: [],
 				swiperList: [],
-				nftList: [
-					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{url:'../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-				],
 				articlesList:[],
 				charitySaleGoodsList:[],
 				targetedAidsList:[],
@@ -371,7 +365,7 @@
 						{
 						  iconUrl: "../../static/img/icon/index/11.png",
 						  tit: this.$t("app.newAdd9"),
-						  link: "/pages/index/auction",
+						  link: "/pages/auctionVenue/auctionVenue",
 						},
 						{
 							iconUrl: "../../static/img/icon/index/22.png",
@@ -481,7 +475,6 @@
 				this.loading = false;
 				if (res.data.code === 200) {
 					this.targetedAidsList = res.data.data.data;
-					console.log(this.nftList)
 				}
 			},
 			async charitySaleGoods() {
@@ -496,7 +489,6 @@
 				this.loading = false;
 				if (res.data.code === 200) {
 					this.charitySaleGoodsList = res.data.data.data;
-					console.log(this.nftList)
 				}
 			},
 			 swiperChange(e) {
@@ -526,7 +518,6 @@
 				this.loading = false;
 				if (res.data.code === 200) {
 					this.articlesList = res.data.data.data;
-					console.log(this.nftList)
 				}
 			},
 			newLink(item) {
@@ -559,7 +550,7 @@
 				// });
 			},
 			async slides() {
-				let res = await $request("slides", {});
+				let res = await $request("slides", {position:'1'});
 				console.log( res.data.data.data)
 				if (res.data.code === 200) {
 					this.swiperList = res.data.data.data;
