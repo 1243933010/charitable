@@ -22,12 +22,12 @@
 				</view>
 			</view>
 			<view class="auctionDetail_top_title">
-				订单详情
+				{{$t('app.orderDetail')}}
 			</view>
 			<view class="auctionDetail_toptwo">
 				<view class="toptwo_title">
 					<view class="title_left">
-						商品名称：
+						{{$t('app.shen9')}}：
 					</view>
 					<view class="title_right">
 						白色的空开放式学校背包
@@ -35,7 +35,7 @@
 				</view>
 				<view class="toptwo_title">
 					<view class="title_left">
-						订单编号：
+						{{$t('app.shen17')}}：
 					</view>
 					<view class="title_right">
 						46516543131
@@ -43,7 +43,7 @@
 				</view>
 				<view class="toptwo_title">
 					<view class="title_left">
-						订单金额：
+						{{$t('app.shen18')}}：
 					</view>
 					<view class="title_right">
 						500USDT
@@ -51,7 +51,7 @@
 				</view>
 				<view class="toptwo_title">
 					<view class="title_left">
-						结束时间：
+						{{$t('app.newAdd47')}}：
 					</view>
 					<view class="title_right">
 						2024-05-20 10:00
@@ -71,7 +71,7 @@
 		computed: {
 			config() {
 				return {
-					title: '详情',
+					title: this.$t('index.detail'),
 					color: "#403039",
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};

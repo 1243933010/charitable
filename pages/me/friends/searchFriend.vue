@@ -9,17 +9,17 @@
 					<image src="../../../static/userStatic/left.png" mode="widthFix" style="width: 22rpx;"></image>
 				</view>
 				<view class="nav_count">
-					我的好友
+					{{$t('app.user.myfriends')}}
 				</view>
 			</view>
 		</view>
 		<view class="broker_search">
 			<view class="broker_search_left">
 				<image src="../../../static/userStatic/search.png" mode="aspectFill"></image>
-				<input type="text" placeholder="请输入" v-model="params.keyword" >
+				<input type="text" :placeholder="$t('app.search')" v-model="params.keyword" >
 			</view>
 			<view class="broker_search_right" @click="getFriends('init')">
-				搜索
+				{{$t('app.xianshi.searched')}}
 			</view>
 		</view>
 		<scroll-view scroll-y="true" class="scroll_h">
@@ -32,7 +32,7 @@
 								{{item.nickname}}
 							</view>
 							<view class="name_right" @click="chanCheck(index)" v-if="!item.checked">
-								此处显示层级
+								{{$t('app.xianshi.dengji')}}
 							</view>
 							<view class="name_right" v-else>
 								{{item.level_name||''}}
@@ -44,12 +44,12 @@
 									{{item.mobile}}
 								</view>
 								<view class="friends_ones_time">
-									注册时间：{{item.created_at_format}}
+									{{$t('app.xianshi.zhucetime')}}：{{item.created_at_format}}
 								</view>
 							</view>
 							<view class="ones_bottom_right">
 								<image src="../../../static/userStatic/add_friends.png" mode="aspectFill"></image>
-								添加好友
+								{{$t('app.xianshi.addfriends')}}
 							</view>
 						</view>
 					</view>

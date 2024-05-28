@@ -4,30 +4,30 @@
 		<view class="bindAddress_centent">
 			<view class="bindAddress_one">
 				<view class="bindAddress_one_tile">
-					联系人
+					{{$t('app.user.lianxiren')}}
 				</view>
 				<view class="bindAddress_one_input">
-					<input type="text" placeholder="请输入联系人">
+					<input type="text" :placeholder="$t('app.user.lianxireninput')">
 				</view>
 			</view>
 			<view class="bindAddress_one">
 				<view class="bindAddress_one_tile">
-					联系电话
+					{{$t('app.user.phone')}}
 				</view>
 				<view class="bindAddress_one_input">
-					<input type="text" placeholder="请输入联系电话">
+					<input type="text" :placeholder="$t('app.user.phoneinput')">
 				</view>
 			</view>
 			<view class="bindAddress_one">
 				<view class="bindAddress_one_tile">
-					收货地址
+					{{$t('app.user.settingshouhuo')}}
 				</view>
 				<view class="bindAddress_one_input">
-					<input type="text" placeholder="请输入收货地址">
+					<input type="text" :placeholder="$t('app.user.settingshouhuoinput')">
 				</view>
 			</view>
 			<view class="bindAddress_button">
-				绑定收货地址
+				{{$t('app.user.bangshouhuo')}}
 			</view>
 		</view>
 	</view>
@@ -42,7 +42,7 @@
 		computed: {
 			config() {
 				return {
-					title: '绑定收货地址',
+					title: this.$t('app.user.bangshouhuo'),
 					color: "#403039",
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};

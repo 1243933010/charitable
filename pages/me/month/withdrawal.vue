@@ -12,7 +12,7 @@
 						<image src="../../../static/userStatic/left.png" mode="widthFix"></image>
 					</view>
 					<view class="nav_centent">
-						提现
+						{{$t('withdraw.pageTit')}}
 					</view>
 				</view>
 			</view>
@@ -20,7 +20,7 @@
 		<view class="withdrawal_bg" :style="bg_image">
 			<view class="withdrawal_centent">
 				<view class="withdrawal_bg_title">
-					提现通道
+					{{$t('app.month.tongdao')}}
 				</view>
 				<view class="withdrawal_one" :class="{'withdrawal_oneActive':tongdaoIndex==index}" v-for="(item,index) in tongdaoArray" :key="index" @click="tongdaoIndex=index">
 					<image v-if="tongdaoIndex==index" :src="item.iconSelect" mode="widthFix"></image>
@@ -31,11 +31,11 @@
 		</view>
 		<view class="withdrawal_count">
 			<view class="withdrawal_count_title">
-				选择提现账户
+				{{$t('app.month.tixainAccount')}}
 			</view>
 			<view class="withdrawal_count_one">
 				<view class="count_one_left">
-					请选择
+					{{$t('app.month.select')}}
 				</view>
 				<view class="count_one_right">
 					<image src="../../../static/userStatic/xila.png" mode="widthFix"></image>
@@ -46,20 +46,20 @@
 					AUD
 				</view>
 				<view class="count_one_right">
-					<input type="text" placeholder="请输入数量">
+					<input type="text" :placeholder="$t('app.month.number')">
 				</view>
 			</view>
 			<view class="withdrawal_count_one">
 				<view class="count_one_left" style="color: #333333;">
-					余额
+					{{$t('app.balance')}}
 				</view>
 				<view class="count_one_rightactive">
-					5.000澳元
+					5.000{{$t('app.month.aoyaun')}}
 				</view>
 			</view>
 			<view class="withdrawal_count_one">
 				<view class="count_one_left" style="color: #333333;">
-					手续费
+					{{$t('app.month.shouxufei')}}
 				</view>
 				<view class="count_one_rightactive">
 					0%
@@ -67,7 +67,7 @@
 			</view>
 			<view class="withdrawal_count_one">
 				<view class="count_one_left" style="color: #333333;">
-					汇率
+					{{$t('app.month.huilv')}}
 				</view>
 				<view class="count_one_rightactive">
 					1:1.39
@@ -75,25 +75,25 @@
 			</view>
 			<view class="withdrawal_count_one">
 				<view class="count_one_left" style="color: #333333;">
-					账户金额
+					{{$t('app.month.jine')}}
 				</view>
 				<view class="count_one_rightactive">
 					USDC 7194
 				</view>
 			</view>
 			<view class="withdrawal_count_two">
-				支付密码
+				{{$t('app.month.pass')}}
 			</view>
 			<view class="withdrawal_count_twoInput">
-				<input type="text" placeholder="请输入密码">
+				<input type="text" :placeholder="$t('login.pwdPlaceholder')">
 			</view>
 			<!-- 按钮 -->
 			<view class="withdrawal_count_button">
-				按钮
+				{{$t('withdraw.pageTit')}}
 			</view>
 			<view class="withdrawal_count_wraning">
 				<view class="wraning_title">
-					注意事项
+					{{$t('app.month.warning')}}
 				</view>
 				<view class="wraning_desc">
 					取款时间:11点至20点

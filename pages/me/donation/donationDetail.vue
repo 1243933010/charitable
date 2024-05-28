@@ -8,13 +8,13 @@
 					{{docationDetail.nickname}}
 				</view>
 				<view class="count_desc">
-					感谢您向<span>公益基金</span>项目捐助了<span>{{docationDetail.money}}USD</span>
+					{{$t('app.ganxie')}}<span>{{$t('app.user.welfare')}}</span>{{$t('app.xiangmu')}}<span>{{docationDetail.money}}USD</span>
 				</view>
 				<view class="count_desctwo">
-					大爱无疆，感谢您让世界更美好！
+					{{$t('app.daiawujiang')}}
 				</view>
 				<view class="count_descthree">
-					证书编号 <span>{{docationDetail.sn}}</span>
+					{{$t('app.zhengshubianhao')}} <span>{{docationDetail.sn}}</span>
 				</view>
 			</view>
 		</view>
@@ -33,7 +33,7 @@
 		computed: {
 			config() {
 				return {
-					title: '捐赠证书',
+					title: this.$t('app.juanzengzhengshu'),
 					color: "#403039",
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};

@@ -11,7 +11,7 @@
 							{{item.title}}
 						</view>
 						<view class="oneLeft_price">
-							捐赠 <span>{{item.money}}USD</span>
+							{{$t('app.juanzeng')}} <span>{{item.money}}USD</span>
 						</view>
 						<view class="oneLeft_time">
 							{{item.created_at_format}}
@@ -19,7 +19,7 @@
 					</view>
 				</view>
 				<view class="donation_oneRight">
-					查看证书
+					{{$t('app.zhengshu')}}
 				</view>
 			</view>
 		</view>
@@ -39,7 +39,7 @@
 		computed: {
 			config() {
 				return {
-					title: '捐赠记录',
+					title: this.$t('app.user.juanzengjilu'),
 					color: "#403039",
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};

@@ -12,7 +12,7 @@
 						<image src="../../../static/userStatic/left.png" mode="widthFix"></image>
 					</view>
 					<view class="nav_centent">
-						账户余额
+						{{$t('app.user.balance')}}
 					</view>
 				</view>
 			</view>
@@ -20,54 +20,54 @@
 		<view class="month_bg" :style="bg_image">
 			<view class="month_centent">
 				<view class="month_title">
-					钱包余额（USD）
+					{{$t('app.user.qianbaoyue')}}（USD）
 				</view>
 				<view class="month_price">
 					0.00
 				</view>
 				<view class="month_bg_button">
 					<view class="button_one" @click="goPath('/pages/me/month/withdrawal')">
-						提现
+						{{$t('withdraw.pageTit')}}
 					</view>
 					<view class="button_one button_two" @click="goPath('/pages/me/month/recharge')">
-						充值
+						{{$t('index.menuBtn5')}}
 					</view>
 				</view>
 				<view class="month_bg_name" @click="goPath('/pages/me/month/accountDetail')">
-					账户明细 >
+					{{$t('app.user.zhanghumingxi')}} >
 				</view>
 			</view>
 		</view>
 		<!-- 内容区域 -->
 		<view class="month_counted">
 			<view class="month_counted_title">
-				更多内容
+				{{$t('app.month.more')}}
 			</view>
 			<!-- 分享奖励 -->
 			<view class="month_counted_share">
 				<view class="counted_share_left">
 					<view class="share_left_title">
-						分享奖励 (USD)
+						{{$t('app.month.sharejiangli')}} (USD)
 					</view>
 					<view class="share_left_price">
 						1.82
 					</view>
 				</view>
 				<view class="counted_share_right" @click="goPath('/pages/me/month/jiangliDetail')">
-					奖励明细>
+					{{$t('app.month.jianglidetail')}}>
 				</view>
 			</view>
 			<view class="month_counted_share" style="background: #DE8F4F;">
 				<view class="counted_share_left">
 					<view class="share_left_title" style="color: #ffffff;">
-						公益基金 (USD)
+						{{$t('app.month.gongyijijin')}} (USD)
 					</view>
 					<view class="share_left_price" style="color: #ffffff;">
 						0.00
 					</view>
 				</view>
 				<view class="counted_share_right" style="color: #FFF8F1;" @click="goPath('/pages/me/month/jijinDetail')">
-					基金明细>
+					{{$t('app.month.jijindetail')}}>
 				</view>
 			</view>
 		</view>

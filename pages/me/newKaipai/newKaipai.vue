@@ -9,7 +9,7 @@
 						服饰箱包
 					</view>
 					<view class="title_right" @click="goPath(`/pages/me/newKaipai/moreKaipin`)">
-						更多
+						{{$t('app.newAdd17')}}
 						<image src="../../../static/userStatic/user_right.png" mode="widthFix"></image>
 					</view>
 				</view>
@@ -35,7 +35,7 @@
 		computed: {
 			config() {
 				return {
-					title: '新品开拍',
+					title: this.$t('app.user.xinpinkaipai'),
 					color: "#403039",
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};

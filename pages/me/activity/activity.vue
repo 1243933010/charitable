@@ -46,7 +46,7 @@
 		computed: {
 			config() {
 				return {
-					title: '活动中心',
+					title: this.$t('activity.pageTit'),
 					color: "#403039",
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};

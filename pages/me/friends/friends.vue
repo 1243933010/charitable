@@ -9,13 +9,13 @@
 					<image src="../../../static/userStatic/left.png" mode="widthFix" style="width: 22rpx;"></image>
 				</view>
 				<view class="nav_count">
-					我的好友
+					{{$t('app.user.myfriends')}}
 				</view>
 			</view>
 		</view>
 		<view class="broker_search" @click="goPath(`/pages/me/friends/searchFriend`)">
 			<image src="../../../static/userStatic/search.png" mode="aspectFill"></image>
-			搜索好友
+			{{$t('app.search.friends')}}
 		</view>
 		<scroll-view scroll-y="true" class="scroll_h">
 			<view class="friends_centent">
@@ -27,7 +27,7 @@
 								{{item.nickname}}
 							</view>
 							<view class="name_right" @click="chanCheck(index)" v-if="!item.checked">
-								此处显示层级
+								{{$t('app.xianshi.dengji')}}
 							</view>
 							<view class="name_right" v-else>
 								{{item.level_name||''}}
@@ -37,7 +37,7 @@
 							{{item.mobile}}
 						</view>
 						<view class="friends_ones_time">
-							注册时间：{{item.created_at_format}}
+							{{$t('app.xianshi.zhucetime')}}：{{item.created_at_format}}
 						</view>
 					</view>
 				</view>

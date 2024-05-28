@@ -4,11 +4,11 @@
 		<view class="accountDetail_centent">
 			<view class="accountDetail_title">
 				<view class="title_left">
-					全部
+					{{$t('app.month.all')}}
 				</view>
 				<view class="title_right">
 					<view class="right_name">
-						2024-04
+						{{$t('app.month.select')}}
 					</view>
 					<image src="../../../static/userStatic/xila.png" mode="widthFix"></image>
 				</view>
@@ -39,7 +39,7 @@
 		computed: {
 			config() {
 				return {
-					title: '基金明细',
+					title: this.$t('app.month.jijindetail'),
 					color: "#403039",
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};

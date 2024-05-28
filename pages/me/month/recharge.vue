@@ -12,7 +12,7 @@
 						<image src="../../../static/userStatic/left.png" mode="widthFix"></image>
 					</view>
 					<view class="nav_centent">
-						充值
+						{{$t('index.menuBtn5')}}
 					</view>
 				</view>
 			</view>
@@ -20,7 +20,7 @@
 		<view class="withdrawal_bg" :style="bg_image">
 			<view class="withdrawal_centent">
 				<view class="withdrawal_bg_title">
-					充值通道
+					{{$t('app.month.chongzhidao')}}
 				</view>
 				<view class="withdrawal_one" :class="{'withdrawal_oneActive':tongdaoIndex==index}" v-for="(item,index) in tongdaoArray" :key="index" @click="tongdaoIndex=index">
 					<image v-if="tongdaoIndex==index" :src="item.iconSelect" mode="widthFix"></image>
@@ -31,19 +31,19 @@
 		</view>
 		<view class="withdrawal_count">
 			<view class="withdrawal_count_title">
-				数量
+				{{$t('app.quantity')}}
 			</view>
 			<view class="withdrawal_count_one">
 				<view class="count_one_left" style="color: #333333;">
 					AUD
 				</view>
 				<view class="count_one_right">
-					<input type="text" placeholder="请输入数量">
+					<input type="text" :placeholder="$t('app.month.number')">
 				</view>
 			</view>
 			<view class="withdrawal_count_one">
 				<view class="count_one_left" style="color: #333333;">
-					汇率
+					{{$t('app.month.huilv')}}
 				</view>
 				<view class="count_one_rightactive">
 					1:1.39
@@ -51,7 +51,7 @@
 			</view>
 			<view class="withdrawal_count_one">
 				<view class="count_one_left" style="color: #333333;">
-					付款金额
+					{{$t('app.month.fukuanjine')}}
 				</view>
 				<view class="count_one_rightactive">
 					USDC 7194
@@ -59,11 +59,11 @@
 			</view>
 			<!-- 按钮 -->
 			<view class="withdrawal_count_button" @click="goReacher">
-				充值
+				{{$t('index.menuBtn5')}}
 			</view>
 			<view class="withdrawal_count_wraning">
 				<view class="wraning_title">
-					注意事项
+					{{$t('app.month.warning')}}
 				</view>
 				<view class="wraning_desc">
 					每次升级都需要获取最新的支付信息，请不要保留旧的账

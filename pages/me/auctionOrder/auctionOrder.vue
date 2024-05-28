@@ -9,7 +9,7 @@
 					<image src="../../../static/userStatic/left.png" mode="widthFix" style="width: 22rpx;"></image>
 				</view>
 				<view class="nav_count">
-					拍卖订单
+					{{$t('app.user.paiorder')}}
 				</view>
 				<!-- <view class="nav_search">
 					<image src="../../../static/userStatic/search_black.png" mode="aspectFill"></image>
@@ -18,11 +18,11 @@
 		</view>
 		<view class="broker_search">
 			<view class="search_title">
-				订单说明：已拍下产品可前往交易板块-我的拍品进行出售
+				{{$t('app.order.shuoming')}}
 			</view>
 			<view class="actionOrdeNav">
 				<view class="actionOrdeNav_one" :class="{'actionOrdeNav_oneActive':navOrderindex==indexs}" v-for="(items,indexs) in navOrderarray" :key="indexs" @click="navOrderindex=indexs">
-					{{items.name}}
+					{{this.$t(items.name)}}
 				</view>
 			</view>
 		</view>
@@ -61,16 +61,16 @@
 			return {
 				navOrderarray:[
 					{
-						name:"全部"
+						name:"app.month.all"
 					},
 					{
-						name:"已出价"
+						name:"app.shen35"
 					},
 					{
-						name:"已出局"
+						name:"app.chuju"
 					},
 					{
-						name:"已拍下"
+						name:"app.paixia"
 					}
 				],
 				navOrderindex:0,

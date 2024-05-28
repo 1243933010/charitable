@@ -6,7 +6,7 @@
 			
 			<view class="bindAddress_one">
 				<view class="bindAddress_one_tile">
-					收款账号
+					{{$t('app.user.shouaccount')}}
 				</view>
 				<view class="bindAddress_one_image">
 					<view class="image_one" v-for="(item,index) in accountArrar" :key="index">
@@ -21,14 +21,14 @@
 			</view>
 			<view class="bindAddress_one">
 				<view class="bindAddress_one_tile">
-					收款账号
+					{{$t('app.user.shouaccount')}}
 				</view>
 				<view class="bindAddress_one_input">
-					<input type="text" placeholder="请输入您要绑定的收款账号">
+					<input type="text" :placeholder="$t('app.user.shouaccountinput')">
 				</view>
 			</view>
 			<view class="bindAddress_button">
-				绑定账号
+				{{$t('app.user.bangding')}}
 			</view>
 		</view>
 	</view>
@@ -43,7 +43,7 @@
 		computed: {
 			config() {
 				return {
-					title: '绑定收款账号',
+					title: this.$t('app.user.bangzhanghao'),
 					color: "#403039",
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};

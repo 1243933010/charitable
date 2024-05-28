@@ -4,12 +4,12 @@
 		<view class="setting_centent">
 			<view class="setting_one">
 				<view class="setting_title">
-					绑定
+					{{$t('app.user.settingbang')}}
 				</view>
 				<view class="setting_ones" @click="goPath('/pages/me/setting/bindAccout')">
 					<view class="setting_ones_left">
 						<image class="setting_onesimage" src="../../../static/userStatic/setting_one.png" mode="heightFix"></image>
-						绑定收款账号
+						{{$t('app.user.bangzhanghao')}}
 					</view>
 					<view class="setting_ones_right">
 						<image src="../../../static/userStatic/user_right.png" mode="aspectFill"></image>
@@ -18,7 +18,7 @@
 				<view class="setting_ones" @click="goPath('/pages/me/setting/bindAddress')">
 					<view class="setting_ones_left">
 						<image class="setting_twoimage" src="../../../static/userStatic/setting_two.png" mode="heightFix"></image>
-						绑定收货地址
+						{{$t('app.user.bangshouhuo')}}
 					</view>
 					<view class="setting_ones_right">
 						<image src="../../../static/userStatic/user_right.png" mode="aspectFill"></image>
@@ -27,12 +27,12 @@
 			</view>
 			<view class="setting_one">
 				<view class="setting_title">
-					安全
+					{{$t('app.user.anquan')}}
 				</view>
 				<view class="setting_ones" @click="goPath('/pages/me/setting/changePaypass')">
 					<view class="setting_ones_left">
 						<image class="setting_threeimage" src="../../../static/userStatic/setting_three.png" mode="heightFix"></image>
-						修改支付密码
+						{{$t('app.user.paypass')}}
 					</view>
 					<view class="setting_ones_right">
 						<image src="../../../static/userStatic/user_right.png" mode="aspectFill"></image>
@@ -41,7 +41,7 @@
 				<view class="setting_ones" @click="goPath('/pages/me/setting/changeLoginpass')">
 					<view class="setting_ones_left">
 						<image class="setting_fourimage" src="../../../static/userStatic/setting_four.png" mode="heightFix"></image>
-						修改登录密码
+						{{$t('app.user.loginpass')}}
 					</view>
 					<view class="setting_ones_right">
 						<image src="../../../static/userStatic/user_right.png" mode="aspectFill"></image>
@@ -61,7 +61,7 @@
 		computed: {
 			config() {
 				return {
-					title: '设置',
+					title:this.$t('app.user.setting'),
 					color: "#403039",
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};

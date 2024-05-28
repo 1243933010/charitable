@@ -4,30 +4,30 @@
 		<view class="bindAddress_centent">
 			<view class="bindAddress_one">
 				<view class="bindAddress_one_tile">
-					旧密码
+					{{$t('app.user.jiupass')}}
 				</view>
 				<view class="bindAddress_one_input">
-					<input type="text" placeholder="请输入旧密码">
+					<input type="text" :placeholder="$t('app.password1')">
 				</view>
 			</view>
 			<view class="bindAddress_one">
 				<view class="bindAddress_one_tile">
-					新密码
+					{{$t('app.user.newpass')}}
 				</view>
 				<view class="bindAddress_one_input">
-					<input type="text" placeholder="请输入新密码">
+					<input type="text" :placeholder="$t('app.password2')">
 				</view>
 			</view>
 			<view class="bindAddress_one">
 				<view class="bindAddress_one_tile">
-					确认密码
+					{{$t('app.user.quePass')}}
 				</view>
 				<view class="bindAddress_one_input">
-					<input type="text" placeholder="请重复输入密码">
+					<input type="text" :placeholder="$t('app.user.quePassinput')">
 				</view>
 			</view>
 			<view class="bindAddress_button">
-				保存
+				{{$t('modifyNickname.btnText')}}
 			</view>
 		</view>
 	</view>
@@ -42,7 +42,7 @@
 		computed: {
 			config() {
 				return {
-					title: '修改支付密码',
+					title: this.$t('app.user.paypass'),
 					color: "#403039",
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};

@@ -13,7 +13,7 @@
 				<image :src="userInfo.avatar||'../../static/img/v2logo.png'" @error="userInfo.avatar='../../static/img/v2logo.png'" mode="aspectFill"></image>
 				<view class="avatar_right" v-if="userInfo">
 					<view class="right_name">
-						{{userInfo.nickname||'未设置昵称'}}
+						{{userInfo.nickname||$t('app.user.nickname')}}
 					</view>
 					<view class="right_phone">
 						+86 {{userInfo.mobile}}
@@ -24,7 +24,7 @@
 				</view>
 				<view class="avatar_right" v-if="!userInfo" @click="goLogin">
 					<view class="right_name">
-						暂未登录
+						{{$t('app.user.login')}}
 					</view>
 				</view>
 			</view>
@@ -35,7 +35,7 @@
 						{{userInfo.balance||0}}
 					</view>
 					<view class="user_money_title">
-						账户余额
+						{{$t('app.user.balance')}}
 					</view>
 				</view>
 				<view class="user_money_one">
@@ -43,7 +43,7 @@
 						{{userInfo.share_bonus||0}}
 					</view>
 					<view class="user_money_title">
-						分享奖金
+						{{$t('app.user.sharebonus')}}
 					</view>
 				</view>
 				<view class="user_money_one">
@@ -51,7 +51,7 @@
 						{{userInfo.public_welfare_fund||0}}
 					</view>
 					<view class="user_money_title">
-						公益基金
+						{{$t('公益基金')}}
 					</view>
 				</view>
 			</view>
@@ -61,10 +61,10 @@
 			<view class="user_centent_title">
 				<view class="title_left">
 					<image src="../../static/userStatic/dian.png" mode="aspectFill"></image>
-					我的订单
+					{{$t('app.user.order')}}
 				</view>
 				<view class="title_right">
-					全部订单
+					{{$t('app.user.allorder')}}
 					<image src="../../static/userStatic/user_right.png" mode="aspectFill"></image>
 				</view>
 			</view>
@@ -72,14 +72,14 @@
 				<view class="order_one" v-for="(item,index) in orderArray" :key="index">
 					<image :src="item.imageUrl" mode="aspectFill"></image>
 					<view class="order_one_title">
-						{{item.name}}
+						{{$t(item.name)}}
 					</view>
 				</view>
 			</view>
 			<view class="user_centent_title title_two">
 				<view class="title_left">
 					<image src="../../static/userStatic/dian.png" mode="aspectFill"></image>
-					更多功能
+					{{$t('app.user.more')}}
 				</view>
 			</view>
 			<view class="functional_count">
@@ -88,7 +88,7 @@
 						<image :src="items.imageeds" mode="aspectFill"></image>
 					</view>
 					<view class="one_image_title">
-						{{items.name}}
+						{{$t(items.name)}}
 					</view>
 				</view>
 			</view>
@@ -107,55 +107,55 @@
 					backgroundSize: `100% 100%`
 				},
 				orderArray:[{
-					name:"待付款",
+					name:"app.user.fukuan",
 					imageUrl:'../../static/userStatic/user_daishoukuan.png',
 				},{
-					name:"待发货",
+					name:"app.user.fahuo",
 					imageUrl:'../../static/userStatic/user_fahuo.png',
 				},{
-					name:"待收货",
+					name:"app.user.shouhuo",
 					imageUrl:'../../static/userStatic/user_daishouhuo.png',
 				},{
-					name:"已完成",
+					name:"app.user.wancheng",
 					imageUrl:'../../static/userStatic/user_wancheng.png',
 				}],
 				functionalArray:[
 					{
-						name:"代理明细",
+						name:"app.user.dailimingxi",
 						imageeds:'../../static/userStatic/function_one.png',
 						path:"/pages/me/broker/broker"
 					},
 					{
-						name:"捐赠记录",
+						name:"app.user.juanzengjilu",
 						imageeds:'../../static/userStatic/function_two.png',
 						path:"/pages/me/donation/donation"
 					},
 					{
-						name:"新品开拍",
+						name:"app.user.xinpinkaipai",
 						imageeds:'../../static/userStatic/function_three.png',
 						path:"/pages/me/newKaipai/newKaipai"
 					},
 					{
-						name:"活动中心",
+						name:"app.user.huozongzhongxin",
 						imageeds:'../../static/userStatic/function_four.png',
 						path:'/pages/me/activity/activity'
 					},
 					{
-						name:"我的好友",
+						name:"app.user.myfriends",
 						imageeds:'../../static/userStatic/function_five.png',
 						path:"/pages/me/friends/friends"
 					},
 					{
-						name:"拍卖订单",
+						name:"app.user.paiorder",
 						imageeds:'../../static/userStatic/function_six.png',
 						path:"/pages/me/auctionOrder/auctionOrder"
 					},
 					{
-						name:"用户反馈",
+						name:"app.user.fankui",
 						imageeds:'../../static/userStatic/function_feedbao.png'
 					},
 					{
-						name:"我要分享",
+						name:"app.user.myshare",
 						imageeds:'../../static/userStatic/function_share.png',
 						path:"/pages/me/share/share"
 					}

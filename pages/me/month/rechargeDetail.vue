@@ -12,7 +12,7 @@
 						<image src="../../../static/userStatic/left.png" mode="widthFix"></image>
 					</view>
 					<view class="nav_centent">
-						充值详情
+						{{$t('app.month.chongzhidetail')}}
 					</view>
 				</view>
 			</view>
@@ -22,11 +22,11 @@
 		<view class="withdrawal_count">
 			<view class="count_one">
 				<view class="count_one_title">
-					充值详情
+					{{$t('app.month.chongzhidetail')}}
 				</view>
 				<view class="count_one_price">
 					<view class="count_one_priceleft">
-						充值金额
+						{{$t('recargar.recTxt3')}}
 					</view>
 					<view class="count_one_pricenumber">
 						USDT194.00
@@ -34,73 +34,72 @@
 				</view>
 				<view class="count_one_price">
 					<view class="count_one_priceleft">
-						订单号
+						{{$t('productDetail.text3')}}
 					</view>
 					<view class="count_one_pricenumber">
-						566545645414877989 <span>复制</span>
+						566545645414877989 <span>{{$t('join.copy')}}</span>
 					</view>
 				</view>
 				<view class="count_one_time">
 					19/01/2022 19:14:33
 				</view>
 				<view class="count_one_time" style="color: #3A2633;">
-					姓名
+					{{$t('schema.name')}}
 				</view>
 				<view class="count_two_title">
-					请选择以下方法转账，以避免在财务支票中出现延迟转
-					账后，请上传转账截图作为验证证明。
+					{{$t('app.month.deyail')}}
 				</view>
 				<view class="count_two_image">
 					<image src="../../../static/img/cn.png" mode="aspectFill"></image>
 				</view>
 				<view class="count_three_title">
 					pe=16047&query=&keyfrom=baidu&sm
-					<span>复制</span>
+					<span>{{$t('join.copy')}}</span>
 				</view>
 				<view class="count_button">
-					保存二维码
+					{{$t('app.month.code')}}
 				</view>
 				<view class="count_five_title">
-					注:每次转账请提交一次付款
+					{{$t('app.month.tishi')}}
 				</view>
 			</view>
 		</view>
 		<view class="withdrawal_count_two">
 			<view class="two_centented">
 				<view class="count_two_named">
-					上传充值信息
+					{{$t('app.month.shangchuanxinix')}}
 				</view>
 				<view class="two_centented_title">
 					<view class="two_centented_titlename">
-						订单号码
+						{{$t('productDetail.text3')}}
 					</view>
 					<view class="two_centented_titleinput">
-						<input type="text" placeholder="请输入订单号">
+						<input type="text" :placeholder="$t('app.month.ordersninput')">
 					</view>
 				</view>
 				<view class="two_centented_title">
 					<view class="two_centented_titlename">
-						付款时间
+						{{$t('app.PaymentTime')}}
 					</view>
 					<view class="two_centented_titleinput">
-						<input type="text" placeholder="请输入订单号">
+						<input type="text" :placeholder="$t('app.month.select')">
 						<image src="../../../static/userStatic/xiala_hui.png" mode="widthFix"></image>
 					</view>
 				</view>
 				<view class="two_centented_titled">
-					充值订单截图：
+					{{$t('app.month.jietu')}}：
 				</view>
 				<view class="two_centented_imagekong" v-if="false">
 					<image src="../../../static/userStatic/tupian.png" mode="widthFix"></image>
 					<view class="kong_title">
-						点击上传充值订单截图
+						{{$t('app.month.jietutwo')}}
 					</view>
 				</view>
 				<view class="imageed">
 					<image src="../../../static/img/cn.png" mode="aspectFill"></image>
 				</view>
 				<view class="image_confim">
-					提交
+					{{$t('app.month.confirm')}}
 				</view>
 			</view>
 		</view>

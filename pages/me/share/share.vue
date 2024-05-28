@@ -15,11 +15,11 @@
 						pe=16047&query=&keyfrom=baidu&sm
 					</view>
 					<view class="link_copy">
-						复制
+						{{$t('join.copy')}}
 					</view>
 				</view>
 				<view class="count_link_title">
-					您可以通过以上方式邀请好友
+					{{$t('app.newAdd41')}}
 				</view>
 				<view class="count_share_button">
 					<view class="button_one">
@@ -49,7 +49,7 @@
 		computed: {
 			config() {
 				return {
-					title: '分享',
+					title: this.$t('app.newAdd40'),
 					color: "#403039",
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};

@@ -10,18 +10,18 @@
 				</view>
 				<view class="nav_count">
 					<view class="count_one" :class="{'countActive':navIndex==index}" v-for="(item,index) in navArray" :key="index" @click="navIndex=index">
-						{{item.name}}
+						{{$t(item.name) }}
 					</view>
 				</view>
 			</view>
 		</view>
 		<view class="broker_sift">
 			<view class="sift_all">
-				全部
+				{{$t('app.month.all')}}
 			</view>
 			<view class="sift_right">
 				<view class="sift_name">
-					2024-04
+					{{$t('app.month.select')}}
 				</view>
 				<image src="../../../static/userStatic/xila.png" mode="widthFix"></image>
 			</view>
@@ -57,10 +57,10 @@
 			return {
 				navArray:[
 					{
-						name:"代理明细"
+						name:"app.user.dailimingxi"
 					},
 					{
-						name:"代理账单"
+						name:"app.dailizhangdan"
 					}
 				],
 				navIndex:0,
