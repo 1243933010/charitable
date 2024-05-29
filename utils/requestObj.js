@@ -85,6 +85,16 @@ let requestObj = {
 		url: '/api/auctions',
 		type: 'POST'
 	},
+	auctionsDetail:{
+		name: "拍卖详情",
+		url: '/api/auctionsDetail',
+		type: 'POST'
+	},
+	auctionsRecords:{
+		name: "竞拍记录",
+		url: '/api/auctionsRecords',
+		type: 'POST'
+	},
 	userAuctions:{
 		name: "交易列表",
 		url: '/api/userAuctions',

@@ -246,9 +246,9 @@
 				</view>
 			
 				<view class="product-list">
-					<view class="product-item" v-for="(item,index) in auctionsList" :key="index">
+					<view class="product-item" v-for="(item,index) in auctionsList" :key="index" @click="goPage(`/pages/auctionVenue/detail?id=${item.id}`)">
 						<view class="product-img pic">
-							<image :src="item.main_image" mode="aspectFit" class="img" @click="goProductDetail(item)">
+							<image :src="item.main_image" mode="aspectFit" class="img" >
 							</image>
 						</view>
 						<view class="product-info">
@@ -603,7 +603,7 @@
 				// 	return
 				// }
 				// // #endif
-				if (link.includes("auctionVenue")||link.includes("classification")) {
+				if (link.includes("/auctionVenue/auctionVenue")||link.includes("classification")) {
 					uni.switchTab({
 						url: link,
 					});

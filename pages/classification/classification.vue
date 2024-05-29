@@ -13,7 +13,7 @@
 						<swiper-item v-for="(item, index) in swiperList" :key="index">
 							<view class="swiper-item">
 								<view class="pic">
-									<image :src="item.image" class="img" mode="widthFix"></image>
+									<image :src="imageUrl+item.image" class="img" mode="widthFix"></image>
 								</view>
 							</view>
 						</swiper-item>
@@ -88,12 +88,27 @@
 
 <script>
 	import {
-		$request
+		$request,filesUrl
 	} from "@/utils/request.js";
 	import productTestImg from "@/static/img/cn.png";
 
 	export default {
-		computed: {},
+		computed: {
+			imageUrl(){
+				return filesUrl;
+			},
+			tabs(){
+				return [{
+					text: this.$t("app.tabbar3"),
+					val: 0
+				},
+				{
+					text: this.$t("app.tabbar4"),
+					val: 1
+				}
+			]
+			}
+		},
 		data() {
 			return {
 				swiperList: [{
@@ -105,15 +120,7 @@
 				],
 				currentIndex: 0,
 				userAuctionsList: [],
-				tabs: [{
-						text: "交易会场",
-						val: 0
-					},
-					{
-						text: "我的拍品",
-						val: 1
-					}
-				],
+				
 				tabsVal: 0,
 				iStatusBarHeight: 0,
 				myProductList: [{
@@ -121,43 +128,7 @@
 						price: '500USDT',
 						title: '白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包',
 						time: "2024-01-01",
-					},
-					{
-						url: productTestImg,
-						price: '500USDT',
-						title: '白色的空开放式学校背包',
-						time: "2024-01-01",
-					},
-					{
-						url: productTestImg,
-						price: '500USDT',
-						title: '白色的空开放式学校背包',
-						time: "2024-01-01",
-					},
-					{
-						url: productTestImg,
-						price: '500USDT',
-						title: '白色的空开放式学校背包',
-						time: "2024-01-01",
-					},
-					{
-						url: productTestImg,
-						price: '500USDT',
-						title: '白色的空开放式学校背包',
-						time: "2024-01-01",
-					},
-					{
-						url: productTestImg,
-						price: '500USDT',
-						title: '白色的空开放式学校背包',
-						time: "2024-01-01",
-					},
-					{
-						url: productTestImg,
-						price: '500USDT',
-						title: '白色的空开放式学校背包',
-						time: "2024-01-01",
-					},
+					}
 				],
 				userAuctionsParams: {
 					page: 1,
@@ -172,6 +143,7 @@
 		mounted() {
 			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight;
 			this.userAuctions();
+			this.slides();
 		},
 		onReachBottom() {
 			if (tabsVal == 0) {
@@ -183,6 +155,18 @@
 			}
 		},
 		methods: {
+			async slides() {
+				let res = await $request("slides", {position:'4'});
+				console.log( res.data.data.data)
+				if (res.data.code === 200) {
+					this.swiperList = res.data.data.data;
+					return false;
+				}
+				uni.showToast({
+					icon: "none",
+					title: res.data.msg,
+				});
+			},
 			async userAuctionsGoods() {
 				let res = await $request('userAuctionsGoods', this.userAuctionsGoodsParams);
 				if (res.data.code === 200) {

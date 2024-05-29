@@ -183,7 +183,7 @@
 			},
 			goUrl(item){
 				uni.navigateTo({
-					url:'./detail'
+					url:`./detail?id=${item.id}`
 				})
 			},
 			bindPickerChange (e)  {

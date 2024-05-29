@@ -6,10 +6,10 @@
 			<view class="banner">
 				<swiper class="swiper" :autoPlay="false" circular autoplay style="height: 400rpx;"
 					@change="swiperChange">
-					<swiper-item :current="current" v-for="(item, index) in swiperList" :key="index">
+					<swiper-item :current="current" v-for="(item, index) in detailInfo.detail_images" :key="index">
 						<view class="swiper-item">
 							<view class="pic">
-								<image @click="linkImg(item)" :src="item.image" class="img" mode="widthFix"></image>
+								<image @click="linkImg(item)" :src="item" class="img" mode="aspectFill"></image>
 
 							</view>
 						</view>
@@ -23,35 +23,35 @@
 			</view>
 
 			<view class="box-contain">
-				<view class="status-box" v-if="status==0">
+				<view class="status-box" v-if="detailInfo.status==0">
 					<view class="text">
-						<text>{{$t("app.newAdd44")}}：即将开始</text>
+						<text>{{$t("app.newAdd44")}}：{{detailInfo.status_desc}}</text>
 					</view>
 					<view class="time">
-						<text>即将开始 05-20 10:00 {{$t("app.newAdd46")}}</text>
+						<text> {{detailInfo.auction_start_time}} {{$t("app.newAdd46")}}</text>
 					</view>
 				</view>
-				<view class="status-box" v-if="[1,2].includes(status)"
+				<view class="status-box" v-if="[1,2].includes(detailInfo.status)"
 					:style="{'background':status==1?' #F96932':'#6A5F4D'}">
 					<view class="text" style="color: white;">
-						<text>{{$t("app.newAdd44")}}：即将开始</text>
+						<text>{{$t("app.newAdd44")}}：{{detailInfo.status_desc}}</text>
 					</view>
 					<view class="time">
 						<image style="width: 28rpx;margin-right: 10rpx;" src="../../static/img/icon/tile_icon.png"
 							mode="widthFix"></image>
-						<text> 05-20 10:00 {{$t("app.newAdd55")}}</text>
+						<text> {{detailInfo.auction_end_time}} {{$t("app.newAdd55")}}</text>
 					</view>
 				</view>
 
-				<view class="status-box1" v-if="[3,4].includes(status)">
+				<view class="status-box1" v-if="[3,4].includes(detailInfo.status)">
 					<view class="header">
 						<view class="text" style="color: #55452B;">
-							<text>{{$t("app.newAdd44")}}：即将开始</text>
+							<text>{{$t("app.newAdd44")}}：：{{detailInfo.status_desc}}</text>
 						</view>
 						<view class="time" style="color: #55452B;">
 							<!-- <image style="width: 28rpx;margin-right: 10rpx;" src="../../static/img/icon/tile_icon.png" mode="widthFix"></image> -->
-							<text v-if="[3].includes(status)"> 05-20 10:00 {{$t("app.newAdd57")}}</text>
-							<text v-if="[4].includes(status)"> 05-20 10:00 {{$t("app.newAdd58")}}</text>
+							<text v-if="[3].includes(detailInfo.status)"> 05-20 10:00 {{$t("app.newAdd57")}}</text>
+							<text v-if="[4].includes(detailInfo.status)"> 05-20 10:00 {{$t("app.newAdd58")}}</text>
 						</view>
 					</view>
 					<view class="label">
@@ -60,43 +60,43 @@
 				</view>
 				<view class="goods">
 					<view class="goods-title">
-						<text>白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包</text>
+						<text>{{detailInfo.title}}</text>
 					</view>
 					<view class="goods-label">
 						<view class="item">
-							<text>{{$t("app.newAdd45")}} <text class="num">$500</text></text>
+							<text>{{$t("app.newAdd45")}} <text class="num">{{detailInfo.price||0}}</text></text>
 						</view>
 						<view class="item right">
-							<text>{{$t("app.newAdd50")}}：2024-05-2010:00</text>
+							<text>{{$t("app.newAdd50")}}：{{detailInfo.auction_start_time}}</text>
 						</view>
 						<view class="item">
-							<text>{{$t("app.newAdd51")}}：50</text>
+							<text>{{$t("app.newAdd51")}}：{{detailInfo.bid_increment||0}}</text>
 						</view>
 						<view class="item right">
-							<text>2024-05-2010:00 </text>
+							<text>{{detailInfo.auction_end_time}} </text>
 						</view>
 					</view>
-					<view class="product-container" v-if="[1,2].includes(status)">
+					<view class="product-container" v-if="[1,2].includes(detailInfo.status)">
 						<view class="header">
 							<view class="tit">
 								<view class="radio"></view>
-								{{ $t("app.newAdd56") }}(222)
+								{{ $t("app.newAdd56") }}({{historyList.length}})
 
 							</view>
-							<view class="desc">{{ $t("app.newAdd17") }}></view>
+							<!-- <view class="desc">{{ $t("app.newAdd17") }}></view> -->
 						</view>
 
 						<view class="product-list">
-							<view class="product-item" v-for="(item,index) in nftList" :key="index">
+							<view class="product-item" v-for="(item,index) in historyList" :key="index">
 								<view class="product-img pic">
 									<image src="../../static/img/icon/p_icon1.png" mode="aspectFit" class="img"
 										@click="goProductDetail(item)">
 									</image>
 								</view>
 								<view class="product-info">
-									<view class="product-title">188888888</view>
-									<view class="product-title1">05-20 10:00</view>
-									<view class="product-title2">$500</view>
+									<view class="product-title">{{item.nickname}}</view>
+									<view class="product-title1">{{item.pay_time}}</view>
+									<view class="product-title2">${{item.order_money}}</view>
 									<!-- <view class="product-tit">{{item.label}}</view> -->
 									<!-- <view class="product-price-info">
 										<view class="rebate">
@@ -116,7 +116,7 @@
 							<text>{{$t("app.newAdd52")}}：</text>
 						</view>
 						<view class="goods-tip-label">
-							<text>这里展示的是竞价要求规范，这里展示的是竞价要求规范，这里展示的是竞价要求规范。</text>
+							<text>{{detailInfo.bid_requirements}}</text>
 						</view>
 					</view>
 					<view class="goods-detail">
@@ -124,21 +124,21 @@
 							<text>{{$t("productDetail.pageTit")}}</text>
 						</view>
 						<view class="goods-detail-rich">
-							<text>这是富文本</text>
+							<rich-text :nodes="detailInfo.detail"></rich-text>
 						</view>
 					</view>
-					<view class="goods-price" v-if="status==0">
-						<text>{{$t("app.newAdd53")}}:500</text>
-						<text>05-20 10:00{{$t("app.newAdd46")}}</text>
+					<view class="goods-price" v-if="detailInfo.status==0">
+						<text style="margin-right: 10rpx;">{{$t("app.newAdd53")}}:{{detailInfo.price}} </text>
+						<text> {{detailInfo.auction_start_time}}{{$t("app.newAdd46")}}</text>
 					</view>
-					<view class="goods-price" v-if="[1,2,3,4].includes(status)" style="color:#F96932 ;">
-						<text>{{$t("app.newAdd53")}}:500</text>
-						<text>05-20 10:00{{$t("app.newAdd46")}}</text>
+					<view class="goods-price" v-if="[1,2,3,4].includes(detailInfo.status)" style="color:#F96932 ;">
+						<text style="margin-right: 10rpx;">{{$t("app.newAdd53")}}:{{detailInfo.price}}</text>
+						<text> {{detailInfo.auction_start_time}}{{$t("app.newAdd46")}}</text>
 					</view>
-					<view class="goods-btn" v-if="[0,2,3,4].includes(status)">
+					<view class="goods-btn" v-if="[0,2,3,4].includes(detailInfo.status)">
 						<text>{{$t("app.newAdd54")}}</text>
 					</view>
-					<view class="goods-btn goods-btn1" v-if="status==1" @click="openDialog">
+					<view class="goods-btn goods-btn1" v-if="detailInfo.status==1" @click="openDialog">
 						<text>{{$t("app.newAdd54")}}</text>
 					</view>
 				</view>
@@ -204,6 +204,12 @@
 		},
 		data() {
 			return {
+				detailInfo:{
+					
+				},
+				historyList:[],
+				// 0-即将开始 1-竞拍中 2-已结束 3-已终止 4-已撤回 
+				statusEnum:['即将开始','竞拍中','已结束','已终止','已撤回'],
 				status: 1,
 				swiperList: [],
 				currentIndex: 0,
@@ -241,8 +247,11 @@
 				],
 			}
 		},
-		mounted() {
-			this.adverts();
+		onLoad(e) {
+			this.getDetail(e.id);
+		},
+		onReachBottom(){
+			
 		},
 		methods: {
 			openDialog() {
@@ -263,16 +272,33 @@
 				// e.detail.current 是当前的索引
 				this.currentIndex = e.detail.current;
 			},
-			async adverts() {
-				let res = await $request("adverts", {});
+			async getDetail(id) {
+				let res = await $request("auctionsDetail", {id});
 				// console.log(res)
-				if (res.data.code === 0) {
-					this.swiperList = res.data.data;
+				if (res.data.code == 200) {
+					// 0-即将开始 1-竞拍中 2-已结束 3-已终止 4-已撤回 
+					res.data.data.status=1;
+					console.log(res.data.data)
+					this.detailInfo = res.data.data;
+					this.getHistory(id)
 					return false;
 				}
 				uni.showToast({
 					icon: "none",
-					title: res.data.msg,
+					title: res.data.message,
+				});
+			},
+			async getHistory(id) {
+				let res = await $request("auctionsRecords", {id});
+				// console.log(res)
+				if (res.data.code == 200) {
+					this.historyList = res.data.data.data;
+					
+					return false;
+				}
+				uni.showToast({
+					icon: "none",
+					title: res.data.message,
 				});
 			},
 		}
@@ -457,15 +483,20 @@
 
 				.swiper-item {
 					.pic {
+						width: 100%;
+						height: 440rpx;
 						position: relative;
 						// background-color: white;
 
 						image {
+							width: 100%;
+							height: 100%;
 							// border-radius: 20rpx;
 						}
 
 						.img {
 							width: 100%;
+							height: 100%;
 						}
 
 						.text-box {

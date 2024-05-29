@@ -22,12 +22,12 @@ export const $request = (requestName,params,headerType=0)=>{
 		}
 	]
 	
-	let reqUrl = reqObj.otherGet?`${url}${reqObj.url}/${params}`:`${url}${reqObj.url}`
-	let data = reqObj.otherGet?{}:params;
+	let reqUrl = reqObj?.otherGet?`${url}${reqObj?.url}/${params}`:`${url}${reqObj?.url}`
+	let data = reqObj?.otherGet?{}:params;
 	return new Promise((resolve,reject)=>{
 		uni.request({
 		    url: reqUrl, 
-			method:requestObj[requestName].type,
+			method:requestObj[requestName]?.type,
 		    data,
 		    header: headerObj[headerType],
 		    success: (res) => {
