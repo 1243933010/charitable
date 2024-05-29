@@ -81,6 +81,11 @@
 				swiperList:[],
 				currentIndex:0,
 				detailInfo:{},
+				list:[],
+				requestParams:{
+					page:1,
+					limit:20
+				},
 				nftList: [
 					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
 					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
@@ -91,7 +96,8 @@
 		},
 		
 		onLoad(e){
-			this.getDetail(e.id)
+			this.getDetail();
+			this.getList();
 		},
 		methods: {
 			goUrl(){
@@ -103,11 +109,19 @@
 			      // e.detail.current 是当前的索引
 			      this.currentIndex = e.detail.current;
 			},
-			async getDetail(id){
-				let res = await $request("loveTransmissionsDetail",{id})
+			async getDetail(){
+				let res = await $request("userLoveTransmissionInfo",{})
 				console.log(res)
 				if(res.data.code==200){
 					this.detailInfo = res.data.data;
+				}
+				
+			},
+			async getList(){
+				let res = await $request("userLoveTransmissionRecords",{...this.requestParams})
+				console.log(res)
+				if(res.data.code==200){
+					this.list = res.data.data;
 				}
 				
 			},

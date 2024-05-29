@@ -522,9 +522,9 @@
 			},
 			newLink(item) {
 
-				uni.setStorageSync("notices", item);
+				// uni.setStorageSync("notices", item);
 				uni.navigateTo({
-					url: "./notices",
+					url: `./notices?id=${item.id}`,
 				});
 			},
 			linkImg(item) {

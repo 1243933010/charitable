@@ -31,10 +31,14 @@ export const $request = (requestName,params,headerType=0)=>{
 		    data,
 		    header: headerObj[headerType],
 		    success: (res) => {
-				// console.log(res,'=====================')
+				console.log(res,'=====================')
 				if(res.data.code==403){
 					uni.hideLoading()
 					uni.clearStorageSync();
+					uni.showToast({
+						icon:'none',
+						title:res.data.message
+					})
 					setTimeout(()=>{
 						uni.reLaunch({
 							url:'/pages/login/index'

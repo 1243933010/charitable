@@ -39,7 +39,7 @@
 					<text>{{$t("app.newAdd34")}}</text>
 				</view>
 				<view class="list">
-					<view class="item" v-for="(item,index) in detailInfo.user_records" :key="index">
+					<view class="item" v-for="(item,index) in user_records" :key="index">
 						<view class="left">
 							<image src="../../../static/img/help_icon.png" mode="widthFix"></image>
 							<text>{{$t("app.newAdd61")}}</text>
@@ -120,11 +120,12 @@
 				currentIndex: 0,
 				detailInfo:{},
 				onLoadPrams:{},
-				money:""
+				money:"",
+				user_records:[]
 			};
 		},
 		mounted() {
-			this.adverts();
+			this.userTargetedAidRecords();
 		},
 		onLoad(e){
 			this.onLoadPrams = e;
@@ -158,11 +159,11 @@
 				// e.detail.current 是当前的索引
 				this.currentIndex = e.detail.current;
 			},
-			async adverts() {
-				let res = await $request("adverts", {});
-				// console.log(res)
-				if (res.data.code === 0) {
-					this.swiperList = res.data.data;
+			async userTargetedAidRecords() {
+				let res = await $request("userTargetedAidRecords", {});
+				console.log(res)
+				if (res.data.code === 200) {
+					this.user_records = res.data.data.data;
 					return false;
 				}
 				uni.showToast({

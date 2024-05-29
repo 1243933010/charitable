@@ -90,6 +90,11 @@ let requestObj = {
 		url: '/api/userAuctions',
 		type: 'POST'
 	},
+	userAuctionsGoods:{
+		name: "用户拍品列表",
+		url: '/api/userAuctionsGoods',
+		type: 'POST'
+	},
 	loveTransmissions:{
 		name: "爱心传递列表",
 		url: '/api/loveTransmissions',
@@ -98,6 +103,21 @@ let requestObj = {
 	loveTransmissionsDetail:{
 		name: "爱心传递详情",
 		url: '/api/loveTransmissionsDetail',
+		type: 'POST'
+	},
+	userLoveTransmissionRecords:{
+		name: "用户爱心传递列表",
+		url: '/api/userLoveTransmissionRecords',
+		type: 'POST'
+	},
+	userLoveTransmissionInfo:{
+		name: "用户爱心传递详情",
+		url: '/api/userLoveTransmissionInfo',
+		type: 'POST'
+	},
+	noticesDetail:{
+		name: "公告详情",
+		url: '/api/noticesDetail',
 		type: 'POST'
 	},
 	bindEmail:{
@@ -296,12 +316,12 @@ let requestObj = {
 		url:"/api/userInfo",
 		type:"POST"
 	},
-	getRecords:{
+	userTargetedAidRecords:{
 		name:"证书列表",
 		url:"/api/userTargetedAidRecords",
 		type:"POST"
 	},
-	getRecordsdetail:{
+	userTargetedAidRecordDetail:{
 		name:"证书详情",
 		url:"/api/userTargetedAidRecordDetail",
 		type:"POST"

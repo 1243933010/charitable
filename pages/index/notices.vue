@@ -25,19 +25,31 @@ export default {
 		config() {
 			return {
 				title: this.$t("notices.pageTit"),
-				color: "#ffffff",
+				color: "#403039",
 				// backgroundColor: [1, "#24bdab"],
 				// 背景图片（array则为滑动切换背景图，string为单一背景图）
 				// backgroundImg: ['/static/xj.jpg','/static/logo.jpg'],
-				backgroundImg: "../../static/img/header_tabber.png",
+				backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 			};
 		},
 	},
 	mounted() {
-		let noticesObj = uni.getStorageSync("notices");
-		console.log(noticesObj);
-		this.noticesObj = noticesObj;
+		// let noticesObj = uni.getStorageSync("notices");
+		// console.log(noticesObj);
+		// this.noticesObj = noticesObj;
 	},
+	onLoad(e) {
+		this.noticesDetail(e.id)
+	},
+	methods:{
+		async noticesDetail(id){
+			let res = await $request("noticesDetail",{id})
+			console.log(res)
+			if(res.data.code==200){
+				this.noticesObj = res.data.data;
+			}
+		}
+	}
 };
 </script>
 
