@@ -3,15 +3,17 @@
 		<hx-navbar :config="config" />
 		<view class="accountDetail_centent">
 			<view class="accountDetail_title">
-				<view class="title_left">
+				<view class="title_left" @click="goAllaccount">
 					{{$t('app.month.all')}}
 				</view>
-				<view class="title_right">
-					<view class="right_name">
-						{{$t('app.month.select')}}
+				<picker mode="date" fields="month"  @change="bindData">
+					<view class="title_right">
+						<view class="right_name">
+							{{pamars.time||$t('app.month.select')}}
+						</view>
+						<image src="../../../static/userStatic/xila.png" mode="widthFix"></image>
 					</view>
-					<image src="../../../static/userStatic/xila.png" mode="widthFix"></image>
-				</view>
+				</picker>
 			</view>
 			<view class="accountDetail_one" v-for="(item,index) in 5" :key="index">
 				<view class="accountDetail_one_left">
@@ -32,6 +34,9 @@
 
 <script>
 	import hxNavbar from "@/components/hx-navbar.vue";
+	import {
+		$request
+	} from "@/utils/request";
 	export default {
 		components: {
 			hxNavbar,
@@ -47,7 +52,49 @@
 		},
 		data(){
 			return {
-				
+				pamars:{
+					page:1,
+					type:"balance",
+					time:""
+				},
+				last_page:1,
+				accountArray:[],//数组
+			}
+		},
+		onLoad() {
+			this.getAccount('init')
+		},
+		onReachBottom() {
+			if(this.last_page>this.pamars.page){
+				this.pamars.page++
+				this.getAccount()
+			}
+		},
+		methods:{
+			async getAccount(type){
+				if(type=='init'){
+					this.pamars.page=1
+					this.accountArray=[]
+				}
+				let res = await $request('getAccountinfo', this.pamars);
+				if (res.data.code == 200) {
+					this.last_page=res.data.data.last_page
+					if(this.pamars.page==1){
+						this.accountArray=res.data.data.data
+					}else{
+						this.accountArray=[...this.accountArray,...res.data.data.data]
+					}
+					// console.log(res,'账户明细')
+				}
+			},
+			goAllaccount(){
+				// 选择全部
+				this.pamars.time=''
+				this.getAccount('init')
+			},
+			bindData(e){
+				this.pamars.time=e.detail.value
+				this.getAccount('init')
 			}
 		}
 	}
