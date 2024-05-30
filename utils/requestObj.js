@@ -90,6 +90,26 @@ let requestObj = {
 		url: '/api/auctionsDetail',
 		type: 'POST'
 	},
+	userAddAuctionGoods:{
+		name: "上架拍品",
+		url: '/api/userAddAuctionGoods',
+		type: 'POST'
+	},
+	userOffAuctionGoods:{
+		name: "下架拍品",
+		url: '/api/userOffAuctionGoods',
+		type: 'POST'
+	},
+	userParticipateAuctionRecords:{
+		name: "拍卖订单列表（用户)",
+		url: '/api/userParticipateAuctionRecords',
+		type: 'POST'
+	},
+	userParticipateAuctionRecordDetail:{
+		name: "拍卖订单详情（用户)",
+		url: '/api/userParticipateAuctionRecordDetail',
+		type: 'POST'
+	},
 	auctionsRecords:{
 		name: "竞拍记录",
 		url: '/api/auctionsRecords',

@@ -99,6 +99,9 @@
 	import {
 		$request
 	} from "@/utils/request";
+	import {
+		setTabbar
+	} from "@/utils/utils.js";
 	export default {
 		data(){
 			return {
@@ -162,6 +165,9 @@
 				],
 				userInfo:"",//用户详情
 			}
+		},
+		mounted(){
+			setTabbar(this.$t)
 		},
 		onShow() {
 			if(uni.getStorageSync('token')){

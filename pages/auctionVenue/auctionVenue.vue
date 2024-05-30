@@ -92,6 +92,9 @@
 	import {
 		$request,filesUrl
 	} from "@/utils/request.js";
+	import {
+		setTabbar
+	} from "@/utils/utils.js";
 	export default {
 		components: {
 			hxNavbar,
@@ -161,6 +164,7 @@
 			}
 		},
 		mounted() {
+			setTabbar(this.$t)
 			this.auctions();
 			this.slides();
 		},

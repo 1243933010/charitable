@@ -336,29 +336,29 @@
 		},
 		onLoad() {},
 		computed: {
-			locales() {
-				return [{
-						text: this.$t("locale.auto"),
-						code: "auto",
-					},
-					{
-						text: this.$t("locale.en"),
-						code: "en",
-					},
-					{
-						text: this.$t("locale.zh-hans"),
-						code: "zh-Hans",
-					},
-					{
-						text: this.$t("locale.zh-hant"),
-						code: "zh-Hant",
-					},
-					{
-						text: this.$t("locale.ja"),
-						code: "ja",
-					},
-				];
-			},
+			// locales() {
+			// 	return [{
+			// 			text: this.$t("locale.auto"),
+			// 			code: "auto",
+			// 		},
+			// 		{
+			// 			text: this.$t("locale.en"),
+			// 			code: "en",
+			// 		},
+			// 		{
+			// 			text: this.$t("locale.zh-hans"),
+			// 			code: "zh-Hans",
+			// 		},
+			// 		{
+			// 			text: this.$t("locale.zh-hant"),
+			// 			code: "zh-Hant",
+			// 		},
+			// 		{
+			// 			text: this.$t("locale.ja"),
+			// 			code: "ja",
+			// 		},
+			// 	];
+			// },
 			menuList() {
 				return [
 					[
