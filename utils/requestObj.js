@@ -360,6 +360,11 @@ let requestObj = {
 		name:"好友列表",
 		url:"/api/userFriends",
 		type:"POST"
+	},
+	getAccountinfo:{
+		name:"账户明细",
+		url:"/api/accountInfo",
+		type:"POST"
 	}
 }
 export default requestObj;
