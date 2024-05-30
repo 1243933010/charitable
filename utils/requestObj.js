@@ -365,6 +365,36 @@ let requestObj = {
 		name:"账户明细",
 		url:"/api/accountInfo",
 		type:"POST"
+	},
+	getChangepassword:{
+		name:"修改登录密码",
+		url:"/api/changePassword",
+		type:"POST"
+	},
+	getsetPayPassword:{
+		name:"设置支付密码",
+		url:"/api/setPayPassword",
+		type:"POST"
+	},
+	getchangePayPassword:{
+		name:"修改支付密码",
+		url:"/api/changePayPassword",
+		type:"POST"
+	},
+	getRechargeConfig:{
+		name:"获取充值和提现配置",
+		url:"/api/getRechargeConfig",
+		type:"POST"
+	},
+	getchangeUserInfo:{
+		name:"修改资料",
+		url:"/api/changeUserInfo",
+		type:"POST"
+	},
+	getupImage:{
+		name:"上传图片",
+		url:"/api/upload",
+		type:"POST"
 	}
 }
 export default requestObj;

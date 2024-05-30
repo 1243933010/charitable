@@ -26,7 +26,7 @@
 					{{userInfo.balance||0}}
 				</view>
 				<view class="month_bg_button">
-					<view class="button_one" @click="goPath('/pages/me/month/withdrawal')">
+					<view class="button_one" @click="goWithdraw">
 						{{$t('withdraw.pageTit')}}
 					</view>
 					<view class="button_one button_two" @click="goPath('/pages/me/month/recharge')">
@@ -108,6 +108,13 @@
 				}
 				// console.log(res,'用户详情')
 			},
+			goWithdraw(){
+				if(this.userInfo.usdt!=''||this.userInfo.usdc!=''){
+					this.goPath('/pages/me/month/withdrawal')
+				}else{
+					this.goPath('/pages/me/setting/bindAccout')
+				}
+			}
 		}
 	}
 </script>

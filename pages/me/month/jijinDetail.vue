@@ -15,17 +15,17 @@
 					</view>
 				</picker>
 			</view>
-			<view class="accountDetail_one" v-for="(item,index) in 5" :key="index">
+			<view class="accountDetail_one" v-for="(item,index) in accountArray" :key="index">
 				<view class="accountDetail_one_left">
 					<view class="left_named">
-						类型：充值
+						{{$t('app.type')}}：{{item.change_tag_desc}}
 					</view>
 					<view class="left_time">
-						2024-02-01
+						{{item.created_at}}
 					</view>
 				</view>
 				<view class="accountDetail_one_right">
-					100USD
+					{{item.amount}}USD
 				</view>
 			</view>
 		</view>

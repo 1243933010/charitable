@@ -9,7 +9,7 @@
 				<image src="../../static/userStatic/setting.png" mode="aspectFill"></image>
 			</view>
 			<!-- 头像区域 -->
-			<view class="user_avatar">
+			<view class="user_avatar" @click="goPath(`/pages/me/userinfo/userInfo`)">
 				<image :src="userInfo.avatar||'../../static/img/v2logo.png'" @error="userInfo.avatar='../../static/img/v2logo.png'" mode="aspectFill"></image>
 				<view class="avatar_right" v-if="userInfo">
 					<view class="right_name">

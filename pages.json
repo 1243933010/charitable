@@ -410,7 +410,14 @@
 				"navigationBarTitleText" : ""
 			}
 		},
-		
+		{
+			"path" : "pages/me/userinfo/userInfo",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"navigationStyle": "custom"
+			}
+		},
 		{
 			"path" : "pages/me/setting/setting",
 			"style" : 
@@ -435,6 +442,13 @@
 			}
 		},{
 			"path" : "pages/me/setting/changePaypass",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"navigationStyle": "custom"
+			}
+		},{
+			"path" : "pages/me/setting/setPaypass",
 			"style" : 
 			{
 				"navigationBarTitleText" : "",
@@ -627,7 +641,8 @@
 			"path" : "pages/me/auctionOrder/auctionDetail",
 			"style" : 
 			{
-				"navigationBarTitleText" : ""
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh": true
 			}
 		},
 		{
