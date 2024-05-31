@@ -58,7 +58,7 @@
 						<image src="../../static/img/icon/index/tab1.png" mode="widthFix"></image>
 						<!-- <text>{{$t("app.newAdd15")}}</text> -->
 					</view>
-					<view class="tab-item" @click="goPage('/pages/index/passingLove')">
+					<view class="tab-item" @click="goPage('/pages/index/publicWelfare')">
 						<image src="../../static/img/icon/index/tab2.png" mode="widthFix"></image>
 						<!-- <text>{{$t("app.newAdd14")}}</text> -->
 					</view>

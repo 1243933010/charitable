@@ -32,7 +32,7 @@
 					</view>
 				</view>
 				<view class="status-box" v-if="[1,2].includes(detailInfo.status)"
-					:style="{'background':status==1?' #F96932':'#6A5F4D'}">
+					:style="{'background':detailInfo.status==1?' #F96932':'#6A5F4D'}">
 					<view class="text" style="color: white;">
 						<text>{{$t("app.newAdd44")}}：{{detailInfo.status_desc}}</text>
 					</view>
@@ -50,12 +50,12 @@
 						</view>
 						<view class="time" style="color: #55452B;">
 							<!-- <image style="width: 28rpx;margin-right: 10rpx;" src="../../static/img/icon/tile_icon.png" mode="widthFix"></image> -->
-							<text v-if="[3].includes(detailInfo.status)"> 05-20 10:00 {{$t("app.newAdd57")}}</text>
-							<text v-if="[4].includes(detailInfo.status)"> 05-20 10:00 {{$t("app.newAdd58")}}</text>
+							<text v-if="[3].includes(detailInfo.status)">{{detailInfo.termination_time}} {{$t("app.newAdd57")}}</text>
+							<text v-if="[4].includes(detailInfo.status)"> {{detailInfo.withdrawal_time}} {{$t("app.newAdd58")}}</text>
 						</view>
 					</view>
 					<view class="label">
-						<text>终止原因：起拍价格定于过高，经用户反馈，将暂停竞拍。具体起拍时间请留意...</text>
+						<text>{{detailInfo.withdrawal_reason}}</text>
 					</view>
 				</view>
 				<view class="goods">
@@ -160,11 +160,11 @@
 							<text>{{$t("app.newAdd53")}}</text>
 						</view>
 						<view class="tip">
-							<text>$ 2000</text>
+							<text>$ {{detailInfo.price}}</text>
 						</view>
 
 						<view class="input">
-							<input :placeholder="$t('app.newAdd39')" type="text" />
+							<input v-model="price" :placeholder="$t('app.newAdd39')" type="text" />
 						</view>
 						<view class="label">
 
@@ -174,7 +174,7 @@
 
 				</view>
 				<view class="btn-div">
-					<view class="btn">
+					<view class="btn" @click="userParticipateAuction">
 						<text>{{$t("app.newAdd54")}}（{{$t("app.newAdd60")}} : <text><uni-countdown :hisBk="false" :show-day="false" :hour="12" :minute="12" :second="12"></uni-countdown></text> ）</text>
 					</view>
 				</view>
@@ -204,69 +204,42 @@
 		},
 		data() {
 			return {
-				detailInfo:{
-					
-				},
+				detailInfo:{},
 				historyList:[],
-				// 0-即将开始 1-竞拍中 2-已结束 3-已终止 4-已撤回 
-				statusEnum:['即将开始','竞拍中','已结束','已终止','已撤回'],
-				status: 1,
+				// 0-即将开始 1-竞拍中 2-已结束 3-已终止 4-已撤回
 				swiperList: [],
 				currentIndex: 0,
-				formData: {
-					// status:'竞拍阶段'
-				},
-				statusList: ['竞拍阶段', 'xx阶段', 'xxx阶段'],
 				index: 0,
-				betweenList: ['10-20', '20-100', '100-500'],
-				betweenIndex: 0,
-				nftList: [{
-						url: '../../static/img/logo.png',
-						label: '500USDT',
-						statusText: '**用户已完成交易',
-						title: '白色的空开放式学校背包'
-					},
-					{
-						url: '../../static/img/logo.png',
-						label: '500USDT',
-						statusText: '**用户已完成交易',
-						title: '白色的空开放式学校背包'
-					},
-					{
-						url: '../../static/img/logo.png',
-						label: '500USDT',
-						statusText: '**用户已完成交易',
-						title: '白色的空开放式学校背包'
-					},
-					{
-						url: '../../static/img/logo.png',
-						label: '500USDT',
-						statusText: '**用户已完成交易',
-						title: '白色的空开放式学校背包'
-					},
-				],
+				price:'',
+				onLoadParams:{}
 			}
 		},
 		onLoad(e) {
+			this.onLoadParams = e;
 			this.getDetail(e.id);
 		},
 		onReachBottom(){
 			
 		},
 		methods: {
+			async userParticipateAuction(id) {
+				let res = await $request("userParticipateAuction", {id:this.onLoadParams.id,price:this.price});
+				// console.log(res)
+				uni.showToast({
+					icon: "none",
+					title: res.data.message,
+				});
+				if (res.data.code == 200) {
+					this.$refs.popup.close();
+					return false;
+				}
+				
+			},
 			openDialog() {
 				this.$refs.popup.open("bottom");
 			},
 			goUrl(item) {
 
-			},
-			bindPickerChange: (e) => {
-				console.log('picker发送选择改变，携带值为', e.detail.value)
-				this.index = e.detail.value
-			},
-			bindPickerChange1: (e) => {
-				console.log('picker发送选择改变，携带值为', e.detail.value)
-				this.betweenIndex = e.detail.value
 			},
 			swiperChange(e) {
 				// e.detail.current 是当前的索引
@@ -277,7 +250,7 @@
 				// console.log(res)
 				if (res.data.code == 200) {
 					// 0-即将开始 1-竞拍中 2-已结束 3-已终止 4-已撤回 
-					res.data.data.status=1;
+					// res.data.data.status=1;
 					console.log(res.data.data)
 					this.detailInfo = res.data.data;
 					this.getHistory(id)
