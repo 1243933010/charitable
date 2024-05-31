@@ -126,7 +126,7 @@
 				let res = await $request('userParticipateAuctionRecords', this.params);
 				if (res.data.code == 200) {
 					this.last_page=res.data.data.last_page
-					if(this.pamars.page==1){
+					if(this.params.page==1){
 						this.orderList=res.data.data.data
 					}else{
 						this.orderList=[...this.orderList,...res.data.data.data]

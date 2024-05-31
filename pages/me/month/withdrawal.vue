@@ -30,17 +30,17 @@
 			</view>
 		</view>
 		<view class="withdrawal_count">
-			<view class="withdrawal_count_title">
+			<!--<view class="withdrawal_count_title">
 				{{$t('app.month.tixainAccount')}}
 			</view>
-			<view class="withdrawal_count_one">
+			 <view class="withdrawal_count_one">
 				<view class="count_one_left">
 					{{$t('app.month.select')}}
 				</view>
 				<view class="count_one_right">
 					<image src="../../../static/userStatic/xila.png" mode="widthFix"></image>
 				</view>
-			</view>
+			</view> -->
 			<view class="withdrawal_count_one">
 				<view class="count_one_left" style="color: #333333;">
 					{{$t('app.quantity')}}
@@ -78,17 +78,17 @@
 					{{$t('app.tixian.account')}}
 				</view>
 				<view class="count_one_rightactive">
-					{{totalPriceBalance(this.params.money)}}
+					{{totalPriceBalance(params.money)}}
 				</view>
 			</view>
 			<view class="withdrawal_count_two">
 				{{$t('app.month.pass')}}
 			</view>
 			<view class="withdrawal_count_twoInput">
-				<input type="text" :placeholder="$t('login.pwdPlaceholder')">
+				<input type="text" v-model="params.pay_password" :placeholder="$t('login.pwdPlaceholder')">
 			</view>
 			<!-- 按钮 -->
-			<view class="withdrawal_count_button">
+			<view class="withdrawal_count_button" @click="goWithdraw">
 				{{$t('withdraw.pageTit')}}
 			</view>
 			<view class="withdrawal_count_wraning">
@@ -126,7 +126,7 @@
 						name:"USDT(TRC20)",
 						icon:"../../../static/userStatic/redio_w.png",
 						iconSelect:"../../../static/userStatic/redio_y.png",
-						channel:1,
+						channel:2,
 					}
 				],
 				tongdaoIndex:0,
@@ -186,6 +186,25 @@
 						item.name=item.name+`(${this.config.withdraw_min_amount}-${this.config.withdraw_max_amount})`
 					}))
 				}
+			},
+			goWithdraw(){
+				this.params.channel= this.tongdaoArray[this.tongdaoIndex].channel
+				$request("gewithdrawApply", this.params).then(res=>{
+					let {
+						data,
+						code,
+						message
+					} = res.data;
+					if (code !== 200) {
+						// 登录失败
+						uni.showToast({
+							title: res.data.message,
+							icon: "none",
+						});
+						return;
+					}
+					uni.navigateBack()
+				})
 			}
 		}
 	}

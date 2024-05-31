@@ -35,10 +35,10 @@
 			</view>
 			<view class="withdrawal_count_one">
 				<view class="count_one_left" style="color: #333333;">
-					AUD
+					{{$t('app.quantity')}}
 				</view>
 				<view class="count_one_right">
-					<input type="text" :placeholder="$t('app.month.number')">
+					<input type="number" v-model="money" :placeholder="$t('app.month.number')">
 				</view>
 			</view>
 			<view class="withdrawal_count_one">
@@ -46,7 +46,7 @@
 					{{$t('app.month.huilv')}}
 				</view>
 				<view class="count_one_rightactive">
-					1:1.39
+					{{config.recharge_rate}}%
 				</view>
 			</view>
 			<view class="withdrawal_count_one">
@@ -54,7 +54,7 @@
 					{{$t('app.month.fukuanjine')}}
 				</view>
 				<view class="count_one_rightactive">
-					USDC 7194
+					{{totalPriceBalance(money)}}
 				</view>
 			</view>
 			<!-- 按钮 -->
@@ -66,11 +66,7 @@
 					{{$t('app.month.warning')}}
 				</view>
 				<view class="wraning_desc">
-					每次升级都需要获取最新的支付信息，请不要保留旧的账
-					户信息充值时间:24小时
-					使用USDT和其他数字货币支付VIP级别作为10%的礼物
-					虚拟货币的汇率仅供参考，视交易时间而定
-					虚拟货币汇率，请参考https://www.xe.com
+					{{config.recharge_notice}}
 				</view>
 			</view>
 		</view>
@@ -78,6 +74,9 @@
 </template>
 
 <script>
+	import {
+		$request
+	} from "@/utils/request";
 	export default {
 		data() {
 			return {
@@ -88,29 +87,58 @@
 				},
 				tongdaoArray:[
 					{
-						name:"USDC(BEP20/BSC)(0-1000000000)",
+						name:"USDC(BEP20/BSC)",
 						icon:"../../../static/userStatic/redio_w.png",
 						iconSelect:"../../../static/userStatic/redio_y.png"
 					},
 					{
-						name:"USDT(TRC20)(0-500000000)",
+						name:"USDT(TRC20)",
 						icon:"../../../static/userStatic/redio_w.png",
 						iconSelect:"../../../static/userStatic/redio_y.png"
 					}
 				],
 				tongdaoIndex:0,
+				config:"",
+				money:"",//提现金额
 			}
 		},
 		onPageScroll(e) {
 			this.isBgcolor = ~~e.scrollTop > 30 ? true : false
 		},
+		onLoad() {
+			this.getWithdraw()
+		},
+		computed:{
+			totalPriceBalance(){
+				return value=>{
+					if(value){
+						return (Number(value)-((Number(value)*(+this.config.recharge_rate/100)).toFixed(4))).toFixed(4)
+					}else{
+						return 0
+					}
+				}
+			}
+		},
 		methods:{
+			async getWithdraw(){
+				let res = await $request('getRechargeConfig', {});
+				if (res.data.code == 200) {
+					// console.log(res.data.data,'配置')
+					this.config=res.data.data.recharge
+					this.tongdaoArray[0].name=this.config.recharge_usdc
+					this.tongdaoArray[1].name=this.config.recharge_usdt
+				}
+			},
 			goBack(){
 				uni.navigateBack()
 			},
 			goReacher(){
+				if(!this.money) return uni.showToast({
+					icon:"none",
+					title:this.$t('app.month.number')
+				})
 				uni.navigateTo({
-					url:"/pages/me/month/rechargeDetail"
+					url:`/pages/me/month/rechargeDetail?money=${this.money}&channel=${this.tongdaoIndex+1}&name=${this.tongdaoArray[this.tongdaoIndex].name}&recharge_usdt_qr_code=${this.config.recharge_usdt_qr_code}`
 				})
 			}
 		}

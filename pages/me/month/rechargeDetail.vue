@@ -29,10 +29,10 @@
 						{{$t('recargar.recTxt3')}}
 					</view>
 					<view class="count_one_pricenumber">
-						USDT194.00
+						{{channel==1?'USDC':'USDT'}}{{money}}
 					</view>
 				</view>
-				<view class="count_one_price">
+				<!-- <view class="count_one_price">
 					<view class="count_one_priceleft">
 						{{$t('productDetail.text3')}}
 					</view>
@@ -48,15 +48,15 @@
 				</view>
 				<view class="count_two_title">
 					{{$t('app.month.deyail')}}
-				</view>
+				</view> -->
 				<view class="count_two_image">
-					<image src="../../../static/img/cn.png" mode="aspectFill"></image>
+					<image :src="sortImage(recharge_usdt_qr_code)" mode="aspectFill"></image>
 				</view>
 				<view class="count_three_title">
-					pe=16047&query=&keyfrom=baidu&sm
-					<span>{{$t('join.copy')}}</span>
+					{{name}}
+					<span @click="copyinfo">{{$t('join.copy')}}</span>
 				</view>
-				<view class="count_button">
+				<view class="count_button" @click="downImage">
 					{{$t('app.month.code')}}
 				</view>
 				<view class="count_five_title">
@@ -71,18 +71,23 @@
 				</view>
 				<view class="two_centented_title">
 					<view class="two_centented_titlename">
-						{{$t('productDetail.text3')}}
+						<!-- {{$t('productDetail.text3')}} -->
+						TXID/HASH
 					</view>
 					<view class="two_centented_titleinput">
-						<input type="text" :placeholder="$t('app.month.ordersninput')">
+						<input type="text" v-model="hash" :placeholder="$t('app.txid_inpt')">
 					</view>
 				</view>
 				<view class="two_centented_title">
 					<view class="two_centented_titlename">
 						{{$t('app.PaymentTime')}}
 					</view>
-					<view class="two_centented_titleinput">
-						<input type="text" :placeholder="$t('app.month.select')">
+					<view class="two_centented_titleinput" style="justify-content: space-between;">
+						<view class="" style="font-size: 28rpx;width: 100%;">
+							<uni-datetime-picker type="datetime" v-model="datetimesingle" @change="changeLog" :clear-icon="false">
+								{{datetimesingle||$t('app.month.select')}}
+							</uni-datetime-picker>
+						</view>
 						<image src="../../../static/userStatic/xiala_hui.png" mode="widthFix"></image>
 					</view>
 				</view>
@@ -95,10 +100,17 @@
 						{{$t('app.month.jietutwo')}}
 					</view>
 				</view>
-				<view class="imageed">
-					<image src="../../../static/img/cn.png" mode="aspectFill"></image>
+				<view class="imageed" @click="upImaged" v-if="!upImage">
+					<image src="../../../static/userStatic/tupian.png" mode="aspectFill"></image>
+					<view class="imageed_title">
+						点击上传充值订单截图
+					</view>
+					<!-- <image src="../../../static/img/cn.png" mode="aspectFill"></image> -->
 				</view>
-				<view class="image_confim">
+				<view class="imageeds" @click="upImaged" v-if="upImage">
+					<image :src="sortImage(upImage)" mode="aspectFill"></image>
+				</view>
+				<view class="image_confim" @click="confimTijiao">
 					{{$t('app.month.confirm')}}
 				</view>
 			</view>
@@ -107,6 +119,11 @@
 </template>
 
 <script>
+	import {
+		$request,
+		filesUrl,
+		url
+	} from "@/utils/request";
 	export default {
 		data() {
 			return {
@@ -115,27 +132,178 @@
 					backgroundImage: `url(../../static/userStatic/user_bg.png)`,
 					backgroundSize: `100% 100%`
 				},
-				tongdaoArray: [{
-						name: "USDC(BEP20/BSC)(0-1000000000)",
-						icon: "../../../static/userStatic/redio_w.png",
-						iconSelect: "../../../static/userStatic/redio_y.png"
-					},
-					{
-						name: "USDT(TRC20)(0-500000000)",
-						icon: "../../../static/userStatic/redio_w.png",
-						iconSelect: "../../../static/userStatic/redio_y.png"
-					}
-				],
-				tongdaoIndex: 0,
+				money: "",
+				channel: "",
+				name: "",
+				recharge_usdt_qr_code: "",
+				datetimesingle:"",
+				upImage:"",
+				hash:"",
 			}
 		},
 		onPageScroll(e) {
 			this.isBgcolor = ~~e.scrollTop > 30 ? true : false
 		},
+		onLoad(option) {
+			this.money = option.money
+			this.channel = option.channel
+			this.name = option.name
+			this.recharge_usdt_qr_code = option.recharge_usdt_qr_code
+		},
+		computed: {
+			sortImage() {
+				return value => {
+					if (value) {
+						return value.indexOf('http') != -1 ? value : filesUrl + value
+					} else {
+						return value
+					}
+				}
+			}
+		},
 		methods: {
 			goBack() {
 				uni.navigateBack()
 			},
+			copyinfo() {
+				uni.setClipboardData({
+					data: this.name,
+					success: (res) => {
+						uni.showToast({
+							icon: "none",
+							title: this.$t('app.copy.success')
+						})
+					}
+				})
+			},
+			changeLog(e){
+				// console.log(e,'选择日期')
+				this.datetimesingle=e
+			},
+			downImage() {
+				// console.log(this.sortImage(this.recharge_usdt_qr_code))
+				var _this = this
+				// #ifdef H5
+				// 假设你已经有了图片的路径
+				let imagePath = _this.sortImage(_this.recharge_usdt_qr_code);
+				// 保存图片到相册
+				uni.saveImageToPhotosAlbum({
+					filePath: imagePath,
+					success: function() {
+						// console.log('图片保存成功');
+						uni.showToast({
+							icon: "none",
+							title: _this.$t('app.image.success')
+						})
+						// 可以在这里提示用户保存成功
+					},
+					fail: function(err) {
+						// console.log('图片保存失败', err);
+						uni.showToast({
+							icon: "none",
+							title: _this.$t('app.image.fail')
+						})
+						// 可以在这里提示用户保存失败，并处理错误
+					}
+				});
+				// #endif
+				// #ifdef APP-PLUS
+
+				// 首先下载图片到本地临时路径
+				uni.downloadFile({
+					url: _this.sortImage(_this.recharge_usdt_qr_code),
+					success: downloadResult => {
+						if (downloadResult.statusCode === 200) {
+							// 下载成功，保存图片到相册
+							uni.saveImageToPhotosAlbum({
+								filePath: downloadResult.tempFilePath,
+								success: () => {
+									uni.showToast({
+										title:_this.$t('app.image.success'),
+										icon: 'none'
+									});
+								},
+								fail: () => {
+									uni.showToast({
+										title:_this.$t('app.image.fail'),
+										icon: 'none'
+									});
+								}
+							});
+						}
+					},
+					fail: () => {
+						uni.showToast({
+							title:_this.$t('app.imagedown.fail'),
+							icon: 'none'
+						});
+					}
+				});
+				// #endif
+			},
+			upImaged(){
+				// 修改头像
+				uni.chooseImage({
+					count:1,
+					success: (res) => {
+						console.log(res,'111222')
+						this.blobtoFile(res.tempFiles[0])
+					}
+				})
+			},
+			blobtoFile(blobs){
+				console.log(blobs,'--')
+				// 假设你已经有了一个Blob对象  
+				let blob = new Blob([blobs], {type: "text/plain;charset=utf-8"});
+				const file = new File([blobs], "avata.png", { type: blob.type });
+				console.log(file,'899999999999')
+				uni.uploadFile({
+					url: `${url}/api/upload`,
+					image:blobs,
+					header: {
+						Authorization: uni.getStorageSync('token')
+					},
+					formData:{
+						image:blobs
+					},
+					success: (res)=> {
+						var data = JSON.parse(res.data)
+						if(data.code==200){
+							this.upImage=data.data.path
+						}
+						console.log(data,'99999')
+					},
+					fail: function(res) {
+						console.log(res, 'fail');
+					},
+				})
+			},
+			confimTijiao(){
+				$request("getrechargeApply", {
+					money:this.money,
+					channel:this.channel,
+					hash:this.hash,
+					pay_time:this.datetimesingle,
+					transfer_voucher:this.upImage
+				}).then(res=>{
+					let {
+						data,
+						code,
+						message
+					} = res.data;
+					if (code !== 200) {
+						// 登录失败
+						uni.showToast({
+							title: res.data.message,
+							icon: "none",
+						});
+						return;
+					}
+					uni.reLaunch({
+						url:"/pages/me/me"
+					})
+				})
+			}
 		}
 	}
 </script>
@@ -401,25 +569,29 @@
 				padding: 29rpx 30rpx;
 				background-color: #FFFFFF;
 				border-radius: 20rpx;
+
 				.count_two_named {
 					font-family: PingFang SC, PingFang SC;
 					font-weight: 800;
 					font-size: 36rpx;
 					color: #3A2633;
 				}
-				.two_centented_title{
+
+				.two_centented_title {
 					width: 100%;
 					display: flex;
 					align-items: center;
 					justify-content: space-between;
 					margin-top: 30rpx;
-					.two_centented_titlename{
+
+					.two_centented_titlename {
 						font-family: PingFang SC, PingFang SC;
 						font-weight: 400;
 						font-size: 30rpx;
 						color: #3A2633;
 					}
-					.two_centented_titleinput{
+
+					.two_centented_titleinput {
 						width: 433rpx;
 						height: 77rpx;
 						background: #F4F4F4;
@@ -428,26 +600,30 @@
 						padding: 0 20rpx;
 						display: flex;
 						align-items: center;
-						input{
+
+						input {
 							width: 100%;
 							height: 77rpx;
 							font-family: PingFang SC, PingFang SC;
 							font-weight: 400;
 							font-size: 26rpx;
 						}
-						image{
+
+						image {
 							width: 30rpx;
 						}
 					}
 				}
-				.two_centented_titled{
+
+				.two_centented_titled {
 					font-family: PingFang SC, PingFang SC;
 					font-weight: 400;
 					font-size: 30rpx;
 					color: #3A2633;
 					margin-top: 30rpx;
 				}
-				.two_centented_imagekong{
+
+				.two_centented_imagekong {
 					width: 560rpx;
 					height: 476rpx;
 					background: #F8F8F8;
@@ -457,10 +633,12 @@
 					align-items: center;
 					justify-content: center;
 					margin: 20rpx auto;
-					image{
+
+					image {
 						width: 74.5rpx;
 					}
-					.kong_title{
+
+					.kong_title {
 						font-family: PingFang SC, PingFang SC;
 						font-weight: 400;
 						font-size: 26rpx;
@@ -468,22 +646,48 @@
 						margin-top: 33rpx;
 					}
 				}
-				.imageed{
+
+				.imageed {
 					width: 560rpx;
 					height: 476rpx;
+					background-color: #F4F4F4;
+					border-radius: 10rpx;
 					margin: 20rpx auto;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: center;
 					image{
-						width: 560rpx;
-						height: 476rpx;
-						border-radius: 30rpx;
+						width: 75rpx;
+						height: 75rpx;
+					}
+					.imageed_title{
+						font-family: PingFang SC, PingFang SC;
+						font-weight: 400;
+						font-size: 26rpx;
+						color: #A4A4A4;
+						margin-top: 30rpx;
 					}
 				}
-				.image_confim{
+				.imageeds{
+					width: 560rpx;
+					height: 476rpx;
+					background-color: #F4F4F4;
+					border-radius: 10rpx;
+					margin: 20rpx auto;
+					image{
+						width: 100%;
+						height: 100%;
+						border-radius: 10rpx;
+					}
+				}
+
+				.image_confim {
 					width: 600rpx;
 					height: 98rpx;
 					line-height: 98rpx;
 					text-align: center;
-					background: linear-gradient( 180deg, #EF8E1F 0%, #F0AC05 100%);
+					background: linear-gradient(180deg, #EF8E1F 0%, #F0AC05 100%);
 					border-radius: 20rpx;
 					font-family: PingFang SC, PingFang SC;
 					font-weight: 800;

@@ -8,13 +8,15 @@
 			</view>
 			<view class="share_count">
 				<view class="count_code">
-					<image src="../../../static/img/cn.png" mode="aspectFill"></image>
+					<!-- <image src="../../../static/img/cn.png" mode="aspectFill"></image> -->
+					<uqrcode  ref="uqrcode" canvas-id="qrcode" :value="shareUrl" :options="{ margin: 10 }" :size="140" :loading="false">
+					</uqrcode>
 				</view>
 				<view class="count_link">
 					<view class="link_name">
-						pe=16047&query=&keyfrom=baidu&sm
+						{{shareUrl}}
 					</view>
-					<view class="link_copy">
+					<view class="link_copy" @click="copyinfo">
 						{{$t('join.copy')}}
 					</view>
 				</view>
@@ -42,6 +44,10 @@
 
 <script>
 	import hxNavbar from "@/components/hx-navbar.vue";
+	import {
+		$request,
+		filesUrl,
+	} from "@/utils/request";
 	export default {
 		components: {
 			hxNavbar,
@@ -55,36 +61,84 @@
 				};
 			},
 		},
-		data(){
+		onLoad() {
+			this.getUserinfo() //获取用户详情
+		},
+		data() {
 			return {
-				
+				userInfo: "", //用户详情
+				shareUrl: "",
+			}
+		},
+		methods: {
+			async getUserinfo() {
+				let res = await $request('getInfo', {});
+				if (res.data.code == 200) {
+					this.userInfo = res.data.data;
+					this.getShare()
+					console.log(this.userInfo)
+				}
+				// console.log(res,'用户详情')
+			},
+			async getShare() {
+				let res = await $request('getSharecode', {
+					invitation_code: this.userInfo.invitation_code
+				});
+				if (res.data.code == 200) {
+					console.log(res.data.data)
+					this.shareUrl = res.data.data.url
+					this.getQRcode()
+				}
+			},
+			getQRcode() {
+				var qr = new UQRCode();
+				// 设置uQRCode属性
+				qr.data = this.shareUrl; // 指定二维码对应内容
+				qr.size = 220; // 指定要生成的二维码大小
+				qr.margin = 10; // 指定二维码的边距
+			},
+			copyinfo() {
+				uni.setClipboardData({
+					data: this.shareUrl,
+					success: (res) => {
+						uni.showToast({
+							icon: "none",
+							title: this.$t('app.copy.success')
+						})
+					}
+				})
 			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	.share{
+	.share {
 		width: 100%;
-		.share_centetn{
+
+		.share_centetn {
 			width: 100%;
 			position: relative;
-			image{
+
+			image {
 				width: 100%;
 				height: 1400rpx;
 			}
-			.share_title{
+
+			.share_title {
 				width: 100%;
 				text-align: center;
 				position: absolute;
 				top: 80rpx;
 				left: 0;
-				image{
+
+				image {
 					width: 451rpx;
 					height: 139rpx;
 				}
 			}
-			.share_count{
+
+			.share_count {
 				width: 100%;
 				min-height: 200rpx;
 				box-sizing: border-box;
@@ -92,7 +146,8 @@
 				position: absolute;
 				left: 0;
 				top: 45%;
-				.count_code{
+
+				.count_code {
 					width: 286rpx;
 					height: 286rpx;
 					background: #FFFFFF;
@@ -101,12 +156,14 @@
 					align-items: center;
 					justify-content: center;
 					margin: 0 auto;
-					image{
+
+					image {
 						width: 232rpx;
 						height: 232rpx;
 					}
 				}
-				.count_link{
+
+				.count_link {
 					width: 100%;
 					height: 84rpx;
 					background: #FBB77C;
@@ -117,7 +174,8 @@
 					display: flex;
 					align-items: center;
 					justify-content: space-between;
-					.link_name{
+
+					.link_name {
 						width: 450rpx;
 						font-family: PingFang SC, PingFang SC;
 						font-weight: 400;
@@ -127,7 +185,8 @@
 						overflow: hidden;
 						text-overflow: ellipsis;
 					}
-					.link_copy{
+
+					.link_copy {
 						width: 120rpx;
 						height: 52rpx;
 						line-height: 52rpx;
@@ -143,7 +202,8 @@
 						color: #FFFFFF;
 					}
 				}
-				.count_link_title{
+
+				.count_link_title {
 					width: 100%;
 					box-sizing: border-box;
 					padding: 35rpx 30rpx;
@@ -153,19 +213,23 @@
 					font-size: 30rpx;
 					color: #533612;
 				}
-				.count_share_button{
+
+				.count_share_button {
 					width: 60%;
 					display: flex;
 					align-items: center;
 					justify-content: space-around;
 					margin: 30rpx auto 0;
-					.button_one{
+
+					.button_one {
 						text-align: center;
-						image{
+
+						image {
 							width: 90rpx;
 							height: 90rpx;
 						}
-						.button_one_title{
+
+						.button_one_title {
 							font-family: PingFang SC, PingFang SC;
 							font-weight: 800;
 							font-size: 24rpx;

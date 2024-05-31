@@ -515,7 +515,12 @@
 		"app.order.jingjiaprice":"我的竞价",
 		"app.order.setPaypass":"设置支付密码",
 		"app.setpass":"支付密码",
-		"app.tixian.account":"提现到账金额"
+		"app.tixian.account":"提现到账金额",
+		"app.copy.success":"复制成功",
+		"app.image.success":"图片保存成功",
+		"app.image.fail":"图片保存失败",
+		"app.imagedown.fail":"下载失败",
+		"app.txid_inpt":"请输入TXID/HASH"
 		
 		
 		

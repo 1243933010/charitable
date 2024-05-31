@@ -404,6 +404,21 @@ let requestObj = {
 		name:"上传图片",
 		url:"/api/upload",
 		type:"POST"
+	},
+	gewithdrawApply:{
+		name:"提现",
+		url:"/api/withdrawApply",
+		type:"POST"
+	},
+	getSharecode:{
+		name:"分享",
+		url:"/api/createShareLink",
+		type:"POST"
+	},
+	getrechargeApply:{
+		name:"充值",
+		url:"/api/rechargeApply",
+		type:"POST"
 	}
 }
 export default requestObj;
