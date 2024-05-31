@@ -78,11 +78,13 @@
 				uni.chooseImage({
 					count:1,
 					success: (res) => {
-						this.blobtoFile(res.tempFilePaths[0])
+						console.log(res,'111222')
+						this.blobtoFile(res.tempFiles[0])
 					}
 				})
 			},
 			blobtoFile(blobs){
+				console.log(blobs,'--')
 				// 假设你已经有了一个Blob对象  
 				let blob = new Blob([blobs], {type: "text/plain;charset=utf-8"});  
 				// 现在你可以使用File对象了，比如上传到服务器  
@@ -94,16 +96,16 @@
 				console.log(file,'899999999999')
 				uni.uploadFile({
 					url: `${url}/api/upload`,
-					file,
+					image:blobs,
 					//后台获取我们图片的key
-					name: 'file',
+					// name: 'image',
 					//额外的参数formData
 					header: {
 						Authorization: uni.getStorageSync('token')
 					},
 					formData:{
 						// image:res.tempFilePaths[0]
-						image:file.name
+						image:blobs
 					},
 					success: (res)=> {
 						//上传成功
