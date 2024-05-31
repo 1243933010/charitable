@@ -49,7 +49,7 @@ export const $request = (requestName,params,headerType=0)=>{
 		        resolve(res)
 		    },
 			fail: (err) => {
-				// console.log(err,'-------------')
+				console.log(err,'-------------')
 				reject(err)
 			}
 		});

@@ -23,10 +23,10 @@
 					{{$t('app.user.qianbaoyue')}}（USD）
 				</view>
 				<view class="month_price">
-					0.00
+					{{userInfo.balance||0}}
 				</view>
 				<view class="month_bg_button">
-					<view class="button_one" @click="goPath('/pages/me/month/withdrawal')">
+					<view class="button_one" @click="goWithdraw">
 						{{$t('withdraw.pageTit')}}
 					</view>
 					<view class="button_one button_two" @click="goPath('/pages/me/month/recharge')">
@@ -50,7 +50,7 @@
 						{{$t('app.month.sharejiangli')}} (USD)
 					</view>
 					<view class="share_left_price">
-						1.82
+						{{userInfo.share_bonus||0}}
 					</view>
 				</view>
 				<view class="counted_share_right" @click="goPath('/pages/me/month/jiangliDetail')">
@@ -63,7 +63,7 @@
 						{{$t('app.month.gongyijijin')}} (USD)
 					</view>
 					<view class="share_left_price" style="color: #ffffff;">
-						0.00
+						{{userInfo.public_welfare_fund||0}}
 					</view>
 				</view>
 				<view class="counted_share_right" style="color: #FFF8F1;" @click="goPath('/pages/me/month/jijinDetail')">
@@ -75,6 +75,9 @@
 </template>
 
 <script>
+	import {
+		$request
+	} from "@/utils/request";
 	export default {
 		data(){
 			return {
@@ -82,7 +85,11 @@
 					backgroundImage: `url(../../static/userStatic/month_bg.png)`,
 					backgroundSize: `100% 100%`
 				},
+				userInfo:"",
 			}
+		},
+		onShow() {
+			this.getUserinfo()//获取用户详情
 		},
 		methods:{
 			goBack(){
@@ -93,6 +100,21 @@
 					url: link,
 				});
 			},
+			async getUserinfo(){
+				let res = await $request('getInfo', {});
+				if (res.data.code == 200) {
+					this.userInfo = res.data.data;
+					console.log(this.userInfo)
+				}
+				// console.log(res,'用户详情')
+			},
+			goWithdraw(){
+				if(this.userInfo.usdt!=''||this.userInfo.usdc!=''){
+					this.goPath('/pages/me/month/withdrawal')
+				}else{
+					this.goPath('/pages/me/setting/bindAccout')
+				}
+			}
 		}
 	}
 </script>

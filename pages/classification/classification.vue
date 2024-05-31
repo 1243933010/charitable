@@ -64,7 +64,7 @@
 				<view class="icons" @click="closeDialog">
 					<image src="@/static/img/close_small_icon.png" mode="widthFix" class="img"></image>
 				</view>
-				<view class="title">确认消息</view>
+				<view class="title">{{$t("app.newAdd62")}}</view>
 				<view class="pic">
 					<image src="@/static/img/cn.png" mode="widthFix" class="img"></image>
 				</view>
@@ -72,13 +72,16 @@
 					<view class="label">名称：</view>
 					<view class="text no-bg">白色的空开放式学校背包白色的空开放式学校背包</view>
 				</view>
-				<view class="label-text">
+				<view class="label-text label-text1">
 					<view class="label">价格：</view>
-					<view class="text">$50</view>
+					<view class="text">$ <input type="text" v-model="price" /> </view>
 				</view>
 				<view class="label-text">
 					<view class="label">交易截止时间：</view>
-					<view class="text time">16:42 01/19/2022</view>
+					<view class="text time">
+
+						<uni-datetime-picker :fields="fields" @change="onDateTimeChange"></uni-datetime-picker>
+					</view>
 				</view>
 				<view class="btn-box" @click="submitHandle">{{$t("app.shen36")}}</view>
 			</view>
@@ -88,25 +91,28 @@
 
 <script>
 	import {
-		$request,filesUrl
+		$request,
+		filesUrl
 	} from "@/utils/request.js";
 	import productTestImg from "@/static/img/cn.png";
-
+	import {
+		setTabbar
+	} from "@/utils/utils.js";
 	export default {
 		computed: {
-			imageUrl(){
+			imageUrl() {
 				return filesUrl;
 			},
-			tabs(){
+			tabs() {
 				return [{
-					text: this.$t("app.tabbar3"),
-					val: 0
-				},
-				{
-					text: this.$t("app.tabbar4"),
-					val: 1
-				}
-			]
+						text: this.$t("app.tabbar3"),
+						val: 0
+					},
+					{
+						text: this.$t("app.tabbar4"),
+						val: 1
+					}
+				]
 			}
 		},
 		data() {
@@ -120,16 +126,15 @@
 				],
 				currentIndex: 0,
 				userAuctionsList: [],
-				
+
 				tabsVal: 0,
 				iStatusBarHeight: 0,
 				myProductList: [{
-						url: productTestImg,
-						price: '500USDT',
-						title: '白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包',
-						time: "2024-01-01",
-					}
-				],
+					url: productTestImg,
+					price: '500USDT',
+					title: '白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包',
+					time: "2024-01-01",
+				}],
 				userAuctionsParams: {
 					page: 1,
 					limit: 20
@@ -137,10 +142,19 @@
 				userAuctionsGoodsParams: {
 					page: 1,
 					limit: 20
-				}
+				},
+				fields: 'year,month,day,hour,minute,second',
+				// 设置可选择的开始日期和结束日期
+				// :start="startDate" :end="endDate"
+				startDate: '2010-01-01 00:00:00',
+				endDate: '2030-12-31 23:59:59',
+				price: '',
+				time: '',
+				productInfo:{}
 			};
 		},
 		mounted() {
+			setTabbar(this.$t)
 			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight;
 			this.userAuctions();
 			this.slides();
@@ -155,9 +169,15 @@
 			}
 		},
 		methods: {
+			onDateTimeChange(e) {
+				console.log(e)
+				this.time = e;
+			},
 			async slides() {
-				let res = await $request("slides", {position:'4'});
-				console.log( res.data.data.data)
+				let res = await $request("slides", {
+					position: '4'
+				});
+				console.log(res.data.data.data)
 				if (res.data.code === 200) {
 					this.swiperList = res.data.data.data;
 					return false;
@@ -199,10 +219,21 @@
 				}
 			},
 			openDialog(productInfo) {
+				this.productInfo = productInfo;
 				this.$refs.popupRef.open('top');
 			},
-			submitHandle() {
-				this.closeDialog();
+			async submitHandle() {
+				// this.closeDialog();
+				let res = await $request('userAddAuctionGoods',{price:this.price,end_time:this.time,id:this.productInfo.id});
+				console.log(res)
+				uni.showToast({
+					icon:'none',
+					title:res.data.message
+				})
+				if (res.data.code === 200) {
+					this.closeDialog();
+					return
+				}
 			},
 			closeDialog() {
 				this.$refs.popupRef.close();
@@ -469,6 +500,14 @@
 					&.time {
 						color: #A8A8A8;
 					}
+				}
+			}
+
+			.label-text1 {
+				.text {
+					display: flex;
+					flex-direction: row !important;
+					align-items: center;
 				}
 			}
 

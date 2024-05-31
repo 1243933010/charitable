@@ -93,6 +93,24 @@ let requestObj = {
 	userParticipateAuction:{
 		name: "拍卖",
 		url: '/api/userParticipateAuction',
+	userAddAuctionGoods:{
+		name: "上架拍品",
+		url: '/api/userAddAuctionGoods',
+		type: 'POST'
+	},
+	userOffAuctionGoods:{
+		name: "下架拍品",
+		url: '/api/userOffAuctionGoods',
+		type: 'POST'
+	},
+	userParticipateAuctionRecords:{
+		name: "拍卖订单列表（用户)",
+		url: '/api/userParticipateAuctionRecords',
+		type: 'POST'
+	},
+	userParticipateAuctionRecordDetail:{
+		name: "拍卖订单详情（用户)",
+		url: '/api/userParticipateAuctionRecordDetail',
 		type: 'POST'
 	},
 	auctionsRecords:{
@@ -344,6 +362,41 @@ let requestObj = {
 	getFriends:{
 		name:"好友列表",
 		url:"/api/userFriends",
+		type:"POST"
+	},
+	getAccountinfo:{
+		name:"账户明细",
+		url:"/api/accountInfo",
+		type:"POST"
+	},
+	getChangepassword:{
+		name:"修改登录密码",
+		url:"/api/changePassword",
+		type:"POST"
+	},
+	getsetPayPassword:{
+		name:"设置支付密码",
+		url:"/api/setPayPassword",
+		type:"POST"
+	},
+	getchangePayPassword:{
+		name:"修改支付密码",
+		url:"/api/changePayPassword",
+		type:"POST"
+	},
+	getRechargeConfig:{
+		name:"获取充值和提现配置",
+		url:"/api/getRechargeConfig",
+		type:"POST"
+	},
+	getchangeUserInfo:{
+		name:"修改资料",
+		url:"/api/changeUserInfo",
+		type:"POST"
+	},
+	getupImage:{
+		name:"上传图片",
+		url:"/api/upload",
 		type:"POST"
 	}
 }

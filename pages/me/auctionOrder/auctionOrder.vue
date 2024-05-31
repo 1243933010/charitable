@@ -21,33 +21,33 @@
 				{{$t('app.order.shuoming')}}
 			</view>
 			<view class="actionOrdeNav">
-				<view class="actionOrdeNav_one" :class="{'actionOrdeNav_oneActive':navOrderindex==indexs}" v-for="(items,indexs) in navOrderarray" :key="indexs" @click="navOrderindex=indexs">
+				<view class="actionOrdeNav_one" :class="{'actionOrdeNav_oneActive':navOrderindex==indexs}" v-for="(items,indexs) in navOrderarray" :key="indexs" @click="navOrderindex=indexs,getPaiorder('init')">
 					{{this.$t(items.name)}}
 				</view>
 			</view>
 		</view>
 		<scroll-view scroll-y="true" class="scroll_h">
 			<view class="friends_centent">
-				<view class="order_one" v-for="(item,index) in 10" :key="index" @click="goPath(`/pages/me/auctionOrder/auctionDetail`)">
+				<view class="order_one" v-for="(item,index) in orderList" :key="index" @click="goPath(`/pages/me/auctionOrder/auctionDetail?id=${item.id}`)">
 					<view class="order_one_left">
-						<image src="../../../static/img/cn.png" mode="aspectFill"></image>
+						<image :src="sortImage(item.main_image)" mode="aspectFill"></image>
 						<view class="order_one_leftcount">
 							<view class="leftcount_name">
-								白色的空开放式学校背包
+								{{item.title}}
 							</view>
 							<view class="leftcount_price">
-								当前价格：500 USDT
+								{{$t('app.order.currentprice')}}：{{item.current_price}} USDT
 							</view>
 							<view class="leftcount_pricetwo">
-								我的竞价：500 USDT
+								{{$t('app.order.jingjiaprice')}}：{{item.order_money}} USDT
 							</view>
-							<view class="leftcount_time">
-								2024-05-20 10:00结束
+							<view class="leftcount_time" v-if="item.auction_end_time">
+								{{item.auction_end_time}}{{$t('app.newAdd55')}}
 							</view>
 						</view>
 					</view>
 					<view class="order_one_right">
-						已出价
+						{{item.status_desc}}
 					</view>
 				</view>
 			</view>
@@ -56,27 +56,84 @@
 </template>
 
 <script>
+	import {
+		$request,
+		filesUrl
+	} from "@/utils/request";
 	export default {
 		data(){
 			return {
 				navOrderarray:[
 					{
-						name:"app.month.all"
+						name:"app.month.all",
+						status:""
 					},
 					{
-						name:"app.shen35"
+						name:"app.shen35",
+						status:"0"
 					},
 					{
-						name:"app.chuju"
+						name:"app.paixia",
+						status:"1"
 					},
 					{
-						name:"app.paixia"
+						name:"app.chuju",
+						status:"2"
 					}
 				],
 				navOrderindex:0,
+				params:{
+					page:1,
+					status:""
+				},
+				last_page:1,
+				orderList:[]
+			}
+		},
+		onLoad() {
+			this.getPaiorder('init')
+		},
+		onReachBottom() {
+			if(this.last_page>this.params.page){
+				this.params.page++
+				this.getPaiorder()
+			}
+		},
+		onPullDownRefresh() {
+			setTimeout(()=>{
+				uni.stopPullDownRefresh()
+			},1500)
+			this.getPaiorder('init')
+		},
+		computed:{
+			sortImage() {
+				return value => {
+					if(value){
+						return value.indexOf('http') != -1 ? value : filesUrl + value
+					}else{
+						return value
+					}
+				}
 			}
 		},
 		methods:{
+			async getPaiorder(type){
+				if(type=='init'){
+					this.params.page=1
+					this.orderList=[]
+				}
+				this.params.status=this.navOrderarray[this.navOrderindex].status
+				let res = await $request('userParticipateAuctionRecords', this.params);
+				if (res.data.code == 200) {
+					this.last_page=res.data.data.last_page
+					if(this.pamars.page==1){
+						this.orderList=res.data.data.data
+					}else{
+						this.orderList=[...this.orderList,...res.data.data.data]
+					}
+					// console.log(res,'账户明细')
+				}
+			},
 			goBack(){
 				uni.navigateBack()
 			},

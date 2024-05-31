@@ -29,10 +29,10 @@
 				<view class="setting_title">
 					{{$t('app.user.anquan')}}
 				</view>
-				<view class="setting_ones" @click="goPath('/pages/me/setting/changePaypass')">
+				<view class="setting_ones" @click="goPaypass">
 					<view class="setting_ones_left">
 						<image class="setting_threeimage" src="../../../static/userStatic/setting_three.png" mode="heightFix"></image>
-						{{$t('app.user.paypass')}}
+						{{$t('app.setpass')}}
 					</view>
 					<view class="setting_ones_right">
 						<image src="../../../static/userStatic/user_right.png" mode="aspectFill"></image>
@@ -54,6 +54,9 @@
 
 <script>
 	import hxNavbar from "@/components/hx-navbar.vue";
+	import {
+		$request
+	} from "@/utils/request";
 	export default {
 		components: {
 			hxNavbar,
@@ -77,6 +80,20 @@
 				uni.navigateTo({
 					url: link,
 				});
+			},
+			async goPaypass(){
+				let res = await $request('getInfo', {});
+				if (res.data.code == 200) {
+					if(res.data.data.is_set_pay_password==0){
+						uni.navigateTo({
+							url:"/pages/me/setting/setPaypass"
+						})
+					}else{
+						uni.navigateTo({
+							url:"/pages/me/setting/changePaypass"
+						})
+					}
+				}
 			}
 		}
 	}

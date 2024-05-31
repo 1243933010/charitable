@@ -65,6 +65,7 @@
 		"app.newAdd59":"注：所出价格不能低于当前竞拍价格",
 		"app.newAdd60":"距离结束",
 		"app.newAdd61":"我已捐赠",
+		"app.newAdd62":"确认消息",
 		
 		
 
@@ -508,7 +509,14 @@
 		"app.xianshi.searched":"搜索",
 		"app.order.shuoming":"订单说明：已拍下产品可前往交易板块-我的拍品进行出售",
 		"app.chuju":"已出局",
-		"app.paixia":"已拍下"
+		"app.paixia":"已拍下",
+		"app.type":"类型",
+		"app.order.currentprice":"当前价格",
+		"app.order.jingjiaprice":"我的竞价",
+		"app.order.setPaypass":"设置支付密码",
+		"app.setpass":"支付密码",
+		"app.tixian.account":"提现到账金额"
+		
 		
 		
 		

@@ -19,15 +19,23 @@
 					</view>
 				</view>
 			</view>
-			<view class="bindAddress_one">
+			<view class="bindAddress_one" v-if="accoutIndex==0">
 				<view class="bindAddress_one_tile">
 					{{$t('app.user.shouaccount')}}
 				</view>
 				<view class="bindAddress_one_input">
-					<input type="text" :placeholder="$t('app.user.shouaccountinput')">
+					<input type="text" v-model="userInfo.usdt" :placeholder="$t('app.user.shouaccountinput')">
 				</view>
 			</view>
-			<view class="bindAddress_button">
+			<view class="bindAddress_one" v-if="accoutIndex==1">
+				<view class="bindAddress_one_tile">
+					{{$t('app.user.shouaccount')}}
+				</view>
+				<view class="bindAddress_one_input">
+					<input type="text" v-model="userInfo.usdc" :placeholder="$t('app.user.shouaccountinput')">
+				</view>
+			</view>
+			<view class="bindAddress_button" @click="bindBang">
 				{{$t('app.user.bangding')}}
 			</view>
 		</view>
@@ -36,6 +44,9 @@
 
 <script>
 	import hxNavbar from "@/components/hx-navbar.vue";
+	import {
+		$request
+	} from "@/utils/request";
 	export default {
 		components: {
 			hxNavbar,
@@ -64,6 +75,56 @@
 					icon_select:"../../../static/userStatic/redio_y.png"
 				}],
 				accoutIndex:0,
+				userInfo:"",
+			}
+		},
+		onLoad() {
+			this.getUserinfo()
+		},
+		methods:{
+			async getUserinfo(){
+				let res = await $request('getInfo', {});
+				if (res.data.code == 200) {
+					this.userInfo = res.data.data;
+					console.log(this.userInfo)
+				}
+			},
+			bindBang(){
+				if(this.accoutIndex==0){
+					$request("getchangeUserInfo", {usdt:this.userInfo.usdt}).then(res=>{
+						let {
+							data,
+							code,
+							message
+						} = res.data;
+						if (code !== 200) {
+							// 登录失败
+							uni.showToast({
+								title: res.data.message,
+								icon: "none",
+							});
+							return;
+						}
+						uni.navigateBack()
+					})
+				}else{
+					$request("getchangeUserInfo", {usdc:this.userInfo.usdc}).then(res=>{
+						let {
+							data,
+							code,
+							message
+						} = res.data;
+						if (code !== 200) {
+							// 登录失败
+							uni.showToast({
+								title: res.data.message,
+								icon: "none",
+							});
+							return;
+						}
+						uni.navigateBack()
+					})
+				}
 			}
 		}
 	}

@@ -2,20 +2,20 @@
 	<view class="bindAddress">
 		<hx-navbar :config="config" />
 		<view class="bindAddress_centent">
-			<view class="bindAddress_one">
+			<!-- <view class="bindAddress_one">
 				<view class="bindAddress_one_tile">
 					{{$t('app.user.jiupass')}}
 				</view>
 				<view class="bindAddress_one_input">
-					<input type="text" v-model="params.old_password"  :placeholder="$t('app.password1')">
+					<input type="text" :placeholder="$t('app.password1')">
 				</view>
-			</view>
+			</view> -->
 			<view class="bindAddress_one">
 				<view class="bindAddress_one_tile">
 					{{$t('app.user.newpass')}}
 				</view>
 				<view class="bindAddress_one_input">
-					<input type="text" v-model="params.password" :placeholder="$t('app.password2')">
+					<input type="text" v-model="pamars.password" :placeholder="$t('app.password2')">
 				</view>
 			</view>
 			<view class="bindAddress_one">
@@ -23,10 +23,10 @@
 					{{$t('app.user.quePass')}}
 				</view>
 				<view class="bindAddress_one_input">
-					<input type="text" v-model="params.password_confirmation" :placeholder="$t('app.user.quePassinput')">
+					<input type="text" v-model="pamars.password_confirmation" :placeholder="$t('app.user.quePassinput')">
 				</view>
 			</view>
-			<view class="bindAddress_button" @click="confirm">
+			<view class="bindAddress_button" @click="gowancheng">
 				{{$t('modifyNickname.btnText')}}
 			</view>
 		</view>
@@ -45,7 +45,7 @@
 		computed: {
 			config() {
 				return {
-					title: this.$t('app.user.loginpass'),
+					title: this.$t('app.order.setPaypass'),
 					color: "#403039",
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};
@@ -53,16 +53,15 @@
 		},
 		data(){
 			return {
-				params:{
-					old_password:"",
+				pamars:{
 					password:"",
 					password_confirmation:"",
 				}
 			}
 		},
 		methods:{
-			confirm(){
-				$request("getChangepassword", this.params).then(res=>{
+			gowancheng(){
+				$request("getsetPayPassword", this.pamars).then(res=>{
 					let {
 						data,
 						code,
@@ -76,10 +75,7 @@
 						});
 						return;
 					}
-					uni.clearStorageSync()
-					uni.reLaunch({
-						url:"/pages/login/index"
-					})
+					uni.navigateBack()
 				})
 			}
 		}

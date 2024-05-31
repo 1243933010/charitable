@@ -7,7 +7,7 @@
 					{{$t('app.user.jiupass')}}
 				</view>
 				<view class="bindAddress_one_input">
-					<input type="text" :placeholder="$t('app.password1')">
+					<input type="text" v-model="pamars.old_password" :placeholder="$t('app.password1')">
 				</view>
 			</view>
 			<view class="bindAddress_one">
@@ -15,7 +15,7 @@
 					{{$t('app.user.newpass')}}
 				</view>
 				<view class="bindAddress_one_input">
-					<input type="text" :placeholder="$t('app.password2')">
+					<input type="text" v-model="pamars.password" :placeholder="$t('app.password2')">
 				</view>
 			</view>
 			<view class="bindAddress_one">
@@ -23,10 +23,10 @@
 					{{$t('app.user.quePass')}}
 				</view>
 				<view class="bindAddress_one_input">
-					<input type="text" :placeholder="$t('app.user.quePassinput')">
+					<input type="text" v-model="pamars.password_confirmation" :placeholder="$t('app.user.quePassinput')">
 				</view>
 			</view>
-			<view class="bindAddress_button">
+			<view class="bindAddress_button" @click="gowancheng">
 				{{$t('modifyNickname.btnText')}}
 			</view>
 		</view>
@@ -35,6 +35,9 @@
 
 <script>
 	import hxNavbar from "@/components/hx-navbar.vue";
+	import {
+		$request
+	} from "@/utils/request";
 	export default {
 		components: {
 			hxNavbar,
@@ -50,7 +53,31 @@
 		},
 		data(){
 			return {
-				
+				pamars:{
+					old_password:"",
+					password:"",
+					password_confirmation:"",
+				}
+			}
+		},
+		methods:{
+			gowancheng(){
+				$request("getchangePayPassword", this.pamars).then(res=>{
+					let {
+						data,
+						code,
+						message
+					} = res.data;
+					if (code !== 200) {
+						// 登录失败
+						uni.showToast({
+							title: res.data.message,
+							icon: "none",
+						});
+						return;
+					}
+					uni.navigateBack()
+				})
 			}
 		}
 	}

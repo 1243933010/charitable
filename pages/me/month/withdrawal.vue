@@ -43,10 +43,10 @@
 			</view>
 			<view class="withdrawal_count_one">
 				<view class="count_one_left" style="color: #333333;">
-					AUD
+					{{$t('app.quantity')}}
 				</view>
 				<view class="count_one_right">
-					<input type="text" :placeholder="$t('app.month.number')">
+					<input type="text" v-model="params.money" :placeholder="$t('app.month.number')">
 				</view>
 			</view>
 			<view class="withdrawal_count_one">
@@ -54,15 +54,7 @@
 					{{$t('app.balance')}}
 				</view>
 				<view class="count_one_rightactive">
-					5.000{{$t('app.month.aoyaun')}}
-				</view>
-			</view>
-			<view class="withdrawal_count_one">
-				<view class="count_one_left" style="color: #333333;">
-					{{$t('app.month.shouxufei')}}
-				</view>
-				<view class="count_one_rightactive">
-					0%
+					{{userInfo.balance}}
 				</view>
 			</view>
 			<view class="withdrawal_count_one">
@@ -70,15 +62,23 @@
 					{{$t('app.month.huilv')}}
 				</view>
 				<view class="count_one_rightactive">
-					1:1.39
+					{{config.withdraw_fee_ratio}}%
 				</view>
 			</view>
 			<view class="withdrawal_count_one">
 				<view class="count_one_left" style="color: #333333;">
-					{{$t('app.month.jine')}}
+					{{$t('app.month.shouxufei')}}
 				</view>
 				<view class="count_one_rightactive">
-					USDC 7194
+					{{totalPrice(this.params.money)}}
+				</view>
+			</view>
+			<view class="withdrawal_count_one">
+				<view class="count_one_left" style="color: #333333;">
+					{{$t('app.tixian.account')}}
+				</view>
+				<view class="count_one_rightactive">
+					{{totalPriceBalance(this.params.money)}}
 				</view>
 			</view>
 			<view class="withdrawal_count_two">
@@ -96,11 +96,7 @@
 					{{$t('app.month.warning')}}
 				</view>
 				<view class="wraning_desc">
-					取款时间:11点至20点
-					1.建议绑定USDT或其他虚拟货币提取现金。24小时内送
-					到，不收手续费。
-					2.银行卡提现，扣除5%的提现手续费。并在3个工作日内
-					到达。
+					{{config.withdraw_notice}}
 				</view>
 			</view>
 		</view>
@@ -108,6 +104,9 @@
 </template>
 
 <script>
+	import {
+		$request
+	} from "@/utils/request";
 	export default {
 		data() {
 			return {
@@ -118,26 +117,76 @@
 				},
 				tongdaoArray:[
 					{
-						name:"USDC(BEP20/BSC)(0-1000000000)",
+						name:"USDC(BEP20/BSC)",
 						icon:"../../../static/userStatic/redio_w.png",
-						iconSelect:"../../../static/userStatic/redio_y.png"
+						iconSelect:"../../../static/userStatic/redio_y.png",
+						channel:1,
 					},
 					{
-						name:"USDT(TRC20)(0-500000000)",
+						name:"USDT(TRC20)",
 						icon:"../../../static/userStatic/redio_w.png",
-						iconSelect:"../../../static/userStatic/redio_y.png"
+						iconSelect:"../../../static/userStatic/redio_y.png",
+						channel:1,
 					}
 				],
 				tongdaoIndex:0,
+				config:"",//配置详情
+				userInfo:"",//用户详情
+				params:{
+					channel:1,
+					money:"",//提现金额
+					pay_password:"",//支付密码
+				}
 			}
 		},
 		onPageScroll(e) {
 			this.isBgcolor = ~~e.scrollTop > 30 ? true : false
 		},
+		onLoad() {
+			this.getUserinfo()
+			this.getWithdraw()
+		},
+		computed:{
+			totalPrice(){
+				return value=>{
+					if(value){
+						return (Number(value)*(+this.config.withdraw_fee_ratio/100)).toFixed(4)
+					}else{
+						return 0
+					}
+				}
+			},
+			totalPriceBalance(){
+				return value=>{
+					if(value){
+						return (Number(value)-((Number(value)*(+this.config.withdraw_fee_ratio/100)).toFixed(4))).toFixed(4)
+					}else{
+						return 0
+					}
+				}
+			}
+		},
 		methods:{
 			goBack(){
 				uni.navigateBack()
 			},
+			async getUserinfo(){
+				let res = await $request('getInfo', {});
+				if (res.data.code == 200) {
+					this.userInfo = res.data.data;
+					console.log(this.userInfo)
+				}
+			},
+			async getWithdraw(){
+				let res = await $request('getRechargeConfig', {});
+				if (res.data.code == 200) {
+					// console.log(res.data.data,'配置')
+					this.config=res.data.data.withdraw
+					this.tongdaoArray.forEach((item=>{
+						item.name=item.name+`(${this.config.withdraw_min_amount}-${this.config.withdraw_max_amount})`
+					}))
+				}
+			}
 		}
 	}
 </script>

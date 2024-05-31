@@ -4,21 +4,21 @@
 		<view class="auctionDetail_centent">
 			<view class="auctionDetail_top">
 				<view class="auctionDetail_top_left">
-					<image src="../../../static/img/cn.png" mode="aspectFill"></image>
+					<image :src="sortImage(detailInfo.main_image)" mode="aspectFill"></image>
 					<view class="left_centent">
 						<view class="left_name">
-							白色的空开放式学校背包
+							{{detailInfo.title}}
 						</view>
 						<view class="left_price">
-							当前价格：500 USDT
+							{{$t('app.order.currentprice')}}：{{detailInfo.current_price}} USDT
 						</view>
 						<view class="left_priced">
-							我的竞价：500 USDT
+							{{$t('app.order.jingjiaprice')}}：{{detailInfo.order_money}} USDT
 						</view>
 					</view>
 				</view>
 				<view class="auctionDetail_top_right">
-					已出价
+					{{detailInfo.status_desc}}
 				</view>
 			</view>
 			<view class="auctionDetail_top_title">
@@ -30,7 +30,7 @@
 						{{$t('app.shen9')}}：
 					</view>
 					<view class="title_right">
-						白色的空开放式学校背包
+						{{detailInfo.title}}
 					</view>
 				</view>
 				<view class="toptwo_title">
@@ -38,7 +38,7 @@
 						{{$t('app.shen17')}}：
 					</view>
 					<view class="title_right">
-						46516543131
+						{{detailInfo.order_no}}
 					</view>
 				</view>
 				<view class="toptwo_title">
@@ -46,7 +46,7 @@
 						{{$t('app.shen18')}}：
 					</view>
 					<view class="title_right">
-						500USDT
+						{{detailInfo.order_money}}USDT
 					</view>
 				</view>
 				<view class="toptwo_title">
@@ -54,7 +54,7 @@
 						{{$t('app.newAdd47')}}：
 					</view>
 					<view class="title_right">
-						2024-05-20 10:00
+						{{detailInfo.auction_end_time}}
 					</view>
 				</view>
 			</view>
@@ -64,6 +64,10 @@
 
 <script>
 	import hxNavbar from "@/components/hx-navbar.vue";
+	import {
+		$request,
+		filesUrl
+	} from "@/utils/request";
 	export default {
 		components: {
 			hxNavbar,
@@ -76,10 +80,33 @@
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};
 			},
+			sortImage() {
+				return value => {
+					if(value){
+						return value.indexOf('http') != -1 ? value : filesUrl + value
+					}else{
+						return value
+					}
+				}
+			}
 		},
 		data(){
 			return {
-				
+				id:"",
+				detailInfo:"",
+			}
+		},
+		onLoad(option) {
+			this.id = option.id
+			this.getOrderdetail()
+		},
+		methods:{
+			async getOrderdetail(){
+				let res = await $request('userParticipateAuctionRecordDetail', {id:this.id});
+				if (res.data.code == 200) {
+					this.detailInfo=res.data.data
+					// console.log(res,'账户明细')
+				}
 			}
 		}
 	}
