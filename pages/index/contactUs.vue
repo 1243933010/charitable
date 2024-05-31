@@ -3,50 +3,50 @@
 		<hx-navbar :config="config" />
 
 		<view class="index-scroll  has-tabbar">
-			<view class="box" v-for="(item,index) in contactList" :key="index">
+			<view class="box" v-for="(item,index) in Object.values(customerServicesList).length" :key="index">
 				<view class="header">
-					<view class="icon">
+					<!-- <view class="icon">
 						<image src="../../static/img/icon/index/radio.png" mode="widthFix"></image>
-					</view>
-					<view class="title">
+					</view> -->
+					<!-- <view class="title">
 						<text>{{item.title}}</text>
-					</view>
+					</view> -->
 				</view>
 				<view class="content">
 					<view class="item item1">
 						<view class="icon">
-							<image src="../../static/img/icon/index/telegram.png" mode="widthFix"></image>
+							<image :src="imageUrl+customerServicesList[index+1][0].image_url" mode="widthFix"></image>
 						</view>
 						<view class="title">
-							<text>Telegram</text>
+							<text>{{customerServicesList[index+1][0].title}}</text>
 						</view>
 						<view class="text">
-							<text>{{item.telegram}}</text>
+							<text>{{customerServicesList[index+1][0].phone}}</text>
 						</view>
 					</view>
 					<view class="item item2">
 						<view class="icon">
-							<image src="../../static/img/icon/index/wechats.png" mode="widthFix"></image>
+							<image :src="imageUrl+customerServicesList[index+1][1].image_url" mode="widthFix"></image>
 						</view>
 						<view class="title">
-							<text>Wechats</text>
+							<text>{{customerServicesList[index+1][1].title}}</text>
 						</view>
 						<view class="text">
-							<text>{{item.wechats}}</text>
+							<text>{{customerServicesList[index+1][1].phone}}</text>
 						</view>
 					</view>
 				</view>
 				<view class="footer">
 					<view class="left">
 						<view class="icon">
-							<image src="../../static/img/icon/index/call.png" mode="widthFix"></image>
+							<image :src="imageUrl+customerServicesList[index+1][2].image_url" mode="widthFix"></image>
 						</view>
 						<view class="label">
-							<text>{{$t("app.newAdd25")}}</text>
+							<text>{{customerServicesList[index+1][2].title}}</text>
 						</view>
 					</view>
 					<view class="right">
-						<text>{{item.other}}</text>
+						<text>{{customerServicesList[index+1][2].phone}}</text>
 					</view>
 				</view>
 			</view>
@@ -57,7 +57,7 @@
 <script>
 	import hxNavbar from "@/components/hx-navbar.vue";
 	import {
-		$request
+		$request,filesUrl
 	} from "@/utils/request.js";
 	export default {
 		components: {
@@ -74,33 +74,35 @@
 		},
 		data() {
 			return {
-				contactList:[
-					{
-						title:'客服热线01',
-						telegram:'12121212121',
-						wechats:'12121212121',
-						other:'12121212121'
-					},
-					{
-						title:'客服热线01',
-						telegram:'12121212121',
-						wechats:'12121212121',
-						other:'12121212121'
-					},
-					{
-						title:'客服热线01',
-						telegram:'12121212121',
-						wechats:'12121212121',
-						other:'12121212121'
-					}
+				
+				customerServicesList:[
+					
 				]
 			};
 		},
+		computed:{
+			imageUrl(){
+				return filesUrl;
+			}
+		},
 		mounted() {
-			
+			this.customerServices()
 		},
 		methods: {
-			
+			async customerServices() {
+				let formData = {
+					// keywords: '',
+					page: 1,
+					limit: 20,
+					// identifier: 'charity'
+				}
+				let res = await $request('customerServices', formData);
+				console.log(res)
+				this.loading = false;
+				if (res.data.code === 200) {
+					this.customerServicesList = res.data.data;
+				}
+			},
 		}
 	}
 </script>

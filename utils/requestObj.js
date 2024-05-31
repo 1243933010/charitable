@@ -154,6 +154,11 @@ let requestObj = {
 		url: '/api/noticesDetail',
 		type: 'POST'
 	},
+	customerServices:{
+		name: "联系我们",
+		url: '/api/customerServices',
+		type: 'POST'
+	},
 	bindEmail:{
 		name: "检测用户是否绑定邮箱",
 		url: '/api/check_email_bind',

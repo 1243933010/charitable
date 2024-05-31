@@ -1,17 +1,18 @@
 <template>
 	<view class="index-page1 ">
 		<hx-navbar :config="config" />
-		
+
 		<view class="content">
 			<view class="qr-code">
-				<image src="../../static/img/bg/index_bg.png" mode="widthFix"></image>
+				<!-- <image src="../../static/img/bg/index_bg.png" mode="widthFix"></image> -->
+				<uqrcode  ref="uqrcode" canvas-id="qrcode" :value="url" :options="{ margin: 10 }" :size="140" :loading="false">
+				</uqrcode>
 			</view>
 			<view class="link">
 				<view class="text">
-					<text>pe=16047&query=&keyfrom=baidu&smsdsdsd</text>
-					<!-- pe=16047&query=&keyfrom=baidu&smsdsdsdsdsdsdsdsdsd -->
+					<text>{{url}}</text>
 				</view>
-				<view class="copy">
+				<view class="copy" @click="copy(url)">
 					<text>{{$t("join.copy")}}</text>
 				</view>
 			</view>
@@ -36,6 +37,7 @@
 
 <script>
 	import hxNavbar from "@/components/hx-navbar.vue";
+	// import UQRCode from '@/uni_modules/Sansnn-uQRCode/js_sdk/uqrcode/uqrcode.js';
 	import {
 		$request
 	} from "@/utils/request.js";
@@ -54,33 +56,61 @@
 		},
 		data() {
 			return {
-				
+				url:"pe=16047&query=&keyfrom=baidu&smsdsdsd"
 			};
+		},
+		mounted() {
+			// this.getQRcode();
+		},
+		methods: {
+			getQRcode() {
+				var qr = new UQRCode();
+				// 设置uQRCode属性
+				qr.data = 'https://uqrcode.cn/doc'; // 指定二维码对应内容
+				qr.size = 220; // 指定要生成的二维码大小
+				qr.margin = 10; // 指定二维码的边距
+			},
+			copy(str){
+				uni.setClipboardData({
+					data:str,
+					success: () => {
+						uni.showToast({
+							icon:'none',
+							title:'success'
+						})
+					}
+				})
+			}
 		}
 	}
 </script>
 
 <style lang="less">
 	@import "../../static/less/variable.less";
+
 	.index-page1 {
 		width: 100%;
 		height: 100%;
 		// background-color: #F4F4F4;
 		background: url("../../static/img/bg/app_bk.png") no-repeat top center / 100% 100%;
-		.content{
+
+		.content {
 			width: 100%;
 			padding-top: 460rpx;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			.qr-code{
+
+			.qr-code {
 				width: 286rpx;
 				margin-bottom: 33rpx;
-				image{
+
+				image {
 					width: 100%;
 				}
 			}
-			.link{
+
+			.link {
 				width: calc(100% - 30rpx);
 				margin: 0 auto;
 				border-radius: 50rpx;
@@ -92,16 +122,18 @@
 				align-items: center;
 				box-sizing: border-box;
 				padding: 16rpx 33rpx;
-				.text{
+
+				.text {
 					width: 80%;
 					overflow: hidden;
 					text-overflow: ellipsis;
-					
-					text{
+
+					text {
 						white-space: nowrap;
 					}
 				}
-				.copy{
+
+				.copy {
 					width: 120rpx;
 					height: 52rpx;
 					background: #F0931B;
@@ -114,33 +146,39 @@
 					font-weight: 600;
 				}
 			}
-			.footer{
+
+			.footer {
 				width: 100%;
 				padding-top: 33rpx;
 				display: flex;
 				flex-direction: column;
 				align-items: center;
-				.title{
+
+				.title {
 					color: #533612;
 					font-size: 30rpx;
 					font-weight: 600;
 					margin-bottom: 64rpx;
 				}
-				.icon{
+
+				.icon {
 					width: 100%;
 					display: flex;
 					justify-content: center;
 					align-items: center;
-					.img{
+
+					.img {
 						display: flex;
 						flex-direction: column;
 						align-items: center;
 						margin: 0 70rpx;
-						image{
+
+						image {
 							width: 90rpx;
 							margin-bottom: 20rpx;
 						}
-						text{
+
+						text {
 							color: 533612;
 							font-size: 24rpx;
 							font-weight: 600;
