@@ -10,8 +10,7 @@
 					</view>
 				</view>
 				<view class="userInfo_one_title">
-					<!-- 点击更换此头像 -->
-					<input type="file" name="" id="">
+					点击更换此头像
 				</view>
 			</view>
 			<view class="userInfo_nicheng">
@@ -86,31 +85,38 @@
 			blobtoFile(blobs){
 				console.log(blobs,'--')
 				// 假设你已经有了一个Blob对象  
-				let blob = new Blob([blobs], {type: "text/plain;charset=utf-8"});  
-				// 现在你可以使用File对象了，比如上传到服务器  
-				// 注意：虽然我们在这里将["blob content"]作为File构造函数的第一个参数，但这实际上是不必要的，  
-				// 因为我们已经有了一个Blob对象，并且File是基于Blob的。  
-				// 在实际使用中，你通常会直接使用你的Blob对象，而不是再次创建一个新的数组。  
-				// 所以更简洁的代码应该是：  
+				let blob = new Blob([blobs], {type: "text/plain;charset=utf-8"});
 				const file = new File([blobs], "avata.png", { type: blob.type });
 				console.log(file,'899999999999')
 				uni.uploadFile({
 					url: `${url}/api/upload`,
 					image:blobs,
-					//后台获取我们图片的key
-					// name: 'image',
-					//额外的参数formData
 					header: {
 						Authorization: uni.getStorageSync('token')
 					},
 					formData:{
-						// image:res.tempFilePaths[0]
 						image:blobs
 					},
 					success: (res)=> {
-						//上传成功
-						// console.log(res, 'success');
 						var data = JSON.parse(res.data)
+						if(data.code==200){
+							this.userInfo.avatar=data.data.path
+							$request("getchangeUserInfo", {avatar:this.userInfo.avatar}).then(res=>{
+								let {
+									data,
+									code,
+									message
+								} = res.data;
+								if (code !== 200) {
+									// 登录失败
+									uni.showToast({
+										title: res.data.message,
+										icon: "none",
+									});
+									return;
+								}
+							})
+						}
 						console.log(data,'99999')
 					},
 					fail: function(res) {

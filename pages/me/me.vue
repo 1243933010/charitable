@@ -10,7 +10,7 @@
 			</view>
 			<!-- 头像区域 -->
 			<view class="user_avatar" @click="goPath(`/pages/me/userinfo/userInfo`)">
-				<image :src="userInfo.avatar||'../../static/img/v2logo.png'" @error="userInfo.avatar='../../static/img/v2logo.png'" mode="aspectFill"></image>
+				<image :src="sortImage(userInfo.avatar)" mode="aspectFill"></image>
 				<view class="avatar_right" v-if="userInfo">
 					<view class="right_name">
 						{{userInfo.nickname||$t('app.user.nickname')}}
@@ -97,7 +97,8 @@
 </template>
 <script>
 	import {
-		$request
+		$request,
+		filesUrl,
 	} from "@/utils/request";
 	import {
 		setTabbar
@@ -174,6 +175,17 @@
 				this.getUserinfo()//获取用户详情
 			}
 		},
+		computed: {
+			sortImage() {
+				return value => {
+					if(value){
+						return value.indexOf('http') != -1 ? value : filesUrl + value
+					}else{
+						return value
+					}
+				}
+			}
+		},
 		methods:{
 			async getUserinfo(){
 				let res = await $request('getInfo', {});
@@ -235,6 +247,7 @@
 				image{
 					width: 160rpx;
 					height: 160rpx;
+					background-color: #f7f7f7;
 					border-radius: 50%;
 				}
 				.avatar_right{
