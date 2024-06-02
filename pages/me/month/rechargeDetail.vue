@@ -56,9 +56,11 @@
 					{{name}}
 					<span @click="copyinfo">{{$t('join.copy')}}</span>
 				</view>
+				<!-- #ifdef APP-PLUS -->
 				<view class="count_button" @click="downImage">
 					{{$t('app.month.code')}}
 				</view>
+				<!-- #endif -->
 				<view class="count_five_title">
 					{{$t('app.month.tishi')}}
 				</view>

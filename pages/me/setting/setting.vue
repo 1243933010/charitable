@@ -48,6 +48,9 @@
 					</view>
 				</view>
 			</view>
+			<view class="seeting_Quite" @click="goQuite">
+				{{$t('app.Exit')}}
+			</view>
 		</view>
 	</view>
 </template>
@@ -94,6 +97,14 @@
 						})
 					}
 				}
+			},
+			goQuite(){
+				uni.clearStorageSync()
+				setTimeout(()=>{
+					uni.reLaunch({
+						url:"/pages/login/index"
+					})
+				},1500)
 			}
 		}
 	}
@@ -156,6 +167,17 @@
 						}
 					}
 				}
+			}
+			.seeting_Quite{
+				width: 80%;
+				background: linear-gradient(180deg, #EF8E1F 0%, #F0AC05 100%);
+				    color: #ffffff;
+				height: 100rpx;
+				line-height: 100rpx;
+				text-align: center;
+				line-height: 100rpx;
+			    border-radius: 85rpx;
+				margin: 150rpx auto;
 			}
 		}
 		

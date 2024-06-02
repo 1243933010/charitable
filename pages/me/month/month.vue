@@ -17,7 +17,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="month_bg" :style="bg_image">
+		<view class="month_bg" :style="[bg_image]">
 			<view class="month_centent">
 				<view class="month_title">
 					{{$t('app.user.qianbaoyue')}}（USD）
@@ -122,6 +122,8 @@
 <style lang="scss" scoped>
 	.month{
 		width: 100%;
+		min-height: 100vh;
+		background-color: #ffffff;
 		// 封装头部
 		.month_nav{
 			width: 100%;

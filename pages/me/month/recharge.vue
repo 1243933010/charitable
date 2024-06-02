@@ -17,7 +17,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="withdrawal_bg" :style="bg_image">
+		<view class="withdrawal_bg" :style="[bg_image]">
 			<view class="withdrawal_centent">
 				<view class="withdrawal_bg_title">
 					{{$t('app.month.chongzhidao')}}
@@ -45,8 +45,11 @@
 				<view class="count_one_left" style="color: #333333;">
 					{{$t('app.month.huilv')}}
 				</view>
-				<view class="count_one_rightactive">
-					{{config.recharge_rate}}%
+				<view class="count_one_rightactive" v-if="tongdaoIndex==0">
+					1:{{config.recharge_rate_usdc}}
+				</view>
+				<view class="count_one_rightactive" v-if="tongdaoIndex==1">
+					1:{{config.recharge_rate_usdt}}
 				</view>
 			</view>
 			<view class="withdrawal_count_one">
@@ -112,7 +115,7 @@
 			totalPriceBalance(){
 				return value=>{
 					if(value){
-						return (Number(value)-((Number(value)*(+this.config.recharge_rate/100)).toFixed(4))).toFixed(4)
+						return  (Number(value) * Number(this.tongdaoIndex == 0 ? this.config.recharge_rate_usdc : this.config.recharge_rate_usdt)).toFixed(2)
 					}else{
 						return 0
 					}
@@ -137,8 +140,9 @@
 					icon:"none",
 					title:this.$t('app.month.number')
 				})
+				var money = (Number(this.money) * Number(this.tongdaoIndex == 0 ? this.config.recharge_rate_usdc : this.config.recharge_rate_usdt)).toFixed(2)
 				uni.navigateTo({
-					url:`/pages/me/month/rechargeDetail?money=${this.money}&channel=${this.tongdaoIndex+1}&name=${this.tongdaoArray[this.tongdaoIndex].name}&recharge_usdt_qr_code=${this.config.recharge_usdt_qr_code}`
+					url:`/pages/me/month/rechargeDetail?money=${money}&channel=${this.tongdaoIndex+1}&name=${this.tongdaoArray[this.tongdaoIndex].name}&recharge_usdt_qr_code=${this.config.recharge_usdt_qr_code}`
 				})
 			}
 		}

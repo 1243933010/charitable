@@ -17,12 +17,13 @@
 				</view>
 			</view>
 		</view>
-		<view class="withdrawal_bg" :style="bg_image">
+		<view class="withdrawal_bg" :style="[bg_image]">
 			<view class="withdrawal_centent">
 				<view class="withdrawal_bg_title">
 					{{$t('app.month.tongdao')}}
 				</view>
-				<view class="withdrawal_one" :class="{'withdrawal_oneActive':tongdaoIndex==index}" v-for="(item,index) in tongdaoArray" :key="index" @click="tongdaoIndex=index">
+				<view class="withdrawal_one" :class="{'withdrawal_oneActive':tongdaoIndex==index}"
+					v-for="(item,index) in tongdaoArray" :key="index" @click="tongdaoIndex=index">
 					<image v-if="tongdaoIndex==index" :src="item.iconSelect" mode="widthFix"></image>
 					<image v-else :src="item.icon" mode="widthFix"></image>
 					{{item.name}}
@@ -61,8 +62,11 @@
 				<view class="count_one_left" style="color: #333333;">
 					{{$t('app.month.huilv')}}
 				</view>
-				<view class="count_one_rightactive">
-					{{config.withdraw_fee_ratio}}%
+				<view class="count_one_rightactive" v-if="tongdaoIndex==0">
+					1:{{config.withdraw_ratio_usdc}}
+				</view>
+				<view class="count_one_rightactive" v-if="tongdaoIndex==1">
+					1:{{config.withdraw_ratio_usdt}}
 				</view>
 			</view>
 			<view class="withdrawal_count_one">
@@ -70,7 +74,8 @@
 					{{$t('app.month.shouxufei')}}
 				</view>
 				<view class="count_one_rightactive">
-					{{totalPrice(this.params.money)}}
+					{{config.withdraw_fee_ratio}}%
+					<!-- {{totalPrice(this.params.money)}} -->
 				</view>
 			</view>
 			<view class="withdrawal_count_one">
@@ -115,28 +120,28 @@
 					backgroundImage: `url(../../static/userStatic/user_bg.png)`,
 					backgroundSize: `100% 100%`
 				},
-				tongdaoArray:[
-					{
-						name:"USDC(BEP20/BSC)",
-						icon:"../../../static/userStatic/redio_w.png",
-						iconSelect:"../../../static/userStatic/redio_y.png",
-						channel:1,
+				tongdaoArray: [{
+						name: "USDC(BEP20/BSC)",
+						icon: "../../../static/userStatic/redio_w.png",
+						iconSelect: "../../../static/userStatic/redio_y.png",
+						channel: 1,
 					},
 					{
-						name:"USDT(TRC20)",
-						icon:"../../../static/userStatic/redio_w.png",
-						iconSelect:"../../../static/userStatic/redio_y.png",
-						channel:2,
+						name: "USDT(TRC20)",
+						icon: "../../../static/userStatic/redio_w.png",
+						iconSelect: "../../../static/userStatic/redio_y.png",
+						channel: 2,
 					}
 				],
-				tongdaoIndex:0,
-				config:"",//配置详情
-				userInfo:"",//用户详情
-				params:{
-					channel:1,
-					money:"",//提现金额
-					pay_password:"",//支付密码
-				}
+				tongdaoIndex: 0,
+				config: "", //配置详情
+				userInfo: "", //用户详情
+				params: {
+					channel: 1,
+					money: "", //提现金额
+					pay_password: "", //支付密码
+				},
+				isFable: true, //判断连点
 			}
 		},
 		onPageScroll(e) {
@@ -146,65 +151,78 @@
 			this.getUserinfo()
 			this.getWithdraw()
 		},
-		computed:{
-			totalPrice(){
-				return value=>{
-					if(value){
-						return (Number(value)*(+this.config.withdraw_fee_ratio/100)).toFixed(4)
-					}else{
-						return 0
-					}
-				}
-			},
-			totalPriceBalance(){
-				return value=>{
-					if(value){
-						return (Number(value)-((Number(value)*(+this.config.withdraw_fee_ratio/100)).toFixed(4))).toFixed(4)
-					}else{
+		computed: {
+			// totalPrice(){
+			// 	return value=>{
+			// 		if(value){
+			// 			return (Number(value)*(+this.config.withdraw_fee_ratio/100)).toFixed(4)
+			// 		}else{
+			// 			return 0
+			// 		}
+			// 	}
+			// },
+			totalPriceBalance() {
+				return value => {
+					if (value) {
+						return ((Number(value) - (Number(value) * Number(this.config.withdraw_fee_ratio) / 100)) * Number(
+							this.tongdaoIndex == 0 ? this.config.withdraw_ratio_usdc : this.config
+							.withdraw_ratio_usdt)).toFixed(2)
+					} else {
 						return 0
 					}
 				}
 			}
 		},
-		methods:{
-			goBack(){
+		methods: {
+			goBack() {
 				uni.navigateBack()
 			},
-			async getUserinfo(){
+			async getUserinfo() {
 				let res = await $request('getInfo', {});
 				if (res.data.code == 200) {
 					this.userInfo = res.data.data;
 					console.log(this.userInfo)
 				}
 			},
-			async getWithdraw(){
+			async getWithdraw() {
 				let res = await $request('getRechargeConfig', {});
 				if (res.data.code == 200) {
 					// console.log(res.data.data,'配置')
-					this.config=res.data.data.withdraw
-					this.tongdaoArray.forEach((item=>{
-						item.name=item.name+`(${this.config.withdraw_min_amount}-${this.config.withdraw_max_amount})`
+					this.config = res.data.data.withdraw
+					this.tongdaoArray.forEach((item => {
+						item.name = item.name +
+							`(${this.config.withdraw_min_amount}-${this.config.withdraw_max_amount})`
 					}))
 				}
 			},
-			goWithdraw(){
-				this.params.channel= this.tongdaoArray[this.tongdaoIndex].channel
-				$request("gewithdrawApply", this.params).then(res=>{
-					let {
-						data,
-						code,
-						message
-					} = res.data;
-					if (code !== 200) {
-						// 登录失败
-						uni.showToast({
-							title: res.data.message,
-							icon: "none",
-						});
-						return;
-					}
-					uni.navigateBack()
-				})
+			goWithdraw() {
+				this.params.channel = this.tongdaoArray[this.tongdaoIndex].channel
+				if (this.isFable) {
+					this.isFable = false
+					this.getisSwith()
+					$request("gewithdrawApply", this.params).then(res => {
+						let {
+							data,
+							code,
+							message
+						} = res.data;
+						if (code !== 200) {
+							// 登录失败
+							uni.showToast({
+								title: res.data.message,
+								icon: "none",
+							});
+							return;
+						}
+						uni.navigateBack()
+					})
+				}
+
+			},
+			getisSwith() {
+				setTimeout(() => {
+					this.isFable = true
+				}, 3000)
 			}
 		}
 	}
@@ -213,15 +231,19 @@
 <style lang="scss" scoped>
 	.withdrawal {
 		width: 100%;
+		min-height: 100vh;
+		background-color: #ffffff;
 		box-sizing: border-box;
 		padding-bottom: 40rpx;
+
 		.month_nav {
 			width: 100%;
 			height: calc(100rpx + var(--status-bar-height));
 			position: fixed;
 			left: 0;
 			top: 0;
-            z-index: 999;
+			z-index: 999;
+
 			.nav_status {
 				width: 100%;
 				height: var(--status-bar-height);
@@ -277,6 +299,7 @@
 				border-radius: 20rpx;
 				box-sizing: border-box;
 				padding: 39rpx 43rpx;
+
 				.withdrawal_bg_title {
 					font-family: PingFang SC, PingFang SC;
 					font-weight: 800;
@@ -284,43 +307,51 @@
 					color: #3A2633;
 					margin-bottom: 20rpx;
 				}
-				.withdrawal_one{
+
+				.withdrawal_one {
 					width: 100%;
 					height: 90rpx;
 					box-sizing: border-box;
 					padding: 0 20rpx;
 					display: flex;
 					align-items: center;
-					image{
+
+					image {
 						width: 30rpx;
 						height: 30rpx;
 						margin-right: 10rpx;
 					}
-					font-family: PingFang SC, PingFang SC;
+
+					font-family: PingFang SC,
+					PingFang SC;
 					font-weight: bold;
 					font-size: 30rpx;
 					color: #8F8F8F;
 				}
-				.withdrawal_oneActive{
+
+				.withdrawal_oneActive {
 					background: #F9F0EA;
 					color: #EB7B31;
 					border-radius: 15rpx;
 				}
 			}
 		}
-		.withdrawal_count{
+
+		.withdrawal_count {
 			width: 100%;
 			box-sizing: border-box;
 			padding: 0 30rpx;
 			margin-top: -120rpx;
-			.withdrawal_count_title{
+
+			.withdrawal_count_title {
 				font-family: PingFang SC, PingFang SC;
 				font-weight: 800;
 				font-size: 34rpx;
 				color: #3A2633;
 				margin-left: 30rpx;
 			}
-			.withdrawal_count_one{
+
+			.withdrawal_count_one {
 				width: 100%;
 				height: 98rpx;
 				background: #F4F4F4;
@@ -331,17 +362,20 @@
 				align-items: center;
 				justify-content: space-between;
 				margin-top: 25rpx;
-				.count_one_left{
+
+				.count_one_left {
 					font-family: PingFang SC, PingFang SC;
 					font-weight: bold;
 					font-size: 26rpx;
 					color: #8F8F8F;
 				}
-				.count_one_right{
-					image{
+
+				.count_one_right {
+					image {
 						width: 22rpx;
 					}
-					input{
+
+					input {
 						flex: 1;
 						height: 100%;
 						text-align: right;
@@ -350,14 +384,16 @@
 						font-size: 26rpx;
 					}
 				}
-				.count_one_rightactive{
+
+				.count_one_rightactive {
 					font-family: PingFang SC, PingFang SC;
 					font-weight: 800;
 					font-size: 26rpx;
 					color: #3A2633;
 				}
 			}
-			.withdrawal_count_two{
+
+			.withdrawal_count_two {
 				font-family: PingFang SC, PingFang SC;
 				font-weight: 800;
 				font-size: 30rpx;
@@ -365,7 +401,8 @@
 				margin-top: 40rpx;
 				margin-left: 30rpx;
 			}
-			.withdrawal_count_twoInput{
+
+			.withdrawal_count_twoInput {
 				width: 100%;
 				height: 98rpx;
 				background: #F4F4F4;
@@ -373,7 +410,8 @@
 				box-sizing: border-box;
 				padding: 0 20rpx;
 				margin-top: 25rpx;
-				input{
+
+				input {
 					width: 100%;
 					height: 98rpx;
 					font-family: PingFang SC, PingFang SC;
@@ -381,12 +419,13 @@
 					font-size: 26rpx;
 				}
 			}
-			.withdrawal_count_button{
+
+			.withdrawal_count_button {
 				width: 100%;
 				height: 98rpx;
 				line-height: 98rpx;
 				text-align: center;
-				background: linear-gradient( 180deg, #EF8E1F 0%, #F0AC05 100%);
+				background: linear-gradient(180deg, #EF8E1F 0%, #F0AC05 100%);
 				border-radius: 20rpx;
 				font-family: PingFang SC, PingFang SC;
 				font-weight: 800;
@@ -394,16 +433,19 @@
 				color: #FFFFFF;
 				margin-top: 25rpx;
 			}
-			.withdrawal_count_wraning{
+
+			.withdrawal_count_wraning {
 				width: 100%;
 				margin-top: 80rpx;
-				.wraning_title{
+
+				.wraning_title {
 					font-family: PingFang SC, PingFang SC;
 					font-weight: 800;
 					font-size: 30rpx;
 					color: #3A2633;
 				}
-				.wraning_desc{
+
+				.wraning_desc {
 					font-family: PingFang SC, PingFang SC;
 					font-weight: 400;
 					font-size: 26rpx;
