@@ -1,6 +1,6 @@
 <template>
 	<view class="user">
-		<view class="user_bg" :style="bg_image">
+		<view class="user_bg" :style="[bg_image]">
 			<view class="user_bg_height">
 				<!-- 这里是状态栏  -->
 			</view>
@@ -217,6 +217,8 @@
 <style lang="scss" scoped>
 	.user{
 		width: 100%;
+		min-height: 100vh;
+		background-color: #ffffff;
 		.user_bg{
 			width: 100%;
 			height: calc(640rpx - var(--status-bar-height));

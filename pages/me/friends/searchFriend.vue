@@ -31,10 +31,10 @@
 							<view class="name_left">
 								{{item.nickname}}
 							</view>
-							<view class="name_right" @click="chanCheck(index)" v-if="!item.checked">
+							<!-- <view class="name_right" @click="chanCheck(index)" v-if="!item.checked">
 								{{$t('app.xianshi.dengji')}}
-							</view>
-							<view class="name_right" v-else>
+							</view> -->
+							<view class="name_right">
 								{{item.level_name||''}}
 							</view>
 						</view>

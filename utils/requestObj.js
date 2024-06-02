@@ -419,6 +419,11 @@ let requestObj = {
 		name:"充值",
 		url:"/api/rechargeApply",
 		type:"POST"
+	},
+	getuserAuctions:{
+		name:"代理明细",
+		url:"/api/userAuctions",
+		type:"POST"
 	}
 }
 export default requestObj;
