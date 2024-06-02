@@ -15,7 +15,7 @@
 										<text>{{item.title}}</text>
 									</view>
 									<view class="label">
-										<text>希望计划让留守山区的孩子找寻回家的希望，照亮梦乡让留守山区</text>
+										<!-- <text>希望计划让留守山区的孩子找寻回家的希望，照亮梦乡让留守山区</text> -->
 									</view>
 								</view>
 							</view>
@@ -54,11 +54,13 @@
 					</view>
 				</view>
 				<view class="tab">
-					<view class="tab-item"  @click="goPage('/pages/index/passingLove')">
+					 <!-- @click="goPage('/pages/index/passingLove')" -->
+					<view class="tab-item" >
 						<image src="../../static/img/icon/index/tab1.png" mode="widthFix"></image>
 						<!-- <text>{{$t("app.newAdd15")}}</text> -->
 					</view>
-					<view class="tab-item" @click="goPage('/pages/index/publicWelfare')">
+					<!-- @click="goPage('/pages/index/publicWelfare')" -->
+					<view class="tab-item" >
 						<image src="../../static/img/icon/index/tab2.png" mode="widthFix"></image>
 						<!-- <text>{{$t("app.newAdd14")}}</text> -->
 					</view>
@@ -676,9 +678,10 @@
 					height: 140px;
 					
 					.swiper-item {
-						
+						// height: 300rpx;
 						.pic {
 							position: relative;
+							 max-height: 400rpx;
 							image{
 								border-radius: 20rpx;
 							}

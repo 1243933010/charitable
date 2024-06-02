@@ -197,6 +197,7 @@
 					.swiper-item {
 						.pic {
 							position: relative;
+							max-height: 400rpx;
 							image{
 								border-radius: 20rpx;
 							}

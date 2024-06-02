@@ -52,7 +52,7 @@
 				<view class="list">
 					<view class="item" v-for="(item,index) in auctionsList" :key="index" @click="goUrl(item)">
 						<view class="status">
-							<text>{{$t("app.newAdd44")}}:即将开始</text>
+							<text>{{$t("app.newAdd44")}}:{{statusList[pickerIndex].label}}</text>
 						</view>
 						<view class="content">
 							<view class="img">

@@ -30,20 +30,20 @@
 			
 		
 		<view class="rich">
-			<text>这是富文本</text>
+			<rich-text :nodes="detailInfo.detail"></rich-text>
 		</view>
 		
 		<view class="fixed-div">
 			<view class="content">
 				<view class="left">
-					<view class="see">
+					<!-- <view class="see">
 						<image src="../../../static/img/icon/eye.png" mode="widthFix"></image>
 						<text>86{{$t("join.peopleD")}}{{$t("app.newAdd31")}}</text>
 					</view>
 					<view class="see">
 						<image src="../../../static/img/icon/num.png" mode="widthFix"></image>
 						<text>86{{$t("join.peopleD")}}{{$t("app.newAdd32")}}</text>
-					</view>
+					</view> -->
 				</view>
 				<view class="right">
 					<view class="btn" @click="goUrl">

@@ -30,7 +30,7 @@
 
 
 			<view class="rich">
-				<text>这是富文本</text>
+				<rich-text :nodes="detailInfo.detail"></rich-text>
 			</view>
 
 			<view class="history">

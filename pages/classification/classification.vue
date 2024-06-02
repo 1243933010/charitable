@@ -129,12 +129,14 @@
 
 				tabsVal: 0,
 				iStatusBarHeight: 0,
-				myProductList: [{
-					url: productTestImg,
-					price: '500USDT',
-					title: '白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包',
-					time: "2024-01-01",
-				}],
+				myProductList: [
+				// 	{
+				// 	url: productTestImg,
+				// 	price: '500USDT',
+				// 	title: '白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包',
+				// 	time: "2024-01-01",
+				// },
+				],
 				userAuctionsParams: {
 					page: 1,
 					limit: 20

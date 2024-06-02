@@ -253,7 +253,7 @@
 
 					.image-icon {
 						width: 35rpx;
-						height: 38rpx;
+						height: 48rpx;
 						background: no-repeat center center / 100%;
 						// border-radius: 30rpx;
 					}

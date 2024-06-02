@@ -71,6 +71,9 @@
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};
 			},
+			imageUrl(){
+				return filesUrl;
+			}
 		},
 		data() {
 			return {
@@ -80,11 +83,7 @@
 				]
 			};
 		},
-		computed:{
-			imageUrl(){
-				return filesUrl;
-			}
-		},
+		
 		mounted() {
 			this.customerServices()
 		},

@@ -32,14 +32,14 @@
 				<text>{{$t("app.newAdd37")}}</text>
 			</view>
 			<view class="list">
-				<view class="item" v-for="(item,index) in nftList" :key="index">
+				<view class="item" v-for="(item,index) in list" :key="index">
 					<view class="left">
-						<image src="../../../static/img/help_icon.png" mode="widthFix"></image>
-						<text>我已捐赠</text>
+						<image :src="imageUrl+image" mode="widthFix"></image>
+						<text>{{item.title}}</text>
 					</view>
-					<view class="right">
+					<!-- <view class="right">
 						<text>500 USDT</text>
-					</view>
+					</view> -->
 				</view>
 			</view>
 		</view>
@@ -61,7 +61,7 @@
 <script>
 	import hxNavbar from "@/components/hx-navbar.vue";
 	import {
-		$request
+		$request,filesUrl
 	} from "@/utils/request.js";
 	export default {
 		components: {
@@ -75,6 +75,9 @@
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};
 			},
+			imageUrl(){
+				return filesUrl;
+			}
 		},
 		data() {
 			return {
@@ -121,7 +124,7 @@
 				let res = await $request("userLoveTransmissionRecords",{...this.requestParams})
 				console.log(res)
 				if(res.data.code==200){
-					this.list = res.data.data;
+					this.list = res.data.data.data;
 				}
 				
 			},
