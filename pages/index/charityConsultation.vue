@@ -94,7 +94,7 @@
 			};
 		},
 		mounted() {
-			// this.adverts();
+			this.slides();
 			this.getList();
 		},
 		onReachBottom() {
@@ -120,11 +120,11 @@
 					url:`/pages/index/detail/charityConsultationDetail?id=${item.id}`
 				})
 			},
-			async adverts() {
-				let res = await $request("adverts", {});
-				// console.log(res)
-				if (res.data.code === 0) {
-					this.swiperList = res.data.data;
+			async slides() {
+				let res = await $request("slides", {position:'7'});
+				console.log( res.data.data.data)
+				if (res.data.code === 200) {
+					this.swiperList = res.data.data.data;
 					return false;
 				}
 				uni.showToast({
