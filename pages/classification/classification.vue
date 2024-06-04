@@ -29,7 +29,7 @@
 					<view class="product-item" v-for="(item,index) in userAuctionsList" :key="index"
 						@click="goPage(`/pages/classification/productDetail`)">
 						<view class="product-img pic">
-							<image :src="item.main_image" mode="widthFix" class="img"></image>
+							<image :src="imageUrl+item.main_image" mode="widthFix" class="img"></image>
 						</view>
 						<view class="product-info">
 							<view class="product-title">{{item.title}}</view>
@@ -42,7 +42,7 @@
 				<view class="product-list">
 					<view class="product-item-h" v-for="(item,index) in myProductList" :key="index">
 						<view class="product-img pic">
-							<image :src="item.url" mode="widthFix" class="img"></image>
+							<image :src="imageUrl+item.url" mode="widthFix" class="img"></image>
 						</view>
 						<view class="product-info">
 							<view class="product-title">{{item.title}}</view>
@@ -213,10 +213,10 @@
 			tabsChange(val) {
 				this.tabsVal = val;
 				if (this.tabsVal == 0) {
-					this.userAuctionsParams.page++;
+					this.userAuctionsParams.page=1;
 					this.userAuctions();
 				} else {
-					this.userAuctionsGoodsParams.page++;
+					this.userAuctionsGoodsParams.page=1;
 					this.userAuctionsGoods();
 				}
 			},
