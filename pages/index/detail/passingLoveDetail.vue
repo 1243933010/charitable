@@ -49,19 +49,44 @@
 		data() {
 			return {
 				detailInfo:{},
-				nftList: [
-					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包'},
-					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-				],
+				invite_code:'',
+				userInfo:{}
 			};
 		},
 		onLoad(e) {
 			// e = {id:'1'}
 			this.getDetail(e.id)
+			if(e.invite_code){
+				this.invite_code = e.invite_code;
+			}
+			this.getUserinfo();
 		},
 		methods: {
+			async getUserinfo(){
+				let res = await $request('getInfo', {});
+				console.log(res)
+				if (res.data.code == 200) {
+					this.userInfo = res.data.data;
+					this.invite_code = res.data.data.invitation_code;
+					console.log(this.userInfo,this.invite_code,'--')
+				}
+				// console.log(res,'用户详情')
+			},
+			goUrl(){
+				// uni.navigateTo({
+				// 	url:'/pages/index/appShare'
+				// })
+				let res = `http://2405-api.2404.goldval.top/#/pages/login/region?invite_code=${this.invite_code}`
+				uni.setClipboardData({
+					data:res,
+					success: () => {
+						uni.showToast({
+							icon:'none',
+							title:this.$t("app.newAdd65")
+						})
+					}
+				})
+			},
 			async getDetail(id){
 				let res = await $request("loveTransmissionsDetail",{id})
 				console.log(res)
