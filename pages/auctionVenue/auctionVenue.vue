@@ -60,7 +60,7 @@
 						</view>
 						<view class="content">
 							<view class="img">
-								<image :src="item.main_image" mode="widthFix"></image>
+								<image :src="imageUrl+item.main_image" mode="widthFix"></image>
 							</view>
 							<view class="right">
 								<view class="name">
@@ -68,10 +68,10 @@
 								</view>
 								<view class="bottom">
 									<view class="price">
-										<text>{{$t("app.newAdd45")}}：200</text>
+										<text>{{$t("app.newAdd45")}}：{{item.price}}</text>
 									</view>
 									<view class="time">
-										<text>05-20 10:00{{$t("app.newAdd46")}}</text>
+										<text>{{item.auction_start_time}}{{$t("app.newAdd46")}}</text>
 									</view>
 								</view>
 								<!-- 	<view class="time1">
@@ -79,7 +79,7 @@
 									<uni-countdown :show-day="false" :hour="12" :minute="12" :second="12"></uni-countdown>
 								</view> -->
 								<view class="time2">
-									<text style="margin-right: 15rpx;">{{$t("app.newAdd47")}}:2024-05-20 10:00 </text>
+									<text style="margin-right: 15rpx;">{{$t("app.newAdd47")}}:{{item.auction_end_time}} </text>
 
 								</view>
 							</view>
@@ -433,14 +433,15 @@
 							.bottom {
 								width: 100%;
 								display: flex;
-								justify-content: space-between;
-								align-items: center;
+								flex-direction: column;
+								// justify-content: space-between;
+								// align-items: center;
 								font-size: 24rpx;
 								padding-right: 50rpx;
 
 								.price {
 									color: #F45C23;
-
+									margin-bottom: 10rpx;
 									// font-weight: 600;
 								}
 
