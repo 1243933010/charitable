@@ -592,7 +592,8 @@
 			"path" : "pages/me/newKaipai/newKaipai",
 			"style" : 
 			{
-				"navigationBarTitleText" : ""
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh": true
 			}
 		},
 		{
@@ -606,7 +607,8 @@
 			"path" : "pages/me/activity/activity",
 			"style" : 
 			{
-				"navigationBarTitleText" : ""
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh": true
 			}
 		},
 		{

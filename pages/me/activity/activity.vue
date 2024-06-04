@@ -7,14 +7,14 @@
 					<swiper-item  v-for="(item, index) in swiperList" :key="index">
 						<view class="swiper-item">
 							<view class="pic">
-								<image @click="linkImg(item)" :src="item.image" class="img" mode="widthFix"></image>
+								<image @click="linkImg(item)" :src="sortImage(item.image)" class="img" mode="widthFix"></image>
 								<view class="text-box">
 									<view class="title">
-										<text>星星点灯，照亮梦乡</text>
+										<text>{{item.title}}</text>
 									</view>
-									<view class="label">
+									<!-- <view class="label">
 										<text>希望计划让留守山区的孩子找寻回家的希望，照亮梦乡让留守山区</text>
-									</view>
+									</view> -->
 								</view>
 							</view>
 						</view>
@@ -26,9 +26,9 @@
 					<view class="div" :class="index==currentIndex?'active':''"></view>
 				</view>
 			</view>
-			<!-- 图片列表 -->
-			<view class="activity_image" v-for="(item,index) in 3" :key="index">
-				<image src="../../../static/img/cn.png" mode="aspectFill"></image>
+			<!-- 图片列表/pages/index/detail/charityConsultationDetail?id=2 -->
+			<view class="activity_image" v-for="(item,index) in articleArray" :key="index" @click="goPath(`/pages/index/detail/charityConsultationDetail?id=${item.id}`)">
+				<image :src="sortImage(item.images)" mode="aspectFill"></image>
 			</view>
 		</view>
 	</view>
@@ -37,7 +37,8 @@
 <script>
 	import hxNavbar from "@/components/hx-navbar.vue";
 	import {
-		$request
+		$request,
+		filesUrl
 	} from "@/utils/request.js";
 	export default {
 		components: {
@@ -51,15 +52,42 @@
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};
 			},
+			sortImage() {
+				return value => {
+					if(value){
+						return value.indexOf('http') != -1 ? value : filesUrl + value
+					}else{
+						return value
+					}
+				}
+			}
 		},
 		data(){
 			return {
 				swiperList: [],
 				currentIndex:0,
+				params:{
+					page:1,
+				},
+				last_page:1,
+				articleArray:[],
 			}
 		},
 		onLoad() {
 			this.adverts()
+			this.getArticle('init')
+		},
+		onReachBottom() {
+			if(this.last_page>this.params.page){
+				this.params.page++
+				this.getArticle()
+			}
+		},
+		onPullDownRefresh() {
+			setTimeout(()=>{
+				uni.stopPullDownRefresh()
+			},1000)
+			this.getArticle('init')//获取好友列表
 		},
 		methods:{
 			swiperChange(e) {
@@ -67,15 +95,38 @@
 			      this.currentIndex = e.detail.current;
 			},
 			async adverts() {
-				let res = await $request("adverts", {});
+				let res = await $request("slides", {position:7,page:1});
 				console.log(res)
-				if (res.data.code === 0) {
-					this.swiperList = res.data.data;
+				if (res.data.code === 200) {
+					this.swiperList = res.data.data.data;
 					return false;
 				}
 				uni.showToast({
 					icon: "none",
 					title: res.data.msg,
+				});
+			},
+			async getArticle(type){
+				if(type=='init'){
+					this.params.page=1
+					this.articleArray=[]
+				}
+				let res = await $request('articles',this.params)
+				if(res.data.code==200){
+					this.last_page=res.data.data.last_page
+					if(res.data.data.data.length){
+						if(this.params.page==1){
+							this.articleArray=res.data.data.data
+						}else{
+							this.articleArray=[...this.articleArray,...res.data.data.data]
+						}
+					}
+				}
+				// console.log(res,'89999999')
+			},
+			goPath(link){
+				uni.navigateTo({
+					url: link,
 				});
 			},
 		}

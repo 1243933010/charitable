@@ -421,9 +421,24 @@ let requestObj = {
 		url:"/api/rechargeApply",
 		type:"POST"
 	},
-	getuserAuctions:{
+	getAgentDetail:{
 		name:"代理明细",
-		url:"/api/userAuctions",
+		url:"/api/agentDetail",
+		type:"POST"
+	},
+	getAgentBill:{
+		name:"代理账单",
+		url:"/api/agentBill",
+		type:"POST"
+	},
+	getRecords:{
+		name:"捐赠记录",
+		url:"/api/userTargetedAidRecords",
+		type:"POST"
+	},
+	getRecordsdetail:{
+		name:"捐赠证书",
+		url:"/api/userTargetedAidRecordDetail",
 		type:"POST"
 	}
 }
