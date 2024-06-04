@@ -820,7 +820,7 @@
 				}
 
 				.goods-btn1 {
-					position: absolute;
+					position: fixed;
 					width: 100%;
 					bottom: 0;
 					left: 0;

@@ -130,7 +130,7 @@
 				<view class="product-list">
 					<view class="product-item" v-for="(item,index) in articlesList" :key="index" @click="goPage(`/pages/index/detail/charityConsultationDetail?id=${item.id}`)">
 						<view class="product-img pic">
-							<image :src="item.images" mode="aspectFit" class="img" >
+							<image :src="imageUrl+ item.images" mode="aspectFit" class="img" >
 							</image>
 						</view>
 						<view class="product-info">
@@ -160,7 +160,7 @@
 				<view class="product-list">
 					<view class="product-item" v-for="(item,index) in charitySaleGoodsList" :key="index">
 						<view class="product-img pic">
-							<image :src="item.main_image" mode="aspectFit" class="img" @click="goProductDetail(item)">
+							<image :src="imageUrl+item.main_image" mode="aspectFit" class="img" @click="goProductDetail(item)">
 							</image>
 						</view>
 						<view class="product-info">
@@ -219,7 +219,7 @@
 				<view class="product-list">
 					<view class="product-item" v-for="(item,index) in targetedAidsList" :key="index" @click="goPage(`/pages/index/detail/targetedAssistanceDetail?id=${item.id}`)">
 						<view class="product-img pic">
-							<image :src="item.main_image" mode="aspectFit" class="img" >
+							<image :src="imageUrl+item.main_image" mode="aspectFit" class="img" >
 							</image>
 						</view>
 						<view class="product-info">
@@ -251,7 +251,7 @@
 				<view class="product-list">
 					<view class="product-item" v-for="(item,index) in auctionsList" :key="index" @click="goPage(`/pages/auctionVenue/detail?id=${item.id}`)">
 						<view class="product-img pic">
-							<image :src="item.main_image" mode="aspectFit" class="img" >
+							<image :src="imageUrl+item.main_image" mode="aspectFit" class="img" >
 							</image>
 						</view>
 						<view class="product-info">
@@ -280,7 +280,7 @@
 				<view class="product-list">
 					<view class="product-item" v-for="(item,index) in userAuctionsList" :key="index">
 						<view class="product-img pic">
-							<image :src="item.main_image" mode="aspectFit" class="img" @click="goProductDetail(item)">
+							<image :src="imageUrl+item.main_image" mode="aspectFit" class="img" @click="goProductDetail(item)">
 							</image>
 						</view>
 						<view class="product-info">

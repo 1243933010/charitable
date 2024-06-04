@@ -9,12 +9,12 @@
 							<text>{{$t("app.newAdd27")}}</text>
 						</view>
 						<view class="label">
-							<text>{{$t("app.newAdd28")}}  <text class="num">{{info.total||0}}</text> {{$t("app.newAdd29")}} {{$t("app.newAdd30")}}</text>
+							<text>{{$t("app.newAdd28")}}  <text class="num">{{userLoveTransmissionInfo.completed_num||0}}</text> {{$t("app.newAdd29")}} {{$t("app.newAdd30")}}</text>
 						</view>
 					</view>
 				</view>
 				<view class="btn">
-					<view class="button" @click="goUrl">
+					<view class="button" @click="goUrl1">
 						<text>{{$t("app.newAdd26")}}</text>
 					</view>
 				</view>
@@ -23,7 +23,7 @@
 				<view class="product-list">
 					<view class="product-item" @click="goUrl(item)" v-for="(item,index) in info.data" :key="index">
 						<view class="product-img pic">
-							<image :src="item.image" mode="aspectFit" class="img">
+							<image :src="imageUrl+item.image" mode="aspectFit" class="img">
 							</image>
 						</view>
 						<view class="product-info">
@@ -47,7 +47,7 @@
 <script>
 	import hxNavbar from "@/components/hx-navbar.vue";
 	import {
-		$request
+		$request,filesUrl
 	} from "@/utils/request.js";
 	export default {
 		components: {
@@ -61,6 +61,9 @@
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};
 			},
+			imageUrl(){
+				return filesUrl;
+			}
 		},
 		data() {
 			return {
@@ -70,22 +73,40 @@
 					limit: 20,
 				},
 				info: {data:[]},
+				userLoveTransmissionInfo:{}
 			}
 		},
 		mounted() {
 			this.getList();
+			this.userLoveTransmission();
 		},
 		onReachBottom() {
 			this.requestData.page++;
 			this.getList();
 		},
 		methods:{
-			goUrl(item){
+			goUrl1(item){
 				uni.navigateTo({
 					url:`/pages/index/detail/passingLoveDetailDetail?id=${item.id}`
 				})
 			},
+			goUrl(item){
+				uni.navigateTo({
+					url:`/pages/index/detail/passingLoveDetail?id=${item.id}`
+				})
+			},
+			async userLoveTransmission() {
+				// userLoveTransmissionInfo
+				// loveTransmissions
+				let res = await $request('userLoveTransmissionInfo',{});
+				
+				if (res.data.code == 200) {
+					this.userLoveTransmissionInfo = res.data.data;
+				}
+			},
 			async getList() {
+				// userLoveTransmissionInfo
+				// loveTransmissions
 				let res = await $request('loveTransmissions', this.requestData);
 				
 				this.loading = false;

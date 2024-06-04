@@ -93,6 +93,7 @@
 				list: [],
 			};
 		},
+		
 		mounted() {
 			this.slides();
 			this.getList();

@@ -4,26 +4,24 @@
 
 		<view class="index-scroll  has-tabbar">
 			<view class="product-container">
-				<view class="product-list">
-					<view class="product-item" v-for="(item,index) in nftList" :key="index" @click="goUrl(item)">
-						<view class="product-img pic">
-							<image :src="item.url" mode="aspectFit" class="img" @click="goProductDetail(item)">
-							</image>
-						</view>
-						<view class="product-info">
-							<view class="product-title">{{item.title}}</view>
-							<!-- <view class="product-tit">{{item.label}}</view> -->
-							<view class="product-price-info">
-								<view class="rebate">
-									<text style="margin-right:27rpx;color: #F45C23;">{{item.statusText}}</text>
-									<!-- <text style="">{{item.statusText}}</text> -->
-								</view>
-			
+				<view class="rich">
+					<view class="title">
+						<text>{{detailInfo.title}}</text>
+					</view>
+					<view class="content">
+						<rich-text :nodes="detailInfo.detail"></rich-text>
+					</view>
+				</view>
+				<view class="fixed-div">
+					<view class="content">
+						
+						<view class="right">
+							<view class="btn" @click="goUrl">
+								<text>{{$t("app.newAdd14")}}</text>
 							</view>
 						</view>
 					</view>
-			
-				</view>
+				</view>	
 			</view>
 			
 		</view>
@@ -42,7 +40,7 @@
 		computed: {
 			config() {
 				return {
-					title: this.$t("app.newAdd36"),
+					title: this.$t("index.detail"),
 					color: "#403039",
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};
@@ -50,8 +48,7 @@
 		},
 		data() {
 			return {
-				swiperList:[],
-				currentIndex:0,
+				detailInfo:{},
 				nftList: [
 					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包'},
 					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
@@ -60,31 +57,19 @@
 				],
 			};
 		},
-		mounted() {
-			this.adverts();
+		onLoad(e) {
+			// e = {id:'1'}
+			this.getDetail(e.id)
 		},
 		methods: {
-			goUrl(){
-				uni.navigateTo({
-					url:'/pages/index/detail/passingLoveDetailDetail'
-				})
-			},
-			swiperChange(e) {
-			      // e.detail.current 是当前的索引
-			      this.currentIndex = e.detail.current;
-			},
-			async adverts() {
-				let res = await $request("adverts", {});
-				// console.log(res)
-				if (res.data.code === 0) {
-					this.swiperList = res.data.data;
-					return false;
+			async getDetail(id){
+				let res = await $request("loveTransmissionsDetail",{id})
+				console.log(res)
+				if(res.data.code==200){
+					this.detailInfo = res.data.data;
 				}
-				uni.showToast({
-					icon: "none",
-					title: res.data.msg,
-				});
-			},
+			}
+			
 		}
 	}
 </script>
@@ -109,11 +94,23 @@
 			padding-left: 20rpx;
 			padding-right: 20rpx;
 			// background-color: white;
+			.rich{
+				font-weight: 600;
+				font-size: 26rpx;
+				padding-bottom: 150rpx;
+				.title{
+					margin-bottom: 40rpx;
+				}
+				.content{
+					font-size: 24rpx;
+				}
+			}
 			.header {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
 			}
+			
 		
 			.tit {
 				margin-bottom: 8rpx;
@@ -130,93 +127,47 @@
 				color: #777680;
 				font-size: @descSize;
 			}
-		
-			.product-list {
-				// .df(stretch, flex-start);
+			
+			.fixed-div{
+				position: fixed;
+				background-color: white;
+				bottom: 0rpx;
+				left: 0;
 				width: 100%;
-		
-				.product-item {
-					margin-top: 10rpx;
-					margin-right: 10rpx;
-					border-radius: 20rpx;
-					background-color: #fff;
-					margin-bottom: 16rpx;
+				padding-bottom: 30rpx;
+				padding-top:20rpx ;
+				.content{
 					width: 100%;
-					// overflow: hidden;
 					display: flex;
 					flex-direction: row;
 					align-items: center;
 					box-sizing: border-box;
-					padding-top: 9rpx;
-					padding-bottom: 9rpx;
-		
-					.product-img {
-						width: 144rpx;
-						height: 144rpx;
-						background-color: white;
-						margin-right: 27rpx;
-		
-						image {
-							width: 100%;
-							height: 100%;
-							// height: 100rpx;
-						}
-					}
-		
-					.product-info {
-						padding: 20rpx 28rpx;
-						box-sizing: border-box;
-						width: calc(100% - 144rpx);
-						height: 164rpx;
+					padding: 0 30rpx;
+				}
+				
+				
+				.right{
+					width: 600rpx;
+					margin: 0 auto;
+					.btn{
+						background: linear-gradient( 180deg, #EF8E1F 0%, #F0AC05 100%);
+						font-size: 30rpx;
+						color: white;
 						display: flex;
-						flex-direction: column;
-						justify-content: space-between;
-		
-						.product-title {
-							.vertical(2);
-							color: #3A2633;
-							font-size: 24rpx;
-							font-weight: 600;
-							line-height: 1.5;
-							margin-bottom: 9rpx;
+						justify-content: center;
+						align-items: center;
+						border-radius: 20rpx;
+						font-weight: 600;
+						box-sizing: border-box;
+						padding: 34rpx 0;
+						image{
+							width: 35rpx;
+							margin-right: 14rpx;
 						}
-		
-						.product-tit {
-							.vertical(2);
-							color: #F3581D;
-							font-size: 26rpx;
-							font-weight: 600;
-							line-height: 1.5;
-							margin-bottom: 9rpx;
-		
-						}
-		
-						.product-price-info {
-							// .df(center, space-between);
-							display: flex;
-							flex-direction: row;
-							.rebate {
-								color: #9EA19D;
-								font-size: 24rpx;
-								display: flex;
-								flex-direction: row;
-								align-items: center;
-								// font-weight: bold;
-							}
-		
-							.brfore-rebate {
-								color: #777680;
-								font-size: 30rpx;
-								text-decoration: line-through;
-							}
-						}
-					}
-		
-					&:nth-child(2n) {
-						margin-right: 0;
 					}
 				}
 			}
+		
 		}
 	}
 </style>

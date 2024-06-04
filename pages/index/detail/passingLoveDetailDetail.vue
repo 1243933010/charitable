@@ -22,9 +22,8 @@
 			</view> -->
 			
 		
-		<view class="rich">
-			<!-- <text>这是富文本</text> -->
-		</view>
+		<!-- <view class="rich">
+		</view> -->
 		
 		<view class="history">
 			<view class="title">
@@ -32,7 +31,7 @@
 				<text>{{$t("app.newAdd37")}}</text>
 			</view>
 			<view class="list">
-				<view class="item" v-for="(item,index) in list" :key="index">
+				<view class="item" v-for="(item,index) in list" :key="index" @click="goUrl1(item)">
 					<view class="left">
 						<image :src="imageUrl+image" mode="widthFix"></image>
 						<text>{{item.title}}</text>
@@ -43,7 +42,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="fixed-div">
+		<!-- <view class="fixed-div">
 			<view class="content">
 				
 				<view class="right">
@@ -52,7 +51,7 @@
 					</view>
 				</view>
 			</view>
-		</view>	
+		</view>	 -->
 			
 		</view>
 	</view>
@@ -70,7 +69,7 @@
 		computed: {
 			config() {
 				return {
-					title: this.$t("index.detail"),
+					title: this.$t("app.newAdd26"),
 					color: "#403039",
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};
@@ -99,15 +98,21 @@
 		},
 		
 		onLoad(e){
-			this.getDetail();
+			// this.getDetail();
 			this.getList();
 		},
 		methods: {
+			goUrl1(item){
+				uni.navigateTo({
+					url:`/pages/index/detail/passingLoveDetail?id=${item.id}`
+				})
+			},
 			goUrl(){
 				uni.navigateTo({
 					url:'/pages/index/appShare'
 				})
 			},
+			
 			swiperChange(e) {
 			      // e.detail.current 是当前的索引
 			      this.currentIndex = e.detail.current;
