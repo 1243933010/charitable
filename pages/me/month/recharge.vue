@@ -78,14 +78,15 @@
 
 <script>
 	import {
-		$request
+		$request,
+		filesUrl
 	} from "@/utils/request";
 	export default {
 		data() {
 			return {
 				isBgcolor: false,
 				bg_image: {
-					backgroundImage: `url(../../static/userStatic/user_bg.png)`,
+					backgroundImage:  `url(${filesUrl}/uploads/20240604/image/6dd507cb3edbab605dc1e1dd09722aa9.webp)`,
 					backgroundSize: `100% 100%`
 				},
 				tongdaoArray:[

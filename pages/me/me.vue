@@ -16,7 +16,7 @@
 						{{userInfo.nickname||$t('app.user.nickname')}}
 					</view>
 					<view class="right_phone">
-						+86 {{userInfo.mobile}}
+						+{{userInfo.mobile_code}} {{userInfo.mobile}}
 					</view>
 					<view class="right_uid">
 						UUID：{{userInfo.id}}
@@ -107,7 +107,7 @@
 		data(){
 			return {
 				bg_image: {
-					backgroundImage: `url(../../static/userStatic/user_bg.png)`,
+					backgroundImage: `url(${filesUrl}/uploads/20240604/image/d97bd3e1ee3f992a7cbfb06f5a9c28a5.webp)`,
 					backgroundSize: `100% 100%`
 				},
 				orderArray:[{
@@ -147,7 +147,7 @@
 					{
 						name:"app.user.myfriends",
 						imageeds:'../../static/userStatic/function_five.png',
-						path:"/pages/me/friends/friends"
+						path:"/pages/me/friends/searchFriend"
 					},
 					{
 						name:"app.user.paiorder",
@@ -172,6 +172,7 @@
 		},
 		onShow() {
 			if(uni.getStorageSync('token')){
+				console.log('')
 				this.getUserinfo()//获取用户详情
 			}
 		},
