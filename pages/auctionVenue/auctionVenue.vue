@@ -9,7 +9,8 @@
 					<swiper-item :current="current" v-for="(item, index) in swiperList" :key="index">
 						<view class="swiper-item">
 							<view class="pic">
-								<image @click="linkImg(item)" :src="imageUrl+item.image" class="img" mode="widthFix"></image>
+								<image @click="linkImg(item)" :src="imageUrl+item.image" class="img" mode="widthFix">
+								</image>
 								<!-- <view class="text-box">
 									<view class="title">
 										<text>星星点灯，照亮梦乡</text>
@@ -36,14 +37,17 @@
 					</view>
 					<picker @change="bindPickerChange" range-key="label" :value="index" :range="statusList">
 						<view class="status">
-							<view class="uni-input">{{statusList[pickerIndex].label}}</view>
+							<view class="uni-input">
+								{{statusList[pickerIndex]?statusList[pickerIndex].label:$t("app.newAdd64")}}</view>
 							<image src="../../static/img/icon/arrow.png" mode="widthFix"></image>
 
 						</view>
 					</picker>
 					<picker @change="bindPickerChange1" :value="betweenIndex" :range="betweenList">
 						<view class="between">
-							<view class="uni-input">{{$t("app.newAdd43")}}:{{betweenList[betweenIndex]}}</view>
+							<view class="uni-input">
+								{{$t("app.newAdd43")}}:{{formData.start_price? betweenList[betweenIndex]:$t("app.newAdd64")}}
+							</view>
 							<image src="../../static/img/icon/arrow.png" mode="widthFix"></image>
 
 						</view>
@@ -70,13 +74,13 @@
 										<text>05-20 10:00{{$t("app.newAdd46")}}</text>
 									</view>
 								</view>
-							<!-- 	<view class="time1">
+								<!-- 	<view class="time1">
 									<text style="margin-right: 15rpx;">{{$t("app.newAdd47")}}</text>
 									<uni-countdown :show-day="false" :hour="12" :minute="12" :second="12"></uni-countdown>
 								</view> -->
 								<view class="time2">
 									<text style="margin-right: 15rpx;">{{$t("app.newAdd47")}}:2024-05-20 10:00 </text>
-									
+
 								</view>
 							</view>
 						</view>
@@ -90,7 +94,8 @@
 <script>
 	import hxNavbar from "@/components/hx-navbar.vue";
 	import {
-		$request,filesUrl
+		$request,
+		filesUrl
 	} from "@/utils/request.js";
 	import {
 		setTabbar
@@ -108,8 +113,31 @@
 					back: false
 				};
 			},
-			imageUrl(){
+			imageUrl() {
 				return filesUrl;
+			},
+			statusList() {
+				return [{
+						value: 0,
+						label: '即将开始'
+					},
+					{
+						value: 1,
+						label: '竞拍中'
+					},
+					{
+						value: 2,
+						label: '已结束'
+					},
+					{
+						value: 3,
+						label: '已终止'
+					},
+					{
+						value: 4,
+						label: '已撤回'
+					},
+				]
 			}
 		},
 		data() {
@@ -119,48 +147,15 @@
 				formData: {
 					page: 1,
 					limit: 20,
-					status:0,
-					start_price:'0',
-					end_price:'200'
+					status: '',
+					start_price: '',
+					end_price: ''
 				},
-				pickerIndex:0,
-				// statusList: ['即将开始', '竞拍中','已结束','已终止','已撤回'],
-				statusList:[
-					{value:0,label:'即将开始'},
-					{value:1,label:'竞拍中'},
-					{value:2,label:'已结束'},
-					{value:3,label:'已终止'},
-					{value:4,label:'已撤回'},
-				],
+				pickerIndex: '',
 				index: 0,
-				betweenList: ['0-200','200-1000', '1000-5000','5000-100000'],
+				betweenList: ['0-200', '200-1000', '1000-5000', '5000-100000'],
 				betweenIndex: 0,
-				nftList: [{
-						url: '../../static/img/logo.png',
-						label: '500USDT',
-						statusText: '**用户已完成交易',
-						title: '白色的空开放式学校背包'
-					},
-					{
-						url: '../../static/img/logo.png',
-						label: '500USDT',
-						statusText: '**用户已完成交易',
-						title: '白色的空开放式学校背包'
-					},
-					{
-						url: '../../static/img/logo.png',
-						label: '500USDT',
-						statusText: '**用户已完成交易',
-						title: '白色的空开放式学校背包'
-					},
-					{
-						url: '../../static/img/logo.png',
-						label: '500USDT',
-						statusText: '**用户已完成交易',
-						title: '白色的空开放式学校背包'
-					},
-				],
-				auctionsList:[]
+				auctionsList: []
 			}
 		},
 		mounted() {
@@ -168,14 +163,16 @@
 			this.auctions();
 			this.slides();
 		},
-		onReachBottom(){
+		onReachBottom() {
 			this.formData.page++;
 			this.auctions();
 		},
 		methods: {
 			async slides() {
-				let res = await $request("slides", {position:'5'});
-				console.log( res.data.data.data)
+				let res = await $request("slides", {
+					position: '5'
+				});
+				console.log(res.data.data.data)
 				if (res.data.code === 200) {
 					this.swiperList = res.data.data.data;
 					return false;
@@ -185,25 +182,25 @@
 					title: res.data.msg,
 				});
 			},
-			goUrl(item){
+			goUrl(item) {
 				uni.navigateTo({
-					url:`./detail?id=${item.id}`
+					url: `./detail?id=${item.id}`
 				})
 			},
-			bindPickerChange (e)  {
+			bindPickerChange(e) {
 				console.log('picker发送选择改变，携带值为', e.detail.value)
 				this.pickerIndex = e.detail.value
 				this.formData.status = this.statusList[e.detail.value].value;
-				this.formData.page=1;
+				this.formData.page = 1;
 				this.auctionsList = [];
 				this.auctions();
 			},
-			bindPickerChange1(e)  {
+			bindPickerChange1(e) {
 				console.log('picker发送选择改变，携带值为', e.detail.value, this.betweenList[e.detail.value])
 				this.betweenIndex = e.detail.value;
-				this.formData.start_price = this.betweenList[e.detail.value].split('-')[0];
-				this.formData.end_price = this.betweenList[e.detail.value].split('-')[1];
-				this.formData.page=1;
+				this.formData.start_price = +this.betweenList[e.detail.value].split('-')[0];
+				this.formData.end_price = +this.betweenList[e.detail.value].split('-')[1];
+				this.formData.page = 1;
 				this.auctionsList = [];
 				this.auctions();
 			},
@@ -212,7 +209,7 @@
 				this.currentIndex = e.detail.current;
 			},
 			async auctions() {
-				
+
 				let res = await $request('auctions', this.formData);
 				console.log(res)
 				this.loading = false;
@@ -265,6 +262,7 @@
 
 	.index-page1 {
 		padding-bottom: 120rpx;
+
 		.banner {
 
 			width: 100%;
@@ -273,6 +271,7 @@
 			box-sizing: border-box;
 			background-color: white;
 			padding-top: 25rpx;
+
 			.swiper {
 				width: 100%;
 				height: 400rpx !important;
@@ -284,7 +283,7 @@
 						width: 690rpx;
 						margin: 0 auto;
 						position: relative;
-						
+
 						// background-color: white;
 
 						image {
@@ -346,6 +345,7 @@
 				flex-direction: row;
 				align-items: center;
 				margin-bottom: 31rpx;
+
 				.title {
 					color: #3A2633;
 					font-size: 26rpx;
@@ -353,88 +353,105 @@
 					font-weight: 600;
 				}
 
-				.status,.between {
+				.status,
+				.between {
 					display: flex;
 					flex-direction: row;
 					align-items: center;
+
 					// margin-right: 69rpx;
 					// padding-left: 69rpx;
-					.uni-input{
+					.uni-input {
 						color: #3A2633;
 						font-size: 26rpx;
 						font-weight: 600;
 						margin-right: 10rpx;
 					}
+
 					image {
 						width: 18rpx;
 					}
 				}
-				.between{
-					 padding-left: 69rpx;
-					.uni-input{
+
+				.between {
+					padding-left: 69rpx;
+
+					.uni-input {
 						color: #F96932;
 					}
-					
+
 				}
 			}
-			.list{
+
+			.list {
 				width: 100%;
-				.item{
+
+				.item {
 					margin-bottom: 15rpx;
 					box-sizing: border-box;
 					padding: 14rpx 16rpx;
 					background-color: white;
 					border-radius: 20rpx;
-					.status{
+
+					.status {
 						color: #F45C23;
 						font-size: 24rpx;
 						font-weight: 600;
 						margin-bottom: 16rpx;
 					}
-					.content{
+
+					.content {
 						display: flex;
 						flex-direction: row;
+
 						// align-items: center;
-						.img{
+						.img {
 							width: 160rpx;
 							height: 160rpx;
 							// background: red;
 							margin-right: 23rpx;
-							image{
+
+							image {
 								width: 100%;
 							}
 						}
-						.right{
+
+						.right {
 							width: calc(100% - 160rpx);
 							display: flex;
 							flex-direction: column;
+
 							// justify-content: space-between;
 							// padding: 15rpx 0;
-							.name{
+							.name {
 								color: #3A2633;
 								font-size: 24rpx;
 								font-weight: 600;
 								margin-bottom: 22rpx;
 							}
-							.bottom{
+
+							.bottom {
 								width: 100%;
 								display: flex;
 								justify-content: space-between;
 								align-items: center;
 								font-size: 24rpx;
 								padding-right: 50rpx;
-								.price{
+
+								.price {
 									color: #F45C23;
-									
+
 									// font-weight: 600;
 								}
-								.time{
+
+								.time {
 									color: #9EA19D;
 									margin-bottom: 10rpx;
 								}
-								
+
 							}
-							.time1{
+
+							.time1 {
 								width: 100%;
 								color: #3A2633;
 								display: flex;
@@ -442,7 +459,8 @@
 								align-items: center;
 								font-size: 24rpx;
 							}
-							.time2{
+
+							.time2 {
 								background-color: #EEEEEE;
 								color: #3A2633;
 								font-size: 24rpx;

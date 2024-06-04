@@ -45,8 +45,8 @@
 							<!-- <view class="product-tit">{{item.label}}</view> -->
 							<view class="product-price-info">
 								<view class="rebate">
-									<text style="margin-right:27rpx;">{{item.statusText}}</text>
-									<text style="">{{item.statusText}}</text>
+									<text style="margin-right:27rpx;">{{$t("app.newAdd31")}}{{item.views||0}}</text>
+									<text style="">{{$t("app.newAdd32")}}{{item.shares||0}}</text>
 								</view>
 							
 							</view>

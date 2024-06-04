@@ -56,12 +56,12 @@
 				<view class="tab">
 					 <!-- @click="goPage('/pages/index/passingLove')" -->
 					<view class="tab-item" >
-						<image src="../../static/img/icon/index/tab1.png" mode="widthFix"></image>
+						<image @click="goPage('/pages/index/passingLove')" src="../../static/img/icon/index/tab1.png" mode="widthFix"></image>
 						<!-- <text>{{$t("app.newAdd15")}}</text> -->
 					</view>
 					<!-- @click="goPage('/pages/index/publicWelfare')" -->
 					<view class="tab-item" >
-						<image src="../../static/img/icon/index/tab2.png" mode="widthFix"></image>
+						<image @click="goPage('/pages/index/publicWelfare')" src="../../static/img/icon/index/tab2.png" mode="widthFix"></image>
 						<!-- <text>{{$t("app.newAdd14")}}</text> -->
 					</view>
 					
@@ -138,8 +138,8 @@
 							<!-- <view class="product-tit">{{item.label}}</view> -->
 							<view class="product-price-info">
 								<view class="rebate">
-									<text style="margin-right:27rpx;">{{item.statusText}}</text>
-									<text style="">{{item.statusText}}</text>
+									<text style="margin-right:27rpx;font-size: 26rpx;font-weight: 600;color: #F96932;">{{$t("app.newAdd31")}}{{item.views||0}}</text>
+									<text style="">{{$t("app.newAdd32")}}{{item.shares||0}}</text>
 								</view>
 							
 							</view>
@@ -227,8 +227,9 @@
 							<!-- <view class="product-tit">{{item.label}}</view> -->
 							<view class="product-price-info">
 								<view class="rebate">
-									<text style="margin-right:7rpx;">**用户已完成交易{{item.total_moneys}}</text>
-									<text style="color: #F96932;">**用户已完成交易{{item.total_users}}</text>
+									<text style="color: #F96932;font-size: 26rpx;font-weight: 600;">{{item.total_moneys}}USDT</text>
+									<text style="margin-right:7rpx;">{{$t("app.newAdd63")}}：{{item.total_users}}</text>
+			
 								</view>
 							
 							</view>
@@ -538,12 +539,12 @@
 			async getNotices() {
 				let res = await $request("notices", {});
 				// console.log(res)
-				if (res.data.code === 0) {
-					this.newsList = res.data.data;
+				if (res.data.code === 200) {
+					this.newsList = res.data.data.data;
 					console.log(this.newsList, '-------')
-					if (this.newsList.length > 0) {
-						this.$refs.popup.open("center");
-					}
+					// if (this.newsList.length > 0) {
+					// 	this.$refs.popup.open("center");
+					// }
 					return false;
 				}
 				// uni.showToast({
@@ -1055,6 +1056,10 @@
 								.df(center, space-between);
 
 								.rebate {
+									display: flex;
+									justify-content: space-between;
+									align-items: center;
+									width: 100%;
 									color: #9EA19D;
 									font-size: 24rpx;
 									// font-weight: bold;

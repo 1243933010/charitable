@@ -93,6 +93,7 @@ let requestObj = {
 	userParticipateAuction:{
 		name: "拍卖",
 		url: '/api/userParticipateAuction',
+		type: 'POST'
 	},
 	userAddAuctionGoods:{
 		name: "上架拍品",

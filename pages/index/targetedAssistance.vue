@@ -45,8 +45,9 @@
 							<!-- <view class="product-tit">{{item.label}}</view> -->
 							<view class="product-price-info">
 								<view class="rebate">
-									<text style="margin-right:27rpx;">**用户已完成交易</text>
-									<text style="color: #F96932;">**用户已完成交易</text>
+									<text style="color: #F96932;font-size: 26rpx;font-weight: 600;">{{item.total_moneys}}USDT</text>
+									<text style="margin-right:27rpx;">{{$t("app.newAdd63")}}：{{item.total_users}}</text>
+									
 								</view>
 							
 							</view>
@@ -394,8 +395,12 @@
 							.df(center, space-between);
 		
 							.rebate {
+								width: 100%;
 								color: #9EA19D;
 								font-size: 24rpx;
+								display: flex;
+								justify-content: space-between;
+								align-items: center;
 								// font-weight: bold;
 							}
 		

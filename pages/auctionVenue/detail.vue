@@ -215,6 +215,7 @@
 			}
 		},
 		onLoad(e) {
+			// e = {id:2}
 			this.onLoadParams = e;
 			this.getDetail(e.id);
 		},
@@ -231,6 +232,7 @@
 				});
 				if (res.data.code == 200) {
 					this.$refs.popup.close();
+					this.getDetail(this.onLoadParams.id);
 					return false;
 				}
 				
@@ -595,7 +597,8 @@
 			.goods {
 				width: 100%;
 				padding-top: 29rpx;
-
+				position: relative;
+				padding-bottom: 150rpx;
 				.goods-title {
 					color: #3A2633;
 					font-size: 30rpx;
@@ -778,6 +781,16 @@
 						font-weight: 600;
 						margin-bottom: 26rpx;
 					}
+					.goods-detail-rich{
+						width: 100%;
+						
+						img{
+							width: 100%;
+						}
+						// display: flex;
+						// flex-wrap: wrap;
+						// overflow: hidden;
+					}
 				}
 
 				.goods-price {
@@ -807,6 +820,11 @@
 				}
 
 				.goods-btn1 {
+					position: absolute;
+					width: 100%;
+					bottom: 0;
+					left: 0;
+					z-index: 10;
 					background: linear-gradient(180deg, #EF8E1F 0%, #F0AC06 100%);
 					color: white;
 				}

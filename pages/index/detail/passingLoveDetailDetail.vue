@@ -23,7 +23,7 @@
 			
 		
 		<view class="rich">
-			<text>这是富文本</text>
+			<!-- <text>这是富文本</text> -->
 		</view>
 		
 		<view class="history">
@@ -354,6 +354,7 @@
 						font-weight: 600;
 						image{
 							width: 60rpx;
+							height: 60rpx;
 							margin-right: 26rpx;
 						}
 					}

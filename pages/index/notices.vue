@@ -11,7 +11,9 @@
 
 <script>
 import hxNavbar from "@/components/hx-navbar.vue";
-
+import {
+		$request,filesUrl
+	} from "@/utils/request.js";
 export default {
 	components: {
 		hxNavbar,

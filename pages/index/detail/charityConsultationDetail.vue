@@ -80,19 +80,16 @@
 			return {
 				swiperList:[],
 				currentIndex:0,
-				nftList: [
-					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-					{url:'../../../static/img/logo.png',label:'500USDT',statusText:'**用户已完成交易',title:'白色的空开放式学校背包'},
-				],
-				detailInfo:{}
+				nftList: [],
+				detailInfo:{},
+				onLoadInfo:{}
 			};
 		},
 		mounted() {
 			this.adverts();
 		},
 		onLoad(e){
+			this.onLoadInfo = e;
 			this.articlesDetail(e.id)
 		},
 		methods: {
@@ -105,8 +102,17 @@
 				
 			},
 			goUrl(){
-				uni.navigateTo({
-					url:'/pages/index/appShare'
+				// uni.navigateTo({
+				// 	url:'/pages/index/appShare'
+				// })
+				uni.setClipboardData({
+					data:`http://2405-api.2404.goldval.top/#/pages/index/detail/charityConsultationDetail?id=${this.onLoadInfo.id}`,
+					success: () => {
+						uni.showToast({
+							icon:'none',
+							title:'success'
+						})
+					}
 				})
 			},
 			swiperChange(e) {

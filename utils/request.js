@@ -1,5 +1,5 @@
 import requestObj from '@/utils/requestObj.js'
-export let filesUrl = 'https://maojian886.oss-ap-northeast-1.aliyuncs.com';
+export let filesUrl = 'https://maojian886.oss-ap-northeast-1.aliyuncs.com/';
 export let url = 'http://2405-api.2404.goldval.top'
 export const $request = (requestName,params,headerType=0)=>{
 	let reqObj = requestObj[requestName];

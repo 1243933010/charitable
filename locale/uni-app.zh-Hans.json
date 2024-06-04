@@ -42,7 +42,7 @@
 		"app.newAdd36":"爱心传递项目",
 		"app.newAdd37":"爱心传递记录",
 		"app.newAdd38":"捐赠金额",
-		"app.newAdd39":"请输入捐赠金额",
+		"app.newAdd39":"请输入金额",
 		"app.newAdd40":"分享",
 		"app.newAdd41":"您可以通过以上方式邀请好友",
 		"app.newAdd42":"综合",
@@ -66,6 +66,8 @@
 		"app.newAdd60":"距离结束",
 		"app.newAdd61":"我已捐赠",
 		"app.newAdd62":"确认消息",
+		"app.newAdd63":"参与人数",
+		"app.newAdd64":"默认",
 		
 		
 
