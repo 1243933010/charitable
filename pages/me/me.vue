@@ -172,6 +172,7 @@
 		},
 		onShow() {
 			if(uni.getStorageSync('token')){
+				console.log('')
 				this.getUserinfo()//获取用户详情
 			}
 		},
