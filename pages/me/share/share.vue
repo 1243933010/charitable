@@ -115,6 +115,8 @@
 <style lang="scss" scoped>
 	.share {
 		width: 100%;
+		min-height: 100vh;
+		background-color:#FDD7A6;
 
 		.share_centetn {
 			width: 100%;

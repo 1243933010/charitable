@@ -523,11 +523,20 @@
 		"app.image.success":"图片保存成功",
 		"app.image.fail":"图片保存失败",
 		"app.imagedown.fail":"下载失败",
-		"app.txid_inpt":"请输入TXID/HASH"
-		
-		
-		
-		
+		"app.txid_inpt":"请输入TXID/HASH",
+		"app.shenqing.daili":"申请代理",
+		"app.shenqing.dailied":"申请代理详情",
+		"app.shenqing.pay":"确认支付代理费",
+		"app.daili.yeji":"代理业绩",
+		"app.daili.yeji1":"线下代理总人数",
+		"app.daili.yeji2":"一周拍卖总金额",
+		"app.daili.yeji3":"代理拍卖总金额",
+		"app.daili.yeji4":"代理总收入",
+		"app.daili.yeji5":"申请领取代理收入",
+		"app.daili.yeji6":"当前可领取金额",
+		"app.daili.yeji7":"注：确定领取后金额将在3个工作日内到账",
+		"app.daili.yeji8":"申请成功",
+		"app.daili.yeji9":"领取成功"
 	}
 
 }

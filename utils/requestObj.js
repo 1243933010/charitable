@@ -440,6 +440,26 @@ let requestObj = {
 		name:"捐赠证书",
 		url:"/api/userTargetedAidRecordDetail",
 		type:"POST"
-	}
+	},
+	getagentConfig:{
+		name:"代理配置",
+		url:"/api/agentConfig",
+		type:"POST"
+	},
+	getapplyAgent:{
+		name:"代理购买",
+		url:"/api/applyAgent",
+		type:"POST"
+	},
+	getagentAchievement:{
+		name:"代理业绩",
+		url:"/api/agentAchievement",
+		type:"POST"
+	},
+	getreceiveAgentReward:{
+		name:"代理佣金提取",
+		url:"/api/receiveAgentReward",
+		type:"POST"
+	},
 }
 export default requestObj;
