@@ -37,8 +37,9 @@
 					</view>
 					<picker @change="bindPickerChange" range-key="label" :value="index" :range="statusList">
 						<view class="status">
-							<view class="uni-input">
-								{{statusList[pickerIndex]?statusList[pickerIndex].label:$t("app.newAdd64")}}</view>
+							<!-- <view class="uni-input">
+								{{statusList[pickerIndex]?(pickerIndex?statusList[pickerIndex].label:$t("app.newAdd64")):$t("app.newAdd64")}}</view> -->
+								<view class="uni-input">{{statusObj[pickerIndex]}}</view>
 							<image src="../../static/img/icon/arrow.png" mode="widthFix"></image>
 
 						</view>
@@ -56,7 +57,7 @@
 				<view class="list">
 					<view class="item" v-for="(item,index) in auctionsList" :key="index" @click="goUrl(item)">
 						<view class="status">
-							<text>{{$t("app.newAdd44")}}:{{statusList[pickerIndex].label}}</text>
+							<!-- <text>{{$t("app.newAdd44")}}:{{statusObj[pickerIndex]}}</text> -->
 						</view>
 						<view class="content">
 							<view class="img">
@@ -116,31 +117,41 @@
 			imageUrl() {
 				return filesUrl;
 			},
+			statusObj(){
+				return {
+					'all':this.$t("app.month.all"),
+					'0':this.$t("app.newAdd75"),
+					'1':this.$t("app.newAdd76"),
+					'2':this.$t("app.newAdd77"),
+					'3':this.$t("app.newAdd78"),
+					'4':this.$t("app.newAdd79"),
+				}
+			},
 			statusList() {
 				return [
 					{
-						value: '',
-						label: '全部'
+						value: 'all',
+						label: this.$t("app.month.all")
 					},
 					{
-						value: 0,
-						label: '即将开始'
+						value: "0",
+						label:  this.$t("app.newAdd75")
 					},
 					{
-						value: 1,
-						label: '竞拍中'
+						value: "1",
+						label:  this.$t("app.newAdd76")
 					},
 					{
-						value: 2,
-						label: '已结束'
+						value: "2",
+						label:   this.$t("app.newAdd77")
 					},
 					{
-						value: 3,
-						label: '已终止'
+						value: "3",
+						label:  this.$t("app.newAdd78")
 					},
 					{
-						value: 4,
-						label: '已撤回'
+						value: "4",
+						label:  this.$t("app.newAdd79")
 					},
 				]
 			}
@@ -156,7 +167,7 @@
 					start_price: '',
 					end_price: ''
 				},
-				pickerIndex: '',
+				pickerIndex: 'all',
 				index: 0,
 				betweenList: ['0-200', '200-1000', '1000-5000', '5000-100000'],
 				betweenIndex: 0,
@@ -167,6 +178,7 @@
 			setTabbar(this.$t)
 			this.auctions();
 			this.slides();
+			
 		},
 		onReachBottom() {
 			this.formData.page++;
@@ -194,8 +206,11 @@
 			},
 			bindPickerChange(e) {
 				console.log('picker发送选择改变，携带值为', e.detail.value)
-				this.pickerIndex = e.detail.value
+				this.pickerIndex =this.statusList[e.detail.value].value;
 				this.formData.status = this.statusList[e.detail.value].value;
+				if(this.statusList[e.detail.value].value=='all'){
+					this.formData.status  = '';
+				}
 				this.formData.page = 1;
 				this.auctionsList = [];
 				this.auctions();

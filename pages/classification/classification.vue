@@ -81,7 +81,7 @@
 									<view class="price">{{item.bid_increment}} USDT</view>
 								</view>
 								<!-- v-if="item.status==0" -->
-								<view  v-if="item.status==0" class="btn-box" @click="openDialog(item)">{{$t("app.shen6")}}</view>
+								<view  class="btn-box" @click="openDialog(item)">{{$t("app.shen6")}}</view>
 							</view>
 						</view>
 					</view>
@@ -103,11 +103,15 @@
 					<view class="text no-bg">{{productInfo.title}}</view>
 				</view>
 				<view class="label-text label-text1">
-					<view class="label">价格：</view>
+					<view class="label">{{$t("app.newAdd72")}}：</view>
 					<view class="text">$ <input type="text" v-model="price" /> </view>
 				</view>
+				<view class="label-text ">
+					<view class="label">{{$t("app.newAdd71")}}：</view>
+					<view class="text">${{productInfo.shelves_min_price}} - ${{productInfo.shelves_max_price}}  </view>
+				</view>
 				<view class="label-text">
-					<view class="label">交易截止时间：</view>
+					<view class="label">{{$t("app.newAdd73")}}：</view>
 					<view class="text time">
 
 						<uni-datetime-picker :fields="fields" @change="onDateTimeChange"></uni-datetime-picker>
