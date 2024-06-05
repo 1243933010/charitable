@@ -38,7 +38,7 @@
 						{{$t('app.user.balance')}}
 					</view>
 				</view>
-				<view class="user_money_one">
+				<view class="user_money_one" @click="goPath(`/pages/me/month/month`)">
 					<view class="user_money_number">
 						{{userInfo.share_bonus||0}}
 					</view>
@@ -46,7 +46,7 @@
 						{{$t('app.user.sharebonus')}}
 					</view>
 				</view>
-				<view class="user_money_one">
+				<view class="user_money_one" @click="goPath(`/pages/me/month/month`)">
 					<view class="user_money_number">
 						{{userInfo.public_welfare_fund||0}}
 					</view>
@@ -83,7 +83,8 @@
 				</view>
 			</view>
 			<view class="functional_count">
-				<view class="functional_one" v-for="(items,indexs) in functionalArray" :key="indexs" @click="goPath(items.path)">
+				<view class="functional_one" v-for="(items,indexs) in functionalArray" :key="indexs"
+					@click="goPathed(items.path,indexs)">
 					<view class="one_image">
 						<image :src="items.imageeds" mode="aspectFill"></image>
 					</view>
@@ -104,131 +105,160 @@
 		setTabbar
 	} from "@/utils/utils.js";
 	export default {
-		data(){
+		data() {
 			return {
 				bg_image: {
 					backgroundImage: `url(${filesUrl}/uploads/20240604/image/d97bd3e1ee3f992a7cbfb06f5a9c28a5.webp)`,
 					backgroundSize: `100% 100%`
 				},
-				orderArray:[{
-					name:"app.user.fukuan",
-					imageUrl:'../../static/userStatic/user_daishoukuan.png',
-				},{
-					name:"app.user.fahuo",
-					imageUrl:'../../static/userStatic/user_fahuo.png',
-				},{
-					name:"app.user.shouhuo",
-					imageUrl:'../../static/userStatic/user_daishouhuo.png',
-				},{
-					name:"app.user.wancheng",
-					imageUrl:'../../static/userStatic/user_wancheng.png',
+				orderArray: [{
+					name: "app.user.fukuan",
+					imageUrl: '../../static/userStatic/user_daishoukuan.png',
+				}, {
+					name: "app.user.fahuo",
+					imageUrl: '../../static/userStatic/user_fahuo.png',
+				}, {
+					name: "app.user.shouhuo",
+					imageUrl: '../../static/userStatic/user_daishouhuo.png',
+				}, {
+					name: "app.user.wancheng",
+					imageUrl: '../../static/userStatic/user_wancheng.png',
 				}],
-				functionalArray:[
-					{
-						name:"app.user.dailimingxi",
-						imageeds:'../../static/userStatic/function_one.png',
-						path:"/pages/me/broker/broker"
+				functionalArray: [{
+						name: "app.shenqing.daili", //app.shenqing.daili
+						imageeds: '../../static/userStatic/function_one.png',
+						path: "/pages/me/broker/broker"
 					},
 					{
-						name:"app.user.juanzengjilu",
-						imageeds:'../../static/userStatic/function_two.png',
-						path:"/pages/me/donation/donation"
+						name: "app.user.juanzengjilu",
+						imageeds: '../../static/userStatic/function_two.png',
+						path: "/pages/me/donation/donation"
 					},
 					{
-						name:"app.user.xinpinkaipai",
-						imageeds:'../../static/userStatic/function_three.png',
-						path:"/pages/me/newKaipai/newKaipai"
+						name: "app.user.xinpinkaipai",
+						imageeds: '../../static/userStatic/function_three.png',
+						path: "/pages/me/newKaipai/newKaipai"
 					},
 					{
-						name:"app.user.huozongzhongxin",
-						imageeds:'../../static/userStatic/function_four.png',
-						path:'/pages/me/activity/activity'
+						name: "app.user.huozongzhongxin",
+						imageeds: '../../static/userStatic/function_four.png',
+						path: '/pages/me/activity/activity'
 					},
 					{
-						name:"app.user.myfriends",
-						imageeds:'../../static/userStatic/function_five.png',
-						path:"/pages/me/friends/searchFriend"
+						name: "app.user.myfriends",
+						imageeds: '../../static/userStatic/function_five.png',
+						path: "/pages/me/friends/searchFriend"
 					},
 					{
-						name:"app.user.paiorder",
-						imageeds:'../../static/userStatic/function_six.png',
-						path:"/pages/me/auctionOrder/auctionOrder"
+						name: "app.user.paiorder",
+						imageeds: '../../static/userStatic/function_six.png',
+						path: "/pages/me/auctionOrder/auctionOrder"
 					},
 					{
-						name:"app.user.fankui",
-						imageeds:'../../static/userStatic/function_feedbao.png'
+						name: "app.user.fankui",
+						imageeds: '../../static/userStatic/function_feedbao.png'
 					},
 					{
-						name:"app.user.myshare",
-						imageeds:'../../static/userStatic/function_share.png',
-						path:"/pages/me/share/share"
+						name: "app.user.myshare",
+						imageeds: '../../static/userStatic/function_share.png',
+						path: "/pages/me/share/share"
 					}
 				],
-				userInfo:"",//用户详情
+				userInfo: "", //用户详情
 			}
 		},
-		mounted(){
+		mounted() {
 			setTabbar(this.$t)
 		},
 		onShow() {
-			if(uni.getStorageSync('token')){
+			if (uni.getStorageSync('token')) {
 				console.log('')
-				this.getUserinfo()//获取用户详情
+				this.getUserinfo() //获取用户详情
 			}
 		},
 		computed: {
 			sortImage() {
 				return value => {
-					if(value){
+					if (value) {
 						return value.indexOf('http') != -1 ? value : filesUrl + value
-					}else{
+					} else {
 						return value
 					}
 				}
 			}
 		},
-		methods:{
-			async getUserinfo(){
+		methods: {
+			async getUserinfo() {
 				let res = await $request('getInfo', {});
 				if (res.data.code == 200) {
 					this.userInfo = res.data.data;
+					if (this.userInfo.is_agent == 1) {
+						// 显示代理明细
+						this.functionalArray[0].name = 'app.user.dailimingxi'
+					}
 					console.log(this.userInfo)
 				}
 				// console.log(res,'用户详情')
 			},
-			goPath(link){
-				if(uni.getStorageSync('token')){
+			goPath(link) {
+				if (uni.getStorageSync('token')) {
 					uni.navigateTo({
 						url: link,
 					});
-				}else{
+				} else {
 					uni.reLaunch({
-						url:"/pages/login/index"
+						url: "/pages/login/index"
 					})
 				}
 			},
-			goLogin(){
+			goPathed(link, index) {
+				if (uni.getStorageSync('token')) {
+					if (index == 0) {
+						if (this.userInfo.is_agent == 1) {
+							uni.navigateTo({
+								url: "/pages/me/broker/payBroker"
+							})
+						}else{
+							uni.navigateTo({
+								url: "/pages/me/broker/shenBroker"
+							})
+						}
+					} else {
+						uni.navigateTo({
+							url: link,
+						});
+					}
+				} else {
+					uni.reLaunch({
+						url: "/pages/login/index"
+					})
+				}
+			},
+			goLogin() {
 				uni.reLaunch({
-					url:"/pages/login/index"
+					url: "/pages/login/index"
 				})
 			}
 		}
 	}
 </script>
 <style lang="scss" scoped>
-	.user{
+	.user {
 		width: 100%;
 		min-height: 100vh;
 		background-color: #ffffff;
-		.user_bg{
+
+		.user_bg {
 			width: 100%;
 			height: calc(640rpx - var(--status-bar-height));
 			background-repeat: no-repeat;
-			.user_bg_height{
+
+			.user_bg_height {
 				width: 100%;
 				height: var(--status-bar-height);
 			}
-			.user_setting{
+
+			.user_setting {
 				width: 100%;
 				height: 100rpx;
 				display: flex;
@@ -236,24 +266,28 @@
 				justify-content: flex-end;
 				box-sizing: border-box;
 				padding: 0 70rpx;
-				image{
+
+				image {
 					width: 46rpx;
 					height: 53rpx;
 				}
 			}
-			.user_avatar{
+
+			.user_avatar {
 				width: 100%;
 				box-sizing: border-box;
 				padding: 50rpx 70rpx;
 				display: flex;
 				align-items: center;
-				image{
+
+				image {
 					width: 160rpx;
 					height: 160rpx;
 					background-color: #f7f7f7;
 					border-radius: 50%;
 				}
-				.avatar_right{
+
+				.avatar_right {
 					flex: 1;
 					margin-left: 24rpx;
 					display: flex;
@@ -261,19 +295,22 @@
 					justify-content: space-between;
 					box-sizing: border-box;
 					padding: 10rpx 0;
-					.right_name{
+
+					.right_name {
 						font-family: PingFang SC, PingFang SC;
 						font-weight: 800;
 						font-size: 36rpx;
 						color: #403039;
 					}
-					.right_phone{
+
+					.right_phone {
 						font-family: PingFang SC, PingFang SC;
 						font-weight: 400;
 						font-size: 30rpx;
 						color: #6A3A00;
 					}
-					.right_uid{
+
+					.right_uid {
 						font-family: PingFang SC, PingFang SC;
 						font-weight: 400;
 						font-size: 26rpx;
@@ -281,20 +318,24 @@
 					}
 				}
 			}
+
 			// 账户余额
-			.user_money{
+			.user_money {
 				width: 100%;
 				display: flex;
-				.user_money_one{
+
+				.user_money_one {
 					flex: 1;
 					text-align: center;
-					.user_money_number{
+
+					.user_money_number {
 						font-family: PingFang SC, PingFang SC;
 						font-weight: 800;
 						font-size: 36rpx;
 						color: #403039;
 					}
-					.user_money_title{
+
+					.user_money_title {
 						font-family: PingFang SC, PingFang SC;
 						font-weight: 400;
 						font-size: 26rpx;
@@ -304,54 +345,65 @@
 				}
 			}
 		}
+
 		// 内容区域
-		.user_centent{
+		.user_centent {
 			width: 100%;
 			box-sizing: border-box;
 			padding: 0 31rpx;
 			margin-top: calc(-140rpx + var(--status-bar-height));
-			.user_centent_title{
+
+			.user_centent_title {
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
-				.title_left{
-					image{
+
+				.title_left {
+					image {
 						width: 19rpx;
 						height: 19rpx;
 						margin-right: 15rpx;
 					}
-					font-family: PingFang SC, PingFang SC;
+
+					font-family: PingFang SC,
+					PingFang SC;
 					font-weight: 800;
 					font-size: 32rpx;
 					color: #3A2633;
 				}
-				.title_right{
+
+				.title_right {
 					font-family: PingFang SC, PingFang SC;
 					font-weight: 400;
 					font-size: 24rpx;
 					color: #858585;
 					display: flex;
 					align-items: center;
-					image{
+
+					image {
 						width: 11rpx;
 						height: 24rpx;
 						margin-left: 15rpx;
 					}
 				}
 			}
-			.user_centent_order{
+
+			.user_centent_order {
 				width: 100%;
 				display: flex;
-				.order_one{
+
+				.order_one {
 					flex: 1;
 					text-align: center;
 					margin-top: 30rpx;
-					image{
+
+					image {
 						width: 77rpx;
 						height: 57rpx;
 						border-radius: 5rpx;
 					}
-					.order_one_title{
+
+					.order_one_title {
 						font-family: PingFang SC, PingFang SC;
 						font-weight: bold;
 						font-size: 24rpx;
@@ -360,24 +412,29 @@
 					}
 				}
 			}
-			.title_two{
+
+			.title_two {
 				margin-top: 25rpx;
 			}
-			.functional_count{
+
+			.functional_count {
 				width: 100%;
 				display: flex;
 				flex-wrap: wrap;
-				.functional_one{
+
+				.functional_one {
 					flex: 0 25%;
 					margin-top: 40rpx;
 					text-align: center;
-					.one_image{
-						image{
+
+					.one_image {
+						image {
 							width: 50rpx;
 							height: 50rpx;
 						}
 					}
-					.one_image_title{
+
+					.one_image_title {
 						font-family: PingFang SC, PingFang SC;
 						font-weight: bold;
 						font-size: 24rpx;
