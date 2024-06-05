@@ -117,7 +117,12 @@
 				return filesUrl;
 			},
 			statusList() {
-				return [{
+				return [
+					{
+						value: '',
+						label: '全部'
+					},
+					{
 						value: 0,
 						label: '即将开始'
 					},
@@ -428,6 +433,7 @@
 								font-size: 24rpx;
 								font-weight: 600;
 								margin-bottom: 22rpx;
+								.vertical(2)
 							}
 
 							.bottom {

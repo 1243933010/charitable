@@ -526,9 +526,9 @@
 			newLink(item) {
 
 				// uni.setStorageSync("notices", item);
-				uni.navigateTo({
-					url: `./notices?id=${item.id}`,
-				});
+				// uni.navigateTo({
+				// 	url: `./notices?id=${item.id}`,
+				// });
 			},
 			linkImg(item) {
 
@@ -726,11 +726,11 @@
 			}
 
 			.news-list {
-				width: 85%;
+				width: 90%;
 				margin: 20rpx auto;
 				// margin-left: -30rpx;
 				// margin-right: -30rpx;
-				padding: 10rpx 30rpx;
+				padding: 10rpx 0rpx;
 				background-color: white;
 				border-radius: 20rpx;
 				.df(center, flex-start);

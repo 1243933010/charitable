@@ -6,10 +6,10 @@
 			<view class="banner">
 				<swiper class="swiper" :autoPlay="false" circular autoplay style="height: 400rpx;"
 					@change="swiperChange">
-					<swiper-item :current="current" v-for="(item, index) in detailInfo.detail_images" :key="index">
+					<swiper-item :current="current" v-for="(item, index) in detailInfo.images" :key="index">
 						<view class="swiper-item">
 							<view class="pic">
-								<image @click="linkImg(item)" :src="item" class="img" mode="aspectFill"></image>
+								<image @click=" linkImg(item)" :src="imageUrl+item" class="img" mode="aspectFill"></image>
 
 							</view>
 						</view>
@@ -124,7 +124,7 @@
 							<text>{{$t("productDetail.pageTit")}}</text>
 						</view>
 						<view class="goods-detail-rich">
-							<rich-text :nodes="detailInfo.detail"></rich-text>
+							<rich-text style="width: 750rpx;" :nodes="detailInfo.detail"></rich-text>
 						</view>
 					</view>
 					<view class="goods-price" v-if="detailInfo.status==0">
@@ -135,7 +135,7 @@
 						<text style="margin-right: 10rpx;">{{$t("app.newAdd53")}}:{{detailInfo.price}}</text>
 						<text> {{detailInfo.auction_start_time}}{{$t("app.newAdd46")}}</text>
 					</view>
-					<view class="goods-btn" v-if="[0,2,3,4].includes(detailInfo.status)">
+					<view class="goods-btn goods-btn2" v-if="[0,2,3,4].includes(detailInfo.status)">
 						<text>{{$t("app.newAdd54")}}</text>
 					</view>
 					<view class="goods-btn goods-btn1" v-if="detailInfo.status==1" @click="openDialog">
@@ -160,7 +160,7 @@
 							<text>{{$t("app.newAdd53")}}</text>
 						</view>
 						<view class="tip">
-							<text>$ {{detailInfo.price}}</text>
+							<text>$ {{detailInfo.current_price}}</text>
 						</view>
 
 						<view class="input">
@@ -186,7 +186,7 @@
 <script>
 	import hxNavbar from "@/components/hx-navbar.vue";
 	import {
-		$request
+		$request,filesUrl
 	} from "@/utils/request.js";
 	export default {
 		components: {
@@ -200,6 +200,9 @@
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 					// back: false
 				};
+			},
+			imageUrl() {
+				return filesUrl;
 			},
 		},
 		data() {
@@ -285,6 +288,9 @@
 
 	page {
 		background-color: white;
+	}
+	img{
+		max-width:750rpx !important;
 	}
 
 	.popup-container {
@@ -783,10 +789,8 @@
 					}
 					.goods-detail-rich{
 						width: 100%;
+						overflow: hidden;
 						
-						img{
-							width: 100%;
-						}
 						// display: flex;
 						// flex-wrap: wrap;
 						// overflow: hidden;
@@ -827,6 +831,15 @@
 					z-index: 10;
 					background: linear-gradient(180deg, #EF8E1F 0%, #F0AC06 100%);
 					color: white;
+				}
+				.goods-btn2 {
+					position: fixed;
+					width: 100%;
+					bottom: 0;
+					left: 0;
+					z-index: 10;
+					// background: linear-gradient(180deg, #EF8E1F 0%, #F0AC06 100%);
+					// color: white;
 				}
 			}
 		}

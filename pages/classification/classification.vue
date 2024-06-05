@@ -13,7 +13,7 @@
 						<swiper-item v-for="(item, index) in swiperList" :key="index">
 							<view class="swiper-item">
 								<view class="pic">
-									<image :src="imageUrl+item.image" class="img" mode="widthFix"></image>
+									<image :src="imageUrl+item.image" class="img" mode="aspectFit"></image>
 								</view>
 							</view>
 						</swiper-item>
@@ -29,7 +29,36 @@
 					<view class="product-item" v-for="(item,index) in userAuctionsList" :key="index"
 						@click="goPage(`/pages/classification/productDetail`)">
 						<view class="product-img pic">
-							<image :src="imageUrl+item.main_image" mode="widthFix" class="img"></image>
+							<image :src="imageUrl+item.main_image" mode="aspectFit" class="img"></image>
+							<view class="absolute" v-if="item.status==1&&item.price_list.length>0">
+								<view class="icon">
+									<image src="../../static/img/icon/raido_check.png" mode="widthFix"></image>
+									<text>{{$t("app.newAdd67")}}</text>
+								</view>
+								<view class="title">
+									<text>{{$t("app.newAdd66")}}</text>
+								</view>
+								<view class="list" v-for="(val,ind) in item.price_list" :key="ind">
+									<view class="item" v-if="ind==0">
+										<image  src="../../static/img/icon/icon_1.png" mode="widthFix"></image>
+										<text>{{$t("app.newAdd68")}}:</text>
+										<text>${{val.goods_price}}</text>
+									</view>
+									<view class="item" v-if="ind==1">
+										<image  src="../../static/img/icon/icon_2.png" mode="widthFix"></image>
+										<text>{{$t("app.newAdd69")}}:</text>
+										<text>${{val.goods_price}}</text>
+									</view>
+										<view class="item" v-if="ind==2">
+											<image  src="../../static/img/icon/icon_3.png" mode="widthFix"></image>
+											<text>{{$t("app.newAdd70")}}:</text>
+											<text>${{val.goods_price}}</text>
+										</view>
+										
+										
+										
+								</view>
+							</view>
 						</view>
 						<view class="product-info">
 							<view class="product-title">{{item.title}}</view>
@@ -42,16 +71,17 @@
 				<view class="product-list">
 					<view class="product-item-h" v-for="(item,index) in myProductList" :key="index">
 						<view class="product-img pic">
-							<image :src="imageUrl+item.url" mode="widthFix" class="img"></image>
+							<image :src="imageUrl+item.main_image" mode="aspectFit" class="img"></image>
 						</view>
 						<view class="product-info">
 							<view class="product-title">{{item.title}}</view>
 							<view class="time-price-btn">
 								<view class="time-price">
-									<view class="time">{{$t("app.shen34")}}：2024-01-01</view>
-									<view class="price">500 USDT</view>
+									<view class="time">{{$t("app.shen34")}}：{{item.auction_end_time}}</view>
+									<view class="price">{{item.bid_increment}} USDT</view>
 								</view>
-								<view class="btn-box" @click="openDialog(item)">{{$t("app.shen6")}}</view>
+								<!-- v-if="item.status==0" -->
+								<view  v-if="item.status==0" class="btn-box" @click="openDialog(item)">{{$t("app.shen6")}}</view>
 							</view>
 						</view>
 					</view>
@@ -66,11 +96,11 @@
 				</view>
 				<view class="title">{{$t("app.newAdd62")}}</view>
 				<view class="pic">
-					<image src="@/static/img/cn.png" mode="widthFix" class="img"></image>
+					<image :src="imageUrl+ productInfo.main_image" mode="aspectFit" class="img"></image>
 				</view>
 				<view class="label-text">
-					<view class="label">名称：</view>
-					<view class="text no-bg">白色的空开放式学校背包白色的空开放式学校背包</view>
+					<view class="label">{{$t("app.shen9")}}：</view>
+					<view class="text no-bg">{{productInfo.title}}</view>
 				</view>
 				<view class="label-text label-text1">
 					<view class="label">价格：</view>
@@ -117,26 +147,13 @@
 		},
 		data() {
 			return {
-				swiperList: [{
-						image: productTestImg,
-					},
-					{
-						image: productTestImg,
-					}
-				],
+				swiperList: [],
 				currentIndex: 0,
 				userAuctionsList: [],
 
 				tabsVal: 0,
 				iStatusBarHeight: 0,
-				myProductList: [
-				// 	{
-				// 	url: productTestImg,
-				// 	price: '500USDT',
-				// 	title: '白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包',
-				// 	time: "2024-01-01",
-				// },
-				],
+				myProductList: [],
 				userAuctionsParams: {
 					page: 1,
 					limit: 20
@@ -171,6 +188,9 @@
 			}
 		},
 		methods: {
+			reverseFnc(arr){
+				return arr.reverse()
+			},
 			onDateTimeChange(e) {
 				console.log(e)
 				this.time = e;
@@ -198,6 +218,15 @@
 			async userAuctions() {
 				let res = await $request('userAuctions', this.userAuctionsParams);
 				if (res.data.code === 200) {
+					res.data.data.data.forEach((val,ind)=>{
+						if(val.price_list&&val.price_list.length>0){
+							let arr = []
+							for(let i =val.price_list.length-1;i>=0;i--){
+								arr.push(val.price_list[i])
+							}
+							val.price_list = arr;
+						}
+					})
 					this.userAuctionsList.push(...res.data.data.data);
 				}
 			},
@@ -212,11 +241,14 @@
 			},
 			tabsChange(val) {
 				this.tabsVal = val;
+				
 				if (this.tabsVal == 0) {
 					this.userAuctionsParams.page=1;
+					this.myProductList = [];
 					this.userAuctions();
 				} else {
 					this.userAuctionsGoodsParams.page=1;
+					this.userAuctionsList = [];
 					this.userAuctionsGoods();
 				}
 			},
@@ -307,6 +339,7 @@
 				.swiper-active {
 					margin-top: 26rpx;
 					width: 100%;
+					background-color: #F4F4F4 !important;
 					.df(center, center);
 
 					.div {
@@ -342,6 +375,65 @@
 
 					.product-img {
 						width: 100%;
+						height: 300rpx;
+						position: relative;
+						image{
+							width: 100%;
+							height: 100%;
+						}
+						.absolute{
+							width: 100%;
+							height: 100%;
+							position: absolute;
+							top: 0;
+							left: 0;
+							background-color: rgba(0, 0, 0, 0.5);
+							display: flex;
+							flex-direction: column;
+							box-sizing: border-box;
+							padding: 20rpx;
+							.icon{
+								display: flex;
+								flex-direction: row;
+								align-items: center;
+								align-self: flex-end;
+								background-color: rgba(0, 0, 0, 0.8);
+								box-sizing: border-box;
+								padding: 10rpx 10rpx;
+								border-radius: 15rpx;
+								image{
+									width: 24rpx;
+									margin-right: 8rpx;
+								}
+								text{
+									font-size: 20rpx;
+									color: white;
+								}
+							}
+							.title{
+								color: white;
+								font-size: 24rpx;
+								font-weight: 600;
+								margin-bottom: 30rpx;
+							}
+							.list{
+								// display: fl;
+								.item{
+									margin-bottom: 24rpx;
+									display: flex;
+									align-items: center;
+									image{
+										width: 32rpx;
+										margin-right: 9rpx;
+									}
+									text{
+										font-size: 24rpx;
+										font-weight: 600;
+										color: white;
+									}
+								}
+							}
+						}
 					}
 
 					.product-info {
@@ -378,6 +470,10 @@
 						width: 144rpx;
 						height: 144rpx;
 						flex-shrink: 0;
+						image{
+							width: 100%;
+							height: 100%;
+						}
 					}
 
 					.product-info {
@@ -471,6 +567,10 @@
 				border-radius: 20rpx;
 				width: 200rpx;
 				height: 200rpx;
+				image{
+					width: 100%;
+					height: 100%;
+				}
 			}
 
 			.label-text {
