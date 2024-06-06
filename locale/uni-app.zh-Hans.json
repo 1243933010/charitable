@@ -19,7 +19,6 @@
 		"app.newAdd17": "更多",
 		"app.newAdd18": "交易信息",
 		"app.newAdd19": "猜猜你喜欢",
-		// "app.tabbar1":"首页",
 		"app.tabbar2":"拍卖会场",
 		"app.tabbar3":"交易会场",
 		"app.tabbar4":"我的拍品",
@@ -74,8 +73,14 @@
 		"app.newAdd68":"第一名",
 		"app.newAdd69":"第二名",
 		"app.newAdd70":"第三名",
-		
-		
+		"app.newAdd71":"上架价格区间",
+		"app.newAdd72":"价格",
+		"app.newAdd73":"交易截止时间",
+		"app.newAdd75":"即将开始",
+		"app.newAdd76":"竞拍中",
+		"app.newAdd77":"已结束",
+		"app.newAdd78":"已终止",
+		"app.newAdd79":"已撤回",
 
 
 		"app.shen1": "义卖产品",
@@ -528,11 +533,20 @@
 		"app.image.success":"图片保存成功",
 		"app.image.fail":"图片保存失败",
 		"app.imagedown.fail":"下载失败",
-		"app.txid_inpt":"请输入TXID/HASH"
-		
-		
-		
-		
+		"app.txid_inpt":"请输入TXID/HASH",
+		"app.shenqing.daili":"申请代理",
+		"app.shenqing.dailied":"申请代理详情",
+		"app.shenqing.pay":"确认支付代理费",
+		"app.daili.yeji":"代理业绩",
+		"app.daili.yeji1":"线下代理总人数",
+		"app.daili.yeji2":"一周拍卖总金额",
+		"app.daili.yeji3":"代理拍卖总金额",
+		"app.daili.yeji4":"代理总收入",
+		"app.daili.yeji5":"申请领取代理收入",
+		"app.daili.yeji6":"当前可领取金额",
+		"app.daili.yeji7":"注：确定领取后金额将在3个工作日内到账",
+		"app.daili.yeji8":"申请成功",
+		"app.daili.yeji9":"领取成功"
 	}
 
 }

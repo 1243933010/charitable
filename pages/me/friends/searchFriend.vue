@@ -25,7 +25,7 @@
 		<scroll-view scroll-y="true" class="scroll_h">
 			<view class="friends_centent">
 				<view class="friends_ones" v-for="(item,index) in friendsArray" :key="index">
-					<image src="../../../static/img/cn.png" mode="aspectFill"></image>
+					<image :src="sortImage(item.avatar)" mode="aspectFill"></image>
 					<view class="friends_onescount">
 						<view class="friends_ones_name">
 							<view class="name_left">
@@ -47,10 +47,10 @@
 									{{$t('app.xianshi.zhucetime')}}：{{item.created_at_format}}
 								</view>
 							</view>
-							<view class="ones_bottom_right">
+							<!-- <view class="ones_bottom_right">
 								<image src="../../../static/userStatic/add_friends.png" mode="aspectFill"></image>
 								{{$t('app.xianshi.addfriends')}}
-							</view>
+							</view> -->
 						</view>
 					</view>
 				</view>
@@ -88,6 +88,17 @@
 				uni.stopPullDownRefresh()
 			},1000)
 			this.getFriends('init')//获取好友列表
+		},
+		computed: {
+			sortImage() {
+				return value => {
+					if(value){
+						return value.indexOf('http') != -1 ? value : filesUrl + value
+					}else{
+						return value
+					}
+				}
+			}
 		},
 		methods:{
 			goBack(){

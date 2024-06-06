@@ -30,7 +30,7 @@
 						@click="goPage(`/pages/classification/productDetail`)">
 						<view class="product-img pic">
 							<image :src="imageUrl+item.main_image" mode="aspectFit" class="img"></image>
-							<view class="absolute">
+							<view class="absolute" v-if="item.status==1&&item.price_list.length>0">
 								<view class="icon">
 									<image src="../../static/img/icon/raido_check.png" mode="widthFix"></image>
 									<text>{{$t("app.newAdd67")}}</text>
@@ -38,22 +38,25 @@
 								<view class="title">
 									<text>{{$t("app.newAdd66")}}</text>
 								</view>
-								<view class="list">
-										<view class="item">
-											<image src="../../static/img/icon/icon_1.png" mode="widthFix"></image>
-											<text>{{$t("app.newAdd68")}}:</text>
-											<text>$111</text>
-										</view>
-										<view class="item">
-											<image src="../../static/img/icon/icon_2.png" mode="widthFix"></image>
-											<text>{{$t("app.newAdd69")}}:</text>
-											<text>$111</text>
-										</view>
-										<view class="item">
-											<image src="../../static/img/icon/icon_3.png" mode="widthFix"></image>
+								<view class="list" v-for="(val,ind) in item.price_list" :key="ind">
+									<view class="item" v-if="ind==0">
+										<image  src="../../static/img/icon/icon_1.png" mode="widthFix"></image>
+										<text>{{$t("app.newAdd68")}}:</text>
+										<text>${{val.goods_price}}</text>
+									</view>
+									<view class="item" v-if="ind==1">
+										<image  src="../../static/img/icon/icon_2.png" mode="widthFix"></image>
+										<text>{{$t("app.newAdd69")}}:</text>
+										<text>${{val.goods_price}}</text>
+									</view>
+										<view class="item" v-if="ind==2">
+											<image  src="../../static/img/icon/icon_3.png" mode="widthFix"></image>
 											<text>{{$t("app.newAdd70")}}:</text>
-											<text>$111</text>
+											<text>${{val.goods_price}}</text>
 										</view>
+										
+										
+										
 								</view>
 							</view>
 						</view>
@@ -78,7 +81,7 @@
 									<view class="price">{{item.bid_increment}} USDT</view>
 								</view>
 								<!-- v-if="item.status==0" -->
-								<view  v-if="item.status==0" class="btn-box" @click="openDialog(item)">{{$t("app.shen6")}}</view>
+								<view  class="btn-box" @click="openDialog(item)">{{$t("app.shen6")}}</view>
 							</view>
 						</view>
 					</view>
@@ -100,11 +103,15 @@
 					<view class="text no-bg">{{productInfo.title}}</view>
 				</view>
 				<view class="label-text label-text1">
-					<view class="label">价格：</view>
+					<view class="label">{{$t("app.newAdd72")}}：</view>
 					<view class="text">$ <input type="text" v-model="price" /> </view>
 				</view>
+				<view class="label-text ">
+					<view class="label">{{$t("app.newAdd71")}}：</view>
+					<view class="text">${{productInfo.shelves_min_price}} - ${{productInfo.shelves_max_price}}  </view>
+				</view>
 				<view class="label-text">
-					<view class="label">交易截止时间：</view>
+					<view class="label">{{$t("app.newAdd73")}}：</view>
 					<view class="text time">
 
 						<uni-datetime-picker :fields="fields" @change="onDateTimeChange"></uni-datetime-picker>
@@ -144,26 +151,13 @@
 		},
 		data() {
 			return {
-				swiperList: [{
-						image: productTestImg,
-					},
-					{
-						image: productTestImg,
-					}
-				],
+				swiperList: [],
 				currentIndex: 0,
 				userAuctionsList: [],
 
 				tabsVal: 0,
 				iStatusBarHeight: 0,
-				myProductList: [
-				// 	{
-				// 	url: productTestImg,
-				// 	price: '500USDT',
-				// 	title: '白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包白色的空开放式学校背包',
-				// 	time: "2024-01-01",
-				// },
-				],
+				myProductList: [],
 				userAuctionsParams: {
 					page: 1,
 					limit: 20
@@ -198,6 +192,9 @@
 			}
 		},
 		methods: {
+			reverseFnc(arr){
+				return arr.reverse()
+			},
 			onDateTimeChange(e) {
 				console.log(e)
 				this.time = e;
@@ -225,6 +222,15 @@
 			async userAuctions() {
 				let res = await $request('userAuctions', this.userAuctionsParams);
 				if (res.data.code === 200) {
+					res.data.data.data.forEach((val,ind)=>{
+						if(val.price_list&&val.price_list.length>0){
+							let arr = []
+							for(let i =val.price_list.length-1;i>=0;i--){
+								arr.push(val.price_list[i])
+							}
+							val.price_list = arr;
+						}
+					})
 					this.userAuctionsList.push(...res.data.data.data);
 				}
 			},
@@ -385,7 +391,7 @@
 							position: absolute;
 							top: 0;
 							left: 0;
-							background-color: rgba(0, 0, 0, 0.3);
+							background-color: rgba(0, 0, 0, 0.5);
 							display: flex;
 							flex-direction: column;
 							box-sizing: border-box;
