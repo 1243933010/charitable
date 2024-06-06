@@ -582,7 +582,7 @@
 			goProductDetail(item) {
 
 				uni.navigateTo({
-					url: `/pages/index/productDetail?id=${item.id}`,
+					url: `/pages/classification/productDetail?id=${item.id}`,
 				});
 			},
 			goPage(link) {

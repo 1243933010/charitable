@@ -8,7 +8,7 @@
 					<swiper-item :current="current" v-for="(item, index) in swiperList" :key="index">
 						<view class="swiper-item">
 							<view class="pic">
-								<image @click="linkImg(item)" :src="item.image" class="img" mode="widthFix"></image>
+								<image @click="linkImg(item)" :src="imageUrl+item.image" class="img" mode="widthFix"></image>
 								<!-- <view class="text-box">
 									<view class="title">
 										<text>星星点灯，照亮梦乡</text>
@@ -122,7 +122,7 @@
 				})
 			},
 			async slides() {
-				let res = await $request("slides", {position:'7'});
+				let res = await $request("slides", {position:'6'});
 				console.log( res.data.data.data)
 				if (res.data.code === 200) {
 					this.swiperList = res.data.data.data;

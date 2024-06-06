@@ -4,48 +4,35 @@
 		<scroll-view :scroll-y="true" class="charity-product-detail-scroll page-scroll">
 			<view class="banner">
 				<swiper class="swiper" circular autoplay style="height: 430rpx;" @change="swiperChange">
-					<swiper-item v-for="(item, index) in swiperList" :key="index">
+					<swiper-item v-for="(item, index) in detailInfo.images" :key="index">
 						<view class="swiper-item">
 							<view class="pic">
-								<image :src="item.image" class="img" mode="widthFix"></image>
+								<image :src="imageUrl+item" class="img" mode="widthFix"></image>
 							</view>
 						</view>
 					</swiper-item>
 				</swiper>
 				<view class="swiper-active">
-					<view class="item" v-for="(item,index) in swiperList" :key="index">
+					<view class="item" v-for="(item,index) in detailInfo.images" :key="index">
 						<view class="div" :class="index == currentIndex ? 'active' : ''"></view>
 					</view>
 				</view>
-				<h3 class="product-tit">**基金面向**小学爱心助学筹集 1000</h3>
+				<h3 class="product-tit">{{detailInfo.title}}</h3>
 				<div class="price-inventory">
-					<div class="price">$500</div>
-					<div class="inventory">{{$t("app.shen35")}}：232</div>
+					<div class="price">${{detailInfo.price}}</div>
+					<div class="inventory">{{detailInfo.status_desc}}</div>
 				</div>
 			</view>
 			
 			<div class="product-detail">
-				<div class="box-tit">商品详情</div>
+				<div class="box-tit">{{$t("productDetail.pageTit")}}</div>
 				<div class="pic-list">
-					<div class="pic">
-						<image src="@/static/img/cn.png" mode="widthFix" class="img"></image>
-					</div>
-					<div class="pic">
-						<image src="@/static/img/cn.png" mode="widthFix" class="img"></image>
-					</div>
-					<div class="pic">
-						<image src="@/static/img/cn.png" mode="widthFix" class="img"></image>
-					</div>
-					<div class="pic">
-						<image src="@/static/img/cn.png" mode="widthFix" class="img"></image>
-					</div>
-					<div class="pic">
-						<image src="@/static/img/cn.png" mode="widthFix" class="img"></image>
+					<div class="pic" v-for="(val,ind) in detailInfo.detail_images">
+						<image :src="imageUrl+item" mode="aspectFit" class="img"></image>
 					</div>
 				</div>
 				<div class="info">
-					<p>某女士为爱心组学拍卖LV包,品牌:路易威登Louis Vuitton;款式:BEAUBOURG中号手袋:型号:M43953:此款BEAU-BOURG手袋采用柔软的Monogram帆布材质，汇集多处手工精制细节;手柄由色调缤纷的皮革彩带编织而成，手工染色饰边凸显对比感与色彩浓度;彩色LV皮革饰件与姓名吊牌带来趣味与个性;配有一条可脱卸包带，丰富背携方式;尺寸:35CMx24CM x15CM;</p>
-					<p>某女士为爱心组学拍卖LV包,品牌:路易威登Louis Vuitton,款式:BEAUBOURG中号手袋;型号:M43953;此款BEAU-BOURG手袋采用柔软的Monogram帆布材质，汇集多处手工精制细节;</p>
+					<rich-text :nodes="detailInfo.detail"></rich-text>
 				</div>
 			</div>
 		</scroll-view>
@@ -54,7 +41,7 @@
 
 <script>
 	import hxNavbar from "@/components/hx-navbar.vue";
-	import { $request } from "@/utils/request.js";
+	import { $request,filesUrl } from "@/utils/request.js";
 	import productTestImg from "@/static/img/cn.png";
 	
 	export default {
@@ -69,6 +56,9 @@
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};
 			},
+			imageUrl() {
+				return filesUrl;
+			},
 		},
 		data() {
 			return {
@@ -80,12 +70,23 @@
 						image: productTestImg,
 					}
 				],
-				currentIndex: 0
+				currentIndex: 0,
+				detailInfo:{}
 			};
 		},
-		mounted() {
+		onLoad(e){
+			// e = {id:'1'}
+			this.getDetail(e.id);
+			
 		},
 		methods: {
+			async getDetail(id){
+				let res = await $request("auctionsDetail",{id})
+				console.log(res)
+				if(res.data.code==200){
+					this.detailInfo = res.data.data;
+				}
+			},
 			swiperChange(e) {
 			      // e.detail.current 是当前的索引
 			      this.currentIndex = e.detail.current;
@@ -184,6 +185,10 @@ page {
 					border-radius: 20rpx;
 					padding: 16rpx 10rpx 0;
 					width: 33.33%;
+					image{
+						max-width: 200rpx;
+						max-height: 300rpx;
+					}
 				}
 			}
 			

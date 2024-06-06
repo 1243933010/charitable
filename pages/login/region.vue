@@ -103,9 +103,11 @@
 					mobile_code: "975", // 手机前缀
 					scene:'register'
 				},
+				onLoadParams:{}
 			};
 		},
 		onLoad(e) {
+			this.onLoadParams = e;
 			if (e.invite_code) {
 				this.formData.invite_code = e.invite_code;
 			}
@@ -198,9 +200,23 @@
 				});
 				if (data.data.code == 200) {
 					uni.setStorageSync("token", `Bearer ${data.data.data.token}`);
-					uni.reLaunch({
-						url: "/pages/index/index",
-					});
+					let {invite_code,type,id} = this.onLoadParams;
+					if(invite_code||type){
+						let obj = {
+							charityConsultationDetail:'/pages/index/detail/charityConsultationDetail',
+							passingLoveDetail:'/pages/index/detail/passingLoveDetail',
+						}
+						uni.reLaunch({
+							url:`${obj[type]}&id=${id}`
+						})
+					}else{
+						uni.reLaunch({
+							url: "/pages/index/index",
+						});
+					}
+					// uni.reLaunch({
+					// 	url: "/pages/index/index",
+					// });
 				}
 			},
 			regionBtn() {

@@ -12,14 +12,24 @@
 					<uqrcode  ref="uqrcode" canvas-id="qrcode" :value="shareUrl" :options="{ margin: 10 }" :size="140" :loading="false">
 					</uqrcode>
 				</view>
-				<view class="count_link">
-					<view class="link_name">
-						{{shareUrl}}
+				<view class="count_link"  style="background: none;justify-content: flex-start;">
+					<view class="link_name" style="width: 350rpx;">
+						invite_code:{{invite_code}}
 					</view>
-					<view class="link_copy" @click="copyinfo">
+					<view class="link_copy" @click="copyinfo(invite_code)">
 						{{$t('join.copy')}}
 					</view>
 				</view>
+				<view class="count_link" style="margin-top: 0;">
+					<view class="link_name">
+						{{shareUrl}}
+					</view>
+					<view class="link_copy" @click="copyinfo(shareUrl)">
+						{{$t('join.copy')}}
+					</view>
+				</view>
+				
+				
 				<view class="count_link_title">
 					{{$t('app.newAdd41')}}
 				</view>
@@ -61,34 +71,42 @@
 				};
 			},
 		},
-		onLoad() {
+		onLoad(e) {
 			this.getUserinfo() //获取用户详情
 		},
 		data() {
 			return {
-				userInfo: "", //用户详情
+				userInfo: {}, //用户详情
 				shareUrl: "",
+				invite_code:""
 			}
 		},
 		methods: {
-			async getUserinfo() {
+			async getUserinfo(){
 				let res = await $request('getInfo', {});
+				console.log(res)
 				if (res.data.code == 200) {
 					this.userInfo = res.data.data;
+					this.invite_code = res.data.data.invitation_code;
 					this.getShare()
-					console.log(this.userInfo)
+					
+					console.log(this.userInfo,this.invite_code,'--')
 				}
 				// console.log(res,'用户详情')
 			},
 			async getShare() {
-				let res = await $request('getSharecode', {
-					invitation_code: this.userInfo.invitation_code
-				});
-				if (res.data.code == 200) {
-					console.log(res.data.data)
-					this.shareUrl = res.data.data.url
-					this.getQRcode()
-				}
+				this.shareUrl = `http://2405-api.2404.goldval.top/h5/index.html#/pages/login/region?invite_code=${this.invite_code}`
+				console.log(this.shareUrl,'66')
+				this.getQRcode()
+				// return
+				// let res = await $request('getSharecode', {
+				// 	invitation_code: this.invite_code
+				// });
+				// if (res.data.code == 200) {
+				// 	console.log(res.data.data)
+				// 	this.shareUrl = res.data.data.url
+				// 	this.getQRcode()
+				// }
 			},
 			getQRcode() {
 				var qr = new UQRCode();
@@ -97,9 +115,9 @@
 				qr.size = 220; // 指定要生成的二维码大小
 				qr.margin = 10; // 指定二维码的边距
 			},
-			copyinfo() {
+			copyinfo(str) {
 				uni.setClipboardData({
-					data: this.shareUrl,
+					data: str,
 					success: (res) => {
 						uni.showToast({
 							icon: "none",

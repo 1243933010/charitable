@@ -14,7 +14,7 @@
 						<view class="no-input">
 							<text>{{$t('app.newAdd3')}}</text>
 						</view>
-						<view class="region"  @click="goOther('/pages/login/region')">
+						<view class="region"  @click="goRegion">
 							<text>{{$t('region.btn1')}}</text>
 						</view>
 					</view>
@@ -50,7 +50,7 @@
 					<view class="view1" @click="goOther('/pages/login/forgetPwd')">
 						<text>{{$t("login.forget")}}?</text>
 					</view>
-					<view class="view1" @click="goOther('/pages/login/messageLoginIndex')"><text>{{$t("app.newAdd4")}}</text></view>
+					<!-- <view class="view1" @click="goOther('/pages/login/messageLoginIndex')"><text>{{$t("app.newAdd4")}}</text></view> -->
 				</view>
 				<view class="btn-list">
 					<button class="button login-btn" :disabled="!(formData.mobile && formData.password)"
@@ -86,6 +86,11 @@
 					mobile_code: "975", // 手机前缀
 					email:""
 				},
+				onLoadParams:{
+					type:'',
+					invite_code:'',
+					id:''
+				}
 			};
 		},
 		mounted() {
@@ -101,6 +106,9 @@
 				this.formData.mobile_code =   event.prefix;
 			});
 		},
+		onLoad(e){
+			this.onLoadParams = e;
+		},
 		methods: {
 			goOther(url) {
 				uni.navigateTo({
@@ -115,13 +123,23 @@
 				this.pwdType = !this.pwdType;
 			},
 			goRegion() {
+				// onLoadParams:{
+				// 	type:'',
+				// 	invite_code:'',
+				// 	id:''
+				// }
 				// 去往注册页面
+				let {invite_code,type,id} = this.onLoadParams;
+				let url = '/pages/login/region'
+				if(invite_code||type){
+					url = `/pages/login/region?invite_code=${invite_code}&type=${type}&id=${id}`
+				}
+				
 				uni.navigateTo({
-					url: "/pages/login/region",
+					url,
 				});
 			},
 			goPhonePrefix() {
-				// 去往注册页面
 				uni.navigateTo({
 					url: "/pages/login/phonePrefix",
 				});
@@ -161,9 +179,21 @@
 					uni.showToast({
 						title: this.$t("login.seccuss"),
 						success: () => {
-							uni.reLaunch({
-								url: "/pages/index/index",
-							});
+							let {invite_code,type,id} = this.onLoadParams;
+							if(invite_code||type){
+								let obj = {
+									charityConsultationDetail:'/pages/index/detail/charityConsultationDetail',
+									passingLoveDetail:'/pages/index/detail/passingLoveDetail',
+								}
+								uni.reLaunch({
+									url:`${obj[type]}&id=${id}`
+								})
+							}else{
+								uni.reLaunch({
+									url: "/pages/index/index",
+								});
+							}
+						
 						},
 					});
 				});

@@ -76,7 +76,7 @@
 				// uni.navigateTo({
 				// 	url:'/pages/index/appShare'
 				// })
-				let res = `http://2405-api.2404.goldval.top/#/pages/login/region?invite_code=${this.invite_code}`
+				let res = `http://2405-api.2404.goldval.top/h5/index.html#/pages/login/index?invite_code=${this.invite_code}&type=passingLoveDetail&id=${this.detailInfo.id}`
 				uni.setClipboardData({
 					data:res,
 					success: () => {

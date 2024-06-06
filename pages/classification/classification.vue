@@ -27,7 +27,7 @@
 
 				<view class="product-list">
 					<view class="product-item" v-for="(item,index) in userAuctionsList" :key="index"
-						@click="goPage(`/pages/classification/productDetail`)">
+						@click="goPage(item)">
 						<view class="product-img pic">
 							<image :src="imageUrl+item.main_image" mode="aspectFit" class="img"></image>
 							<view class="absolute" v-if="item.status==1&&item.price_list.length>0">
@@ -69,7 +69,7 @@
 			</view>
 			<view class="tab-pane" :class="{active: tabsVal === 1}">
 				<view class="product-list">
-					<view class="product-item-h" v-for="(item,index) in myProductList" :key="index">
+					<view class="product-item-h" v-for="(item,index) in myProductList" @click="goPage(item)" :key="index">
 						<view class="product-img pic">
 							<image :src="imageUrl+item.main_image" mode="aspectFit" class="img"></image>
 						</view>
@@ -81,7 +81,9 @@
 									<view class="price">{{item.bid_increment}} USDT</view>
 								</view>
 								<!-- v-if="item.status==0" -->
-								<view  class="btn-box" @click="openDialog(item)">{{$t("app.shen6")}}</view>
+								<view   v-if="item.status==0" class="btn-box" @click="openDialog(item)">{{$t("app.shen6")}}</view>
+							   <view v-if="item.status==1" style="background: darkgrey;" class="btn-box" >{{$t("app.shen4")}}</view>
+							   <view v-if="item.status==2" style="background: darkgrey;" class="btn-box" >{{$t("app.shen30")}}</view>
 							</view>
 						</view>
 					</view>
@@ -238,9 +240,9 @@
 				// e.detail.current 是当前的索引
 				this.currentIndex = e.detail.current;
 			},
-			goPage(url) {
+			goPage(item) {
 				uni.navigateTo({
-					url,
+					url:`/pages/classification/productDetail?id=${item.id}`,
 				});
 			},
 			tabsChange(val) {

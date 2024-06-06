@@ -31,7 +31,7 @@
 			<view class="all_price">
 				<view class="price">
 					<view class="num">
-						<text>$12121</text>
+						<text>$0</text>
 					</view>
 					<view class="title">
 						<text>{{$t("app.newAdd22")}}</text>

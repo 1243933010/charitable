@@ -5,10 +5,10 @@
 		<view class="index-scroll  has-tabbar">
 			<view class="banner">
 				<swiper class="swiper" circular autoplay style="height: 400rpx;" @change="swiperChange">
-					<swiper-item :current="current" v-for="(item, index) in swiperList" :key="index">
+					<swiper-item :current="current" v-for="(item, index) in [detailInfo.images]" :key="index">
 						<view class="swiper-item">
 							<view class="pic">
-								<image @click="linkImg(item)" :src="item.image" class="img" mode="widthFix"></image>
+								<image @click="linkImg(item)" :src="imageUrl+item" class="img" mode="widthFix"></image>
 								<!-- <view class="text-box">
 									<view class="title">
 										<text>星星点灯，照亮梦乡</text>
@@ -61,7 +61,7 @@
 <script>
 	import hxNavbar from "@/components/hx-navbar.vue";
 	import {
-		$request
+		$request,filesUrl
 	} from "@/utils/request.js";
 	export default {
 		components: {
@@ -74,6 +74,9 @@
 					color: "#403039",
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
 				};
+			},
+			imageUrl() {
+				return filesUrl;
 			},
 		},
 		data() {
@@ -121,7 +124,7 @@
 				// uni.navigateTo({
 				// 	url:'/pages/index/appShare'
 				// })
-				let res = `http://2405-api.2404.goldval.top/#/pages/login/region?invite_code=${this.invite_code}`
+				let res = `http://2405-api.2404.goldval.top/#/pages/login/index?invite_code=${this.invite_code}&type=charityConsultationDetail&id=${this.detailInfo.id}`
 				uni.setClipboardData({
 					data:res,
 					success: () => {
