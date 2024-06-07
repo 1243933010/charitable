@@ -207,7 +207,7 @@
 							passingLoveDetail:'/pages/index/detail/passingLoveDetail',
 						}
 						uni.reLaunch({
-							url:`${obj[type]}&id=${id}`
+							url:`${obj[type]}?id=${id}`
 						})
 					}else{
 						uni.reLaunch({

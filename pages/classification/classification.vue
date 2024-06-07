@@ -82,7 +82,7 @@
 								</view>
 								<!-- v-if="item.status==0" -->
 								<view   v-if="item.status==0" class="btn-box" @click="openDialog(item)">{{$t("app.shen6")}}</view>
-							   <view v-if="item.status==1" style="background: darkgrey;" class="btn-box" >{{$t("app.shen4")}}</view>
+							   <view v-if="item.status==1" style="background: darkgrey;" class="btn-box" >{{$t("app.shen3")}}</view>
 							   <view v-if="item.status==2" style="background: darkgrey;" class="btn-box" >{{$t("app.shen30")}}</view>
 							</view>
 						</view>

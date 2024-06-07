@@ -5,7 +5,7 @@
 			<view class="bk">
 				<view class="tip">
 					<view class="content">
-						<view class="title">
+						<view class="title" v-if="userLoveTransmissionInfo.is_completed_today!==0">
 							<text>{{$t("app.newAdd27")}}</text>
 						</view>
 						<view class="label">
