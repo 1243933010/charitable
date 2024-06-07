@@ -81,8 +81,8 @@
 									<view class="price">{{item.bid_increment}} USDT</view>
 								</view>
 								<!-- v-if="item.status==0" -->
-								<view   v-if="item.status==0" class="btn-box" @click="openDialog(item)">{{$t("app.shen6")}}</view>
-							   <view v-if="item.status==1" style="background: darkgrey;" class="btn-box" >{{$t("app.shen3")}}</view>
+								<view   v-if="item.status==0" class="btn-box" @click.stop="openDialog(item)">{{$t("app.shen6")}}</view>
+							   <view v-if="item.status==1" style="background: darkgrey;" class="btn-box" >{{$t("app.shen4")}}</view>
 							   <view v-if="item.status==2" style="background: darkgrey;" class="btn-box" >{{$t("app.shen30")}}</view>
 							</view>
 						</view>
@@ -242,7 +242,7 @@
 			},
 			goPage(item) {
 				uni.navigateTo({
-					url:`/pages/classification/productDetail?id=${item.id}`,
+					url:`/pages/classification/productDetail?id=${item.auction_goods_id}`,
 				});
 			},
 			tabsChange(val) {

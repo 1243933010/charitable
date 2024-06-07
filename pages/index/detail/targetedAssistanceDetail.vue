@@ -163,7 +163,7 @@
 				this.currentIndex = e.detail.current;
 			},
 			async userTargetedAidRecords() {
-				let res = await $request("userTargetedAidRecords", {});
+				let res = await $request("userTargetedAidRecords", {id:this.onLoadPrams.id});
 				console.log(res)
 				if (res.data.code === 200) {
 					this.user_records = res.data.data.data;

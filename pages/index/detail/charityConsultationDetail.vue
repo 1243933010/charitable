@@ -73,6 +73,8 @@
 					title: this.$t("index.detail"),
 					color: "#403039",
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
+					backTabPage:this.onLoadInfo.type?'/pages/index/index':'',
+					backPage:this.onLoadInfo.type?'':'/pages/index/charityConsultation'
 				};
 			},
 			imageUrl() {
@@ -85,14 +87,14 @@
 				currentIndex:0,
 				nftList: [],
 				detailInfo:{},
-				onLoadInfo:{},
+				onLoadInfo:{
+					type:''
+				},
 				invite_code:'',
 				userInfo:{}
 			};
 		},
-		mounted() {
-			
-		},
+		
 		onLoad(e){
 			this.onLoadInfo = e;
 			this.articlesDetail(e.id)
@@ -124,7 +126,7 @@
 				// uni.navigateTo({
 				// 	url:'/pages/index/appShare'
 				// })
-				let res = `http://2405-api.2404.goldval.top/#/pages/login/index?invite_code=${this.invite_code}&type=charityConsultationDetail&id=${this.detailInfo.id}`
+				let res = `http://2405-api.2404.goldval.top/h5/index.html#/pages/login/index?invite_code=${this.invite_code}&type=charityConsultationDetail&id=${this.detailInfo.id}`
 				uni.setClipboardData({
 					data:res,
 					success: () => {
