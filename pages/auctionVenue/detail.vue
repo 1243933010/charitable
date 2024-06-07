@@ -123,7 +123,7 @@
 						<view class="goods-detail-title">
 							<text>{{$t("productDetail.pageTit")}}</text>
 						</view>
-						<view class="goods-detail-rich">
+						<view class="goods-detail-rich" v-if="detailInfo.detail">
 							<rich-text style="width: 750rpx;" :nodes="detailInfo.detail"></rich-text>
 						</view>
 					</view>

@@ -43,6 +43,8 @@
 					title: this.$t("index.detail"),
 					color: "#403039",
 					backgroundColor: [1, ['#FCEEB7', '#FEE1AB']],
+					backTabPage:this.onLoadInfo.type?'/pages/index/index':'',
+					backPage:this.onLoadInfo.type?'':'/pages/index/charityConsultation'
 				};
 			},
 		},
@@ -50,11 +52,13 @@
 			return {
 				detailInfo:{},
 				invite_code:'',
-				userInfo:{}
+				userInfo:{},
+				onLoadInfo:{}
 			};
 		},
 		onLoad(e) {
 			// e = {id:'1'}
+			this.onLoadInfo = e;
 			this.getDetail(e.id)
 			if(e.invite_code){
 				this.invite_code = e.invite_code;

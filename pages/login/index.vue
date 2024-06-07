@@ -108,6 +108,20 @@
 		},
 		onLoad(e){
 			this.onLoadParams = e;
+			let {invite_code,type,id} = this.onLoadParams;
+			let token = uni.getStorageSync('token')
+			if(token){
+				if(invite_code||type){
+					let obj = {
+						charityConsultationDetail:'/pages/index/detail/charityConsultationDetail',
+						passingLoveDetail:'/pages/index/detail/passingLoveDetail',
+					}
+					uni.reLaunch({
+						url:`${obj[type]}?id=${id}&type=share`
+					})
+				}
+			}
+			
 		},
 		methods: {
 			goOther(url) {
@@ -186,7 +200,7 @@
 									passingLoveDetail:'/pages/index/detail/passingLoveDetail',
 								}
 								uni.reLaunch({
-									url:`${obj[type]}&id=${id}`
+									url:`${obj[type]}?id=${id}&type=share`
 								})
 							}else{
 								uni.reLaunch({
